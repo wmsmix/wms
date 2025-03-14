@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0B0B0B] text-white">
+    <footer className="bg-[#0B0B0B] text-white-base">
       <div className="relative w-full px-4 py-16 sm:px-[120px]">
         <div className="relative mx-auto flex max-w-fit flex-col items-center justify-center gap-4 sm:flex-row sm:gap-0">
           {[
@@ -42,7 +42,7 @@ const Footer = () => {
           ].map(({ icon, title, text, bgColor, marginTop, marginLeft, zIndex, marginLeftOnCard }) => (
             <div
               key={title}
-              className={`relative flex h-[120px] w-full sm:w-[420px] items-center gap-4 p-6 text-white ${marginTop} ${marginLeft} ${zIndex}`}
+              className={`relative flex h-[120px] w-full sm:w-[420px] items-center gap-4 p-6 text-white-base ${marginTop} ${marginLeft} ${zIndex}`}
               style={{
                 backgroundColor: bgColor,
                 clipPath:

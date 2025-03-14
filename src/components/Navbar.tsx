@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-[#0F2771] w-full h-20 flex items-center px-4 md:px-10 lg:px-20 sticky top-0 z-50">
-\      <div className="hidden md:flex w-full max-w-[1272px] mx-auto items-center justify-between">
+      <div className="hidden md:flex w-full max-w-[1272px] mx-auto items-center justify-between">
         <Link href="/">
           <Image
             src="/svgs/wms-logo.svg"
@@ -22,7 +22,7 @@ const Navbar = () => {
           />
         </Link>
 
-        <div className="flex gap-6 lg:gap-10 text-sm font-normal uppercase tracking-wide text-white items-center">
+        <div className="flex gap-6 lg:gap-10 text-sm font-normal uppercase tracking-wide text-white-base items-center">
           <span className="cursor-pointer">Home</span>
           <span className="cursor-pointer">Product & Services</span>
           <span className="cursor-pointer">About</span>
@@ -46,7 +46,7 @@ const Navbar = () => {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`text-white transform transition-transform duration-300 ${
+          className={`text-white-base transform transition-transform duration-300 ${
             isOpen ? "scale-100" : "scale-50"
           }`}
         >
@@ -64,19 +64,19 @@ const Navbar = () => {
         }`}
       >
         <div className="flex flex-col items-center space-y-3">
-          <span className="cursor-pointer text-sm uppercase text-white">
+          <span className="cursor-pointer text-sm uppercase text-white-base">
             Home
           </span>
-          <span className="cursor-pointer text-sm uppercase text-white">
+          <span className="cursor-pointer text-sm uppercase text-white-base">
             Product & Services
           </span>
-          <span className="cursor-pointer text-sm uppercase text-white">
+          <span className="cursor-pointer text-sm uppercase text-white-base">
             About
           </span>
-          <span className="cursor-pointer text-sm uppercase text-white">
+          <span className="cursor-pointer text-sm uppercase text-white-base">
             Projects
           </span>
-          <span className="cursor-pointer text-sm uppercase text-white">
+          <span className="cursor-pointer text-sm uppercase text-white-base">
             Insights
           </span>
           <Button text="CONTACT" height="40px" />

@@ -1,48 +1,59 @@
 "use client";
 
 import React from "react";
+import {
+  FontAwesomeIcon,
+  type FontAwesomeIconProps,
+} from "@fortawesome/react-fontawesome";
 
 interface ButtonProps {
   text: string;
+  icon?: FontAwesomeIconProps["icon"];
+  iconSize?: "sm" | "lg" | "xl" | "2xl" | "4xl";
   bgColor?: string;
   textColor?: string;
   borderColor?: string;
   height?: string;
   onClick?: () => void;
   className?: string;
+  textSize?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   text,
+  icon,
+  iconSize = "lg",
   bgColor = "#E87722",
   textColor = "#FFFFFF",
   borderColor = "#FFFFFF",
   height = "48px",
   onClick,
-  className,
+  className = "",
+  textSize,
 }) => {
   return (
     <button
       onClick={onClick}
-      className={`relative font-bold uppercase tracking-wide shadow-md transition duration-300 hover:opacity-80 ${className}`}
+      className={`relative flex items-center justify-center gap-2 uppercase tracking-wide shadow-md transition duration-300 hover:opacity-80 ${className}`}
       style={{
         position: "relative",
         color: textColor,
         height,
+        clipPath: "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)",
       }}
     >
+      {/* Outer Octagon Border */}
       <span
         className="absolute inset-0"
         style={{
           backgroundColor: borderColor,
-          clipPath:
-            "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)",
           height,
         }}
       ></span>
 
+      {/* Button Content */}
       <span
-        className="relative flex items-center justify-center px-6"
+        className="relative flex items-center justify-center gap-2 px-6 font-titillium bg-white"
         style={{
           backgroundColor: bgColor,
           clipPath:
@@ -50,7 +61,15 @@ const Button: React.FC<ButtonProps> = ({
           height: `calc(${height} - 0.5px)`,
         }}
       >
-        {text}
+        {icon && (
+          <FontAwesomeIcon
+            icon={icon}
+            className={`text-${iconSize} text-white`}
+          />
+        )}
+        {text ? (
+          <span className={`text-${textSize} text-white`}>{text}</span>
+        ) : null}
       </span>
     </button>
   );
