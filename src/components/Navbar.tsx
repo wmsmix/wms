@@ -51,9 +51,9 @@ const Navbar = () => {
           }`}
         >
           {isOpen ? (
-            <XMarkIcon className="h-6 w-6" />
+            <XMarkIcon className="h-8 w-8" />
           ) : (
-            <Bars3Icon className="h-6 w-6" />
+            <Bars3Icon className="h-16 w-16" />
           )}
         </button>
       </div>

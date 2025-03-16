@@ -20,10 +20,9 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   projectLength,
 }) => {
   return (
-    <div className="flex w-full px-16 py-16">
-      <div className="relative h-[500px] w-1/2 ps-24">
+    <div className="flex w-full flex-col px-4 py-8 md:flex-row md:px-16 md:py-16">
+      <div className="relative order-1 mb-8 h-[350px] w-full px-6 md:mb-0 md:h-[500px] md:w-1/2 md:px-0 md:ps-24">
         <div className="relative h-full w-full">
-          {/* Container gambar */}
           <div className="relative h-full w-full overflow-hidden">
             <Image
               src={imageSrc}
@@ -37,49 +36,59 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             />
           </div>
 
-          {/* Container dengan clipPath yang sama di pojok kanan bawah */}
           <div
-            className="bg-white-20 absolute bottom-[-30px] right-[-30px] z-10 h-[190px] w-[254px]"
+            className="absolute bottom-[-20px] right-[-20px] z-10 h-[140px] w-[180px] bg-white-20 md:bottom-[-30px] md:right-[-30px] md:h-[190px] md:w-[254px]"
             style={{
               clipPath:
                 "polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%)",
             }}
           >
             <div className="flex h-full w-full flex-col items-center justify-center">
-              <span className="text-blue-primary text-[88px] font-semibold leading-none">
+              <span className="text-[60px] font-semibold leading-none text-blue-primary md:text-[88px]">
                 {projectValue}
               </span>
-              <span className="text-blue-primary -mt-2 text-3xl">
+              <span className="-mt-2 text-xl text-blue-primary md:text-3xl">
                 NILAI PROYEK
               </span>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex w-1/2 flex-col justify-center px-16">
-        <span className="text-white-10 mb-4 text-5xl">{period}</span>
-        <span className="text-white-10 mb-4 text-5xl">{title}</span>
-        <p className="text-white-10 pe-48 text-base">{description}</p>
-        <div className="mt-12 flex gap-8">
+
+      <div className="order-2 flex w-full flex-col justify-start px-6 md:w-1/2 md:px-16">
+        <span className="mb-2 text-left text-3xl text-white-10 md:mb-4 md:text-5xl">
+          {period}
+        </span>
+        <span className="mb-2 text-left text-3xl text-white-10 md:mb-4 md:text-5xl">
+          {title}
+        </span>
+        <p className="text-left text-sm text-white-10 md:pe-48 md:text-base">
+          {description}
+        </p>
+
+        <div className="mt-6 flex md:mt-8">
+          <Image
+            className="relative z-10 h-[40px] w-[40px] md:h-[50px] md:w-[50px]"
+            width={50}
+            height={50}
+            alt=""
+            src={"/svgs/icon-road.svg"}
+          />
+          <div className="ms-2 flex flex-col">
+            <span className="text-[8px] text-white-10 md:text-[10px]">
+              TOTAL PANJANG JALAN
+            </span>
+            <span className="text-xl text-white-10 md:text-2xl">
+              {projectLength}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-8 md:mt-12">
           <Button
             text="LIHAT LEBIH LENGKAP"
-            className="text-2xl font-normal"
+            className="text-lg font-normal md:text-2xl"
           />
-          <div className="flex">
-            <Image
-              className="relative z-10 h-[50px] w-[50px]"
-              width={50}
-              height={50}
-              alt=""
-              src={"/svgs/icon-road.svg"}
-            />
-            <div className="ms-2 flex flex-col">
-              <span className="text-white-10 text-[10px]">
-                TOTAL PANJANG JALAN
-              </span>
-              <span className="text-white-10 text-2xl">{projectLength}</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

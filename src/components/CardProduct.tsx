@@ -19,7 +19,6 @@ const CardProduct: FC<CardProductProps> = ({
     <div className="relative w-[400px] border-1 border-[#DDDDDD] bg-[#F4F4F4] shadow-lg overflow-hidden" style={{
       clipPath: "polygon(8% 0%, 92% 0%, 100% 4%, 100% 96%, 92% 100%, 8% 100%, 0% 96%, 0% 4%)"
     }}>
-      {/* Image section */}
       <div className="relative h-[256px] w-full">
         <Image
           src={imageSrc}
@@ -29,7 +28,6 @@ const CardProduct: FC<CardProductProps> = ({
         />
       </div>
 
-      {/* Content section */}
       <div className="p-6">
         <h2 className="text-[28px] text-dark text-black mb-3">{title} <span className="italic">({italicText})</span></h2>
         <p className="text-gray-700 mb-5">{description}</p>

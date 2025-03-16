@@ -42,7 +42,6 @@ const Button: React.FC<ButtonProps> = ({
         clipPath: "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)",
       }}
     >
-      {/* Outer Octagon Border */}
       <span
         className="absolute inset-0"
         style={{
@@ -51,7 +50,6 @@ const Button: React.FC<ButtonProps> = ({
         }}
       ></span>
 
-      {/* Button Content */}
       <span
         className="relative flex items-center justify-center gap-2 px-6 font-titillium bg-white"
         style={{

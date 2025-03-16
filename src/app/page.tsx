@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import Button from "~/components/Button";
@@ -31,27 +33,23 @@ const certifications = [
 
 export default function HomePage() {
   return (
-    <div className="text-white-10 min-h-screen bg-black font-titillium">
+    <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
       <Navbar />
 
-      <main className="mt-[-48px] flex min-h-screen flex-col items-center justify-center">
+      <main className="mt-[-48px] flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden">
         <Hero
           backgroundImage="/images/home-background.png"
           headline="Aspal & Beton Terbaik, Dirancang oleh Ahli Konstruksi"
           subheadline="PT Wahana Makmur Sentosa (WMS) adalah pabrik aspal dan beton di Jawa Timur yang telah bersertifikasi SLO dan diakui Kementerian PUPR. Dengan teknologi modern, WMS siap menyajikan produk dengan kualitas tertinggi."
           ctaText="Lihat Produk"
         />
-        <span className="text-white-10 block px-96 py-24 text-center font-noto text-[64px]">
+        <span className="mx-auto block max-w-[90vw] py-24 text-center font-noto text-[40px] text-white-10 sm:max-w-4xl sm:text-[64px]">
           Berpengalaman, Terpercaya, dan Ahli di Bidangnya
         </span>
-        <div className="mt-8 flex w-full max-w-6xl flex-wrap justify-between gap-8">
+        <div className="mx-auto mt-8 grid w-full max-w-[90vw] grid-cols-1 gap-8 px-4 sm:max-w-5xl sm:grid-cols-2 md:grid-cols-3">
           {certifications.map((cert, index) => (
-            <div
-              key={index}
-              className="flex w-full flex-col items-center text-center sm:w-[48%] md:w-[30%]"
-            >
-              {/* Icon dengan lingkaran */}
-              <div className="bg-white-10 relative flex h-20 w-20 items-center justify-center rounded-full">
+            <div key={index} className="flex flex-col items-center text-center">
+              <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white-10">
                 <Image
                   src={cert.image}
                   alt={cert.title}
@@ -59,27 +57,27 @@ export default function HomePage() {
                   height={44}
                 />
               </div>
-              {/* Judul Sertifikat */}
-              <h3 className="mt-4 whitespace-pre-line text-2xl font-normal">
+              <h3 className="mt-4 whitespace-pre-line text-xl font-normal sm:text-2xl">
                 {cert.title}
               </h3>
-              {/* Subtitle */}
-              <p className="mt-2 text-lg opacity-70">{cert.subtitle}</p>
+              <p className="mt-2 text-base opacity-70 sm:text-lg">
+                {cert.subtitle}
+              </p>
             </div>
           ))}
         </div>
         <Labels />
         <div
-          className="bg-white-10 flex w-full flex-col items-center py-8"
+          className="flex w-full flex-col items-center bg-white-10 py-8"
           style={{
             clipPath:
-              "polygon(8% 0%, 92% 0%, 100% 4%, 100% 100%, 92% 100%, 8% 100%, 0% 100%, 0% 4%)",
+              "polygon(0% 0%, 100% 0%, 100% 4%, 100% 100%, 92% 100%, 8% 100%, 0% 100%, 0% 4%)",
           }}
         >
-          <span className="block text-center font-noto text-[64px] text-black">
+          <span className="block text-center font-noto text-4xl text-black md:text-[64px]">
             Produk Kami
           </span>
-          <div className="mt-16 flex w-full flex-wrap justify-center gap-8">
+          <div className="mt-16 flex w-full flex-wrap justify-center gap-8 px-6 sm:px-0">
             <CardProduct
               imageSrc="/images/img-product-aspal.png"
               title="Aspal"
@@ -99,76 +97,69 @@ export default function HomePage() {
               description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
             />
           </div>
-          {/* New Component: Image and Text */}
-          <div className="mt-24 flex w-full">
-            <div className="flex w-1/2 flex-col justify-center px-16">
-              <h2 className="mb-4 text-5xl font-semibold text-black">
+          <div className="mt-24 flex w-full flex-col md:flex-row">
+            <div className="order-2 flex w-full flex-col justify-center px-6 py-8 md:order-1 md:w-1/2 md:px-16">
+              <h2 className="mb-4 text-3xl font-semibold text-black md:text-4xl lg:text-5xl">
                 Sertifikasi Lengkap dan Berpengalaman
               </h2>
-              <p className="text-[20px] text-gray-500">
+              <p className="text-base text-gray-500 md:text-lg lg:text-[20px]">
                 Seluruh produk dan layanan memenuhi standar tertinggi melalui
                 sertifikasi oleh Kementrian Pekerjaan Umum dan Perumahan Rakyat
                 (PUPR), Kementrian Perindustrian dan Lembaga Lainnya.
               </p>
             </div>
-            <div className="relative h-[500px] w-1/2">
+            <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
               <Image
                 src="/images/img-sertifikasi.png"
-                alt="Aspal"
+                alt="Sertifikasi"
                 fill
                 className="object-cover"
               />
             </div>
           </div>
-          <div className="flex w-full">
-            <div className="relative h-[500px] w-1/2">
+          <div className="flex w-full flex-col md:flex-row">
+            <div className="relative order-1 h-[300px] w-full md:h-[500px] md:w-1/2">
               <Image
                 src="/images/img-harga-bersaing.png"
-                alt="Aspal"
+                alt="Harga Bersaing"
                 fill
                 className="object-cover"
               />
             </div>
-            <div className="flex w-1/2 flex-col justify-center px-16">
-              <h2 className="mb-4 text-5xl font-semibold text-black">
+            <div className="order-2 flex w-full flex-col justify-center px-6 py-8 md:w-1/2 md:px-16">
+              <h2 className="mb-4 text-3xl font-semibold text-black md:text-4xl lg:text-5xl">
                 Harga Bersaing, Mutu Terjamin
               </h2>
-              <p className="text-[20px] text-gray-500">
+              <p className="text-base text-gray-500 md:text-lg lg:text-[20px]">
                 Produk aspal dan beton kami telah teruji kualitasnya dan mampu
                 memberikan hasil akhir yang kokoh dan tahan lama. Investasikan
                 pada produk berkualitas untuk proyek Anda.
               </p>
             </div>
           </div>
-          <div className="bg-blue-primary flex w-full">
-            <div className="bg-blue flex w-1/2 flex-col justify-center px-16">
-              <h2 className="text-white-10 mb-4 text-5xl font-semibold">
+          <div className="flex w-full flex-col bg-blue-primary md:flex-row">
+            <div className="bg-blue order-2 flex w-full flex-col justify-center px-6 py-8 md:order-1 md:w-1/2 md:px-16">
+              <h2 className="mb-4 text-3xl font-semibold text-white-10 md:text-4xl lg:text-5xl">
                 Peralatan dan Pelayanan Lengkap, Order Kapanpun
               </h2>
-              <p className="text-white-10 text-[20px]">
+              <p className="text-base text-white-10 md:text-lg lg:text-[20px]">
                 Dari berbagai macam pilihan produk aspal dan beton, penyediaan
                 jasa gelar aspal, pengecoran beton, hingga penyediaan support
                 letter. WMS siap melayani dari awal hingga akhir proses proyek
                 Anda.
               </p>
             </div>
-            <div className="relative h-[500px] w-1/2">
+            <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
               <Image
                 src="/images/img-peralatan.png"
-                alt="Aspal"
+                alt="Peralatan"
                 fill
                 className="object-cover"
               />
             </div>
           </div>
-          <div
-            className="bg-blue-primary flex w-full flex-col items-center py-24"
-            style={{
-              clipPath:
-                "polygon(0% 0%, 92% 0%, 100% 0%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 4%)",
-            }}
-          >
-            <span className="text-white-10 block text-center font-noto text-[64px]">
+          <section className="text-white clip-bottom-corners relative w-full overflow-hidden bg-blue-primary py-24">
+            <span className="block px-12 text-center font-noto text-3xl text-white-10 sm:text-4xl md:text-5xl lg:text-[64px]">
               Jejak Keberhasilan Kami
             </span>
 
@@ -180,27 +171,53 @@ export default function HomePage() {
               projectValue="103M"
               projectLength="7.98 KM"
             />
+
+            <style jsx>{`
+              .clip-bottom-corners {
+                clip-path: polygon(
+                  0% 0%,
+                  100% 0%,
+                  100% 85%,
+                  90% 100%,
+                  10% 100%,
+                  0% 85%
+                );
+              }
+
+              @media (max-width: 768px) {
+                .clip-bottom-corners {
+                  clip-path: polygon(
+                    0% 0%,
+                    100% 0%,
+                    100% 94%,
+                    85% 100%,
+                    15% 100%,
+                    0% 94%
+                  );
+                }
+              }
+            `}</style>
+          </section>
+          <div className="flex w-full flex-col items-center bg-white-10 py-24">
+            <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
+              Siap Bangun <br /> Infrastruktur Berkualitas ?
+            </span>
+            <ContactForm />
           </div>
-        </div>
-        <div className="bg-white-10 flex w-full flex-col items-center py-24">
-          <span className="mb-16 block text-center font-noto text-[64px] text-black">
-            Siap Bangun <br /> Infrastruktur Berkualitas ?
-          </span>
-          <ContactForm />
-        </div>
-        <div className="bg-white-10 flex w-full flex-col items-center py-24">
-          <span className="mb-16 block text-center font-noto text-[64px] text-black">
-            Lihat Proyek WMS
-          </span>
-          
-          <ProjectsGrid />
-        </div>
-        <div className="bg-white-10 flex w-full flex-col items-center py-24">
-          <span className="mb-16 block text-center font-noto text-[64px] text-black">
-            Kabar Proyek WMS
-          </span>
-          
-          <NewsGrid />
+          <div className="flex w-full flex-col items-center bg-white-10 pb-24">
+            <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
+              Lihat Proyek WMS
+            </span>
+
+            <ProjectsGrid />
+          </div>
+          <div className="flex w-full flex-col items-center bg-white-10 pb-24">
+            <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
+              Kabar Proyek WMS
+            </span>
+
+            <NewsGrid />
+          </div>
         </div>
       </main>
       <Footer />
