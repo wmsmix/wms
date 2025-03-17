@@ -36,13 +36,16 @@ export default function HomePage() {
     <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
       <Navbar />
 
-      <main className="mt-[-48px] flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden">
-        <Hero
-          backgroundImage="/images/home-background.png"
-          headline="Aspal & Beton Terbaik, Dirancang oleh Ahli Konstruksi"
-          subheadline="PT Wahana Makmur Sentosa (WMS) adalah pabrik aspal dan beton di Jawa Timur yang telah bersertifikasi SLO dan diakui Kementerian PUPR. Dengan teknologi modern, WMS siap menyajikan produk dengan kualitas tertinggi."
-          ctaText="Lihat Produk"
-        />
+      <main className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden pt-8">
+        <div className="hero-container w-full overflow-hidden">
+          <Hero
+            backgroundImage="/images/home-background.png"
+            headline="Aspal & Beton Terbaik, Dirancang oleh Ahli Konstruksi"
+            subheadline="PT Wahana Makmur Sentosa (WMS) adalah pabrik aspal dan beton di Jawa Timur yang telah bersertifikasi SLO dan diakui Kementerian PUPR. Dengan teknologi modern, WMS siap menyajikan produk dengan kualitas tertinggi."
+            ctaText="Lihat Produk"
+          />
+        </div>
+
         <span className="mx-auto block max-w-[90vw] py-24 text-center font-noto text-[40px] text-white-10 sm:max-w-4xl sm:text-[64px]">
           Berpengalaman, Terpercaya, dan Ahli di Bidangnya
         </span>

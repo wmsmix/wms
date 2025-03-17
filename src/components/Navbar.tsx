@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-[#0F2771] w-full h-20 flex items-center px-4 md:px-10 lg:px-20 sticky top-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F2771] w-full h-20 flex items-center px-4 md:px-10 lg:px-20">
       <div className="hidden md:flex w-full max-w-[1272px] mx-auto items-center justify-between">
         <Link href="/">
           <Image
@@ -23,16 +23,18 @@ const Navbar = () => {
         </Link>
 
         <div className="flex gap-6 lg:gap-10 text-sm font-normal uppercase tracking-wide text-white-base items-center">
-          <span className="cursor-pointer">Home</span>
-          <span className="cursor-pointer">Product & Services</span>
-          <span className="cursor-pointer">About</span>
-          <span className="cursor-pointer">Projects</span>
-          <span className="cursor-pointer">Insights</span>
-          <Button text="CONTACT" height="40px" />
+          <Link href="/" className="cursor-pointer hover:text-white-10 transition-colors">Home</Link>
+          <Link href="/products" className="cursor-pointer hover:text-white-10 transition-colors">Product & Services</Link>
+          <Link href="/about" className="cursor-pointer hover:text-white-10 transition-colors">About</Link>
+          <Link href="/projects" className="cursor-pointer hover:text-white-10 transition-colors">Projects</Link>
+          <Link href="/news" className="cursor-pointer hover:text-white-10 transition-colors">Insights</Link>
+          <Link href="/contact">
+            <Button text="CONTACT" height="40px" />
+          </Link>
         </div>
       </div>
 
-      <div className="md:hidden absolute top-0 left-0 w-full bg-[#0F2771] h-20 flex items-center justify-between px-4">
+      <div className="md:hidden flex w-full items-center justify-between">
         <Link href="/">
           <Image
             src="/svgs/wms-logo.svg"
@@ -46,40 +48,42 @@ const Navbar = () => {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`text-white-base transform transition-transform duration-300 ${
-            isOpen ? "scale-100" : "scale-50"
-          }`}
+          className="text-white-base transform transition-transform duration-300"
+          aria-label="Toggle menu"
         >
           {isOpen ? (
             <XMarkIcon className="h-8 w-8" />
           ) : (
-            <Bars3Icon className="h-16 w-16" />
+            <Bars3Icon className="h-8 w-8" />
           )}
         </button>
       </div>
 
+      {/* Mobile menu dropdown */}
       <div
-        className={`absolute top-full left-0 w-full bg-[#0F2771] transition-all duration-300 ${
-          isOpen ? "opacity-100 visible py-4" : "opacity-0 invisible h-0 overflow-hidden"
+        className={`absolute top-full left-0 w-full bg-[#0F2771] shadow-lg transition-all duration-300 ${
+          isOpen ? "max-h-[500px] opacity-100 visible py-4" : "max-h-0 opacity-0 invisible overflow-hidden"
         }`}
       >
-        <div className="flex flex-col items-center space-y-3">
-          <span className="cursor-pointer text-sm uppercase text-white-base">
+        <div className="flex flex-col items-center space-y-4 py-2">
+          <Link href="/" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             Home
-          </span>
-          <span className="cursor-pointer text-sm uppercase text-white-base">
+          </Link>
+          <Link href="/products" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             Product & Services
-          </span>
-          <span className="cursor-pointer text-sm uppercase text-white-base">
+          </Link>
+          <Link href="/about" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             About
-          </span>
-          <span className="cursor-pointer text-sm uppercase text-white-base">
+          </Link>
+          <Link href="/projects" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             Projects
-          </span>
-          <span className="cursor-pointer text-sm uppercase text-white-base">
+          </Link>
+          <Link href="/news" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             Insights
-          </span>
-          <Button text="CONTACT" height="40px" />
+          </Link>
+          <Link href="/contact" className="py-2">
+            <Button text="CONTACT" height="40px" />
+          </Link>
         </div>
       </div>
     </nav>
