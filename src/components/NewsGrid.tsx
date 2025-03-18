@@ -7,31 +7,44 @@ const news = [
     date: "03",
     month: "APR",
     imageSrc: "/images/img-kabar-proyek-1.png",
-    description: "Setelah dilaporkan tuntas, jalan lingkar selatan (JLS) Tuban mulai diaktifkan secara...",
-    url: "/news/jalan-ringroad-tuban"
+    description:
+      "Setelah dilaporkan tuntas, jalan lingkar selatan (JLS) Tuban mulai diaktifkan secara...",
+    url: "/news/jalan-ringroad-tuban",
   },
   {
     title: "Ring Road Tuban Jadi Opsi Pengendara Kena Macet",
     date: "20",
     month: "MEI",
     imageSrc: "/images/img-kabar-proyek-2.png",
-    description: "KBRN, Tuban: Setelah diresmikan, Ring Road/Jalur Lingkar Selatan Tuban yang berjalan ",
-    url: "/news/wms-penghargaan-2023"
+    description:
+      "KBRN, Tuban: Setelah diresmikan, Ring Road/Jalur Lingkar Selatan Tuban yang berjalan ",
+    url: "/news/wms-penghargaan-2023",
   },
   {
     title: "Jalan Lingkar Selatan Tuban Mulai Diaktifkan Terbatas: Kendaraan",
     date: "30",
     month: "JUNI",
     imageSrc: "/images/img-kabar-proyek-3.png",
-    description: "KBRN, Tuban : Kapolres Tuban AKBP Suryono mengatakan bahwa dirinya sempat ",
-    url: "/news/jembatan-kali-lamong"
-  }
+    description:
+      "KBRN, Tuban : Kapolres Tuban AKBP Suryono mengatakan bahwa dirinya sempat ",
+    url: "/news/jembatan-kali-lamong",
+  },
 ];
 
-const NewsGrid: React.FC = () => {
+interface NewsGridProps {
+  bgColor?: string;
+  textColor?: string;
+  textBadgeColor?: string;
+}
+
+const NewsGrid: React.FC<NewsGridProps> = ({
+  bgColor,
+  textColor,
+  textBadgeColor,
+}) => {
   return (
-    <div className="w-full max-w-7xl mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="mx-auto w-full max-w-7xl px-4">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {news.map((item, index) => (
           <NewsCard
             key={index}
@@ -41,6 +54,9 @@ const NewsGrid: React.FC = () => {
             imageSrc={item.imageSrc}
             description={item.description}
             url={item.url}
+            bgColor={bgColor}
+            textColor={textColor}
+            textBadgeColor={textBadgeColor}
           />
         ))}
       </div>
@@ -48,4 +64,4 @@ const NewsGrid: React.FC = () => {
   );
 };
 
-export default NewsGrid; 
+export default NewsGrid;

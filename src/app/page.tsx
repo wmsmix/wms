@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Button from "~/components/Button";
-import Footer from "~/components/Footer";
+import Button from "~/components/commons/Button";
+import Footer from "~/components/commons/Footer";
 import Hero from "~/components/Hero";
-import Navbar from "~/components/Navbar";
+import Navbar from "~/components/commons/Navbar";
 import Labels from "~/components/Label";
 import CardProduct from "~/components/CardProduct";
 import ProjectShowcase from "~/components/ProjectShowcase";
@@ -84,19 +84,19 @@ export default function HomePage() {
             <CardProduct
               imageSrc="/images/img-product-aspal.png"
               title="Aspal"
-              italicText="Hot-Mix"
+              italicText="(Hot-Mix)"
               description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktrur"
             />
             <CardProduct
               imageSrc="/images/img-product-beton.png"
               title="Beton"
-              italicText="Ready-Mix"
+              italicText="(Ready-Mix)"
               description="Memiliki tipe dengan kekuatan tekan 10 MPa hingga 30 MPa, dimana tiap tipe dirancang untuk kebutuhan konstruksi ringan hingga proyek infrastruktur berat. "
             />
             <CardProduct
               imageSrc="/images/img-product-precast.png"
               title="Paving"
-              italicText="Block"
+              italicText="(Block)"
               description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
             />
           </div>

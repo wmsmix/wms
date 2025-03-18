@@ -9,6 +9,9 @@ interface NewsCardProps {
   imageSrc: string;
   description: string;
   url: string;
+  bgColor?: string;
+  textColor?: string;
+  textBadgeColor?: string;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
@@ -18,12 +21,16 @@ const NewsCard: React.FC<NewsCardProps> = ({
   imageSrc,
   description,
   url,
+  bgColor,
+  textColor,
+  textBadgeColor,
 }) => {
   return (
     <Link
       href={url}
-      className="bg-white block w-full max-w-[380px] overflow-hidden shadow-lg"
+      className="block w-full max-w-[380px] overflow-hidden shadow-lg"
       style={{
+        backgroundColor: bgColor,
         clipPath: "polygon(0 0, 100% 0, 100% 90%, 95% 100%, 5% 100%, 0 90%)",
       }}
     >
@@ -36,22 +43,22 @@ const NewsCard: React.FC<NewsCardProps> = ({
       <div className="flex">
         <div className="flex flex-col items-center">
           <div
-            className="flex h-[70px] w-[60px] flex-shrink-0 items-center justify-center bg-blue-primary text-white-10"
+            className={`flex h-[70px] w-[60px] flex-shrink-0 items-center justify-center ${bgColor} text-white-10`}
             style={{
               clipPath:
                 "polygon(0 0, 100% 0, 100% 90%, 95% 100%, 5% 100%, 0 90%)",
             }}
           >
-            <span className="text-2xl font-semibold">{date}</span>
+            <span className={`text-2xl font-semibold ${textBadgeColor}`}>{date}</span>
           </div>
 
-          <span className="mt-1 text-xl font-medium uppercase text-blue-primary">
+          <span className={`mt-1 text-xl font-medium uppercase ${textColor}`}>
             {month}
           </span>
         </div>
 
         <div className="flex-1 p-4">
-          <h3 className="font-titilium mb-4 text-xl text-black">{title}</h3>
+          <h3 className={`font-titilium mb-4 text-xl ${textColor}`}>{title}</h3>
           <p className="text-gray-400">{description}</p>
         </div>
       </div>

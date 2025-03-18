@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Button from "./Button";
+import Button from "./commons/Button";
 
 const ContactForm: React.FC = () => {
   return (
