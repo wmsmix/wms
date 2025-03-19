@@ -18,7 +18,7 @@ import ProductSection from "~/components/ProductSection";
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
+    <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
       <section className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
@@ -35,23 +35,28 @@ export default function ProductsPage() {
           style={{
             clipPath:
               "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
-            marginLeft: 'calc(-50vw + 50%)',
-            marginRight: 'calc(-50vw + 50%)',
-            width: '100vw',
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
+            width: "100vw",
           }}
         >
-          <span className="block text-center font-noto text-3xl md:text-4xl lg:text-5xl text-black px-4">
+          <span className="block px-4 text-center font-noto text-3xl text-black md:text-4xl lg:text-5xl">
             Dari lapisan aspal hingga infrastrukur berat,
             <br className="hidden md:block" />
             Kustomisasi Produk Sesuai Kebutuhanmu
           </span>
-          <p className="pt-4 md:pt-8 text-center text-sm md:text-base lg:text-[20px] text-gray-500 px-4">
+          <p className="px-4 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px]">
             Pilih dan kustomisasi produk sesuai dengan kebutuhan proyek anda,
             <br className="hidden md:block" />
             tim ahli siap membantu anda menemukan solusi yang tepat
           </p>
           <div className="flex justify-start pt-6 md:pt-8">
-            <Button text="KONSULTASI SEKARANG" height="40px" textSize="base" className="text-sm md:text-lg" />
+            <Button
+              text="KONSULTASI SEKARANG"
+              height="40px"
+              textSize="base"
+              className="text-sm md:text-lg"
+            />
           </div>
         </div>
 
@@ -85,16 +90,18 @@ export default function ProductsPage() {
           imageSrc="/images/img-product-aspal.png"
           imageAlt="Aspal Hot-Mix"
           imagePosition="left"
+          buttonHref="/products/aspal"
         />
-        
+
         <ProductSection
           title="Beton (Ready-Mix)"
           description="Memiliki tipe dengan kekuatan tekan 10 MPa hingga 30 MPa, dimana tiap tipe dirancang untuk kebutuhan konstruksi ringan hingga proyek infrastruktur berat."
           imageSrc="/images/img-product-beton.png"
           imageAlt="Beton Ready-Mix"
           imagePosition="right"
+          buttonHref="/products/beton"
         />
-        
+
         <ProductSection
           title="Precast Concrete"
           description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
@@ -102,6 +109,7 @@ export default function ProductsPage() {
           imageAlt="Precast Concrete"
           imagePosition="left"
           isLastItem={true}
+          buttonHref="/products/precast-concrete"
         />
       </section>
       <section className="bg-blue-primary">
@@ -110,20 +118,20 @@ export default function ProductsPage() {
           style={{
             clipPath:
               "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
-            marginLeft: 'calc(-50vw + 50%)',
-            marginRight: 'calc(-50vw + 50%)',
-            width: '100vw',
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
+            width: "100vw",
           }}
         >
-          <span className="text-white-base block text-center font-noto text-3xl md:text-4xl lg:text-5xl px-4">
+          <span className="text-white-base block px-4 text-center font-noto text-3xl md:text-4xl lg:text-5xl">
             Servis Satu Atap
           </span>
-          <p className="text-white-base pt-4 md:pt-8 text-center text-sm md:text-base lg:text-[20px] px-4">
+          <p className="text-white-base px-4 pt-4 text-center text-sm md:pt-8 md:text-base lg:text-[20px]">
             Dari Konsep hingga Realisasi,
             <br className="hidden md:block" />
             Kami membantu dari perencanaan hingga pelaksanaan
           </p>
-          <div className="grid grid-cols-1 px-4 md:px-8 lg:px-48 py-8 md:py-16 md:grid-cols-2 lg:md:grid-cols-4">
+          <div className="grid grid-cols-1 px-4 py-8 md:grid-cols-2 md:px-8 md:py-16 lg:md:grid-cols-4 lg:px-48">
             <ServiceCard
               imageSrc="/images/img-product-aspal.png"
               title="JASA GELAR ASPAL"
@@ -151,7 +159,7 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
-      <ClippedSection 
+      <ClippedSection
         title="Proyek Impian Anda,<br>Realisasikan Bersama Kami"
         description="Dengan pengalaman bertahun-tahun, kami telah berhasil menyelesaikan berbagai proyek dengan hasil<br>yang memuaskan. Percayakan proyek Anda pada kami dan rasakan perbedaannya."
         buttonText="MULAI SEKARANG"
@@ -159,12 +167,24 @@ export default function ProductsPage() {
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-black"
       />
-      <div className="flex w-full flex-col items-center bg-white-10 pb-24">
+      <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>
 
-        <NewsGrid bgColor="bg-blue-primary" textColor="text-black" textBadgeColor="text-white-10" />
+        <NewsGrid
+          bgColor="bg-blue-primary"
+          textColor="text-black"
+          textBadgeColor="text-white-10"
+        />
+      </div>
+      <div className="flex justify-center pb-6 md:pb-12">
+        <Button
+          text="LIHAT SEMUA"
+          height="56px"
+          textSize="base"
+          className="text-sm md:text-lg"
+        />
       </div>
       <Footer />
     </div>
