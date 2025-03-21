@@ -5,7 +5,7 @@ import { Titillium_Web, Noto_Serif } from "next/font/google";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "WMS",
+  title: "WMS - PT. Wahana Makmur Sentosa",
   description: "WMS",
   icons: [{ rel: "icon", url: "/wms-logo.svg" }],
 };

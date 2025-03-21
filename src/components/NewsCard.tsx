@@ -43,16 +43,16 @@ const NewsCard: React.FC<NewsCardProps> = ({
       <div className="flex">
         <div className="flex flex-col items-center">
           <div
-            className={`flex h-[70px] w-[60px] flex-shrink-0 items-center justify-center ${bgColor} text-white-10`}
+            className={`flex h-[70px] w-[60px] flex-shrink-0 items-end justify-center ${bgColor} pb-2 text-white-10`}
             style={{
               clipPath:
-                "polygon(0 0, 100% 0, 100% 90%, 95% 100%, 5% 100%, 0 90%)",
+                "polygon(0 0, 100% 0, 100% 90%, 88% 100%, 12% 100%, 0 88%)",
             }}
           >
-            <span className={`text-2xl font-semibold ${textBadgeColor}`}>{date}</span>
+            <span className={`text-3xl font-semibold ${textBadgeColor}`}>{date}</span>
           </div>
 
-          <span className={`mt-1 text-xl font-medium uppercase ${textColor}`}>
+          <span className={`mt-4 text-2xl font-medium uppercase ${textColor}`}>
             {month}
           </span>
         </div>

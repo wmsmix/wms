@@ -51,8 +51,8 @@ const Hero: React.FC<HeroProps> = ({
       </div>
 
       <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] sm:max-w-5xl -translate-x-1/2 -translate-y-1/2 px-4 sm:px-0">
-        <div className="grid grid-cols-1 items-center gap-4 sm:gap-8 md:grid-cols-2">
-          <h1 className="text-left pl-12 text-3xl sm:text-5xl font-bold leading-tight md:text-left md:text-6xl">
+        <div className="grid grid-cols-1 items-center gap-6 sm:gap-12 md:grid-cols-2">
+          <h1 className="text-left pl-12 text-3xl sm:text-5xl leading-tight md:text-left md:text-6xl">
             {headline}
           </h1>
 
