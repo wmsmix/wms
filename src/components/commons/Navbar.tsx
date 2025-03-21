@@ -27,7 +27,7 @@ const Navbar = () => {
           <Link href="/products" className="cursor-pointer hover:text-white-10 transition-colors">Product & Services</Link>
           <Link href="/about" className="cursor-pointer hover:text-white-10 transition-colors">About</Link>
           <Link href="/projects" className="cursor-pointer hover:text-white-10 transition-colors">Projects</Link>
-          <Link href="/news" className="cursor-pointer hover:text-white-10 transition-colors">Insights</Link>
+          <Link href="/insights" className="cursor-pointer hover:text-white-10 transition-colors">Insights</Link>
           <Link href="/contact">
             <Button text="CONTACT" height="40px" />
           </Link>

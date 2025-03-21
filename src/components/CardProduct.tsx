@@ -1,5 +1,6 @@
-import type { FC } from "react";
+import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Button from "~/components/commons/Button";
 
 interface CardProductProps {
@@ -9,17 +10,19 @@ interface CardProductProps {
   description: string;
   subtitle?: string;
   fullImage?: boolean;
+  href?: string;
 }
 
-const CardProduct: FC<CardProductProps> = ({
+const CardProduct: React.FC<CardProductProps> = ({
   imageSrc,
   title,
   italicText,
   description,
   subtitle,
   fullImage = true,
+  href,
 }) => {
-  return (
+  const cardContent = (
     <div className={`relative w-full max-w-[400px] border-1 border-[#DDDDDD] ${fullImage ? 'bg-[#F4F4F4]' : 'bg-white'} shadow-lg overflow-hidden`} style={{
       clipPath: "polygon(8% 0%, 92% 0%, 100% 4%, 100% 96%, 92% 100%, 8% 100%, 0% 96%, 0% 4%)"
     }}>
@@ -46,6 +49,16 @@ const CardProduct: FC<CardProductProps> = ({
       </div>
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block w-full max-w-sm">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return cardContent;
 };
 
 export default CardProduct;

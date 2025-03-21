@@ -234,12 +234,24 @@ export default function AspalProductPage() {
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-blue-primary"
       />
-      <div className="flex w-full flex-col items-center bg-white-10 px-4 pb-12 md:px-8 md:pb-24">
-        <span className="mb-8 block text-center font-noto text-3xl text-black sm:text-4xl md:mb-16 md:text-5xl lg:text-[64px]">
+      <div className="flex w-full flex-col items-center bg-white-10">
+        <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>
 
-        <NewsGrid />
+        <NewsGrid
+          bgColor="bg-blue-primary"
+          textColor="text-black"
+          textBadgeColor="text-white-10"
+        />
+      </div>
+      <div className="flex justify-center pb-6 md:pb-12">
+        <Button
+          text="LIHAT SEMUA"
+          height="56px"
+          textSize="base"
+          className="text-sm md:text-lg"
+        />
       </div>
       <Footer />
     </div>

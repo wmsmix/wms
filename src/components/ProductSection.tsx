@@ -9,6 +9,8 @@ interface ProductSectionProps {
   imageAlt: string;
   imagePosition?: "left" | "right";
   isLastItem?: boolean;
+  buttonText?: string;
+  buttonHref?: string;
 }
 
 const ProductSection: React.FC<ProductSectionProps> = ({
@@ -18,10 +20,15 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   imageAlt,
   imagePosition = "left",
   isLastItem = false,
+  buttonText = "LIHAT DETAIL",
+  buttonHref,
 }) => {
   const containerClasses = `flex w-full -translate-y-[1%] flex-col bg-white-10 md:flex-row ${
     isLastItem ? "clip-bottom-corners" : ""
   }`;
+
+  const contentOrder = imagePosition === "left" ? "order-2" : "order-1";
+  const imageOrder = imagePosition === "left" ? "order-1" : "order-2";
 
   return (
     <div className={containerClasses}>
@@ -53,9 +60,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         </p>
         <div className="flex justify-start ps-4 md:ps-24 pt-4 md:pt-8">
           <Button 
-            text="PELAJARI PRODUK" 
-            height="40px" 
-            textSize="base" 
+            text={buttonText} 
+            href={buttonHref} 
             className="text-sm md:text-lg" 
           />
         </div>
