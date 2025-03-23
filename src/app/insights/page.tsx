@@ -132,7 +132,15 @@ export default function InsightsPage() {
                 <div className="flex items-center">
                   <div className="h-px flex-grow bg-gray-300"></div>
                   <Link href="/insights/jalan-lingkar-selatan-tuban-mulai-diaktifkan-terbatas">
-                    <Button text="BACA LEBIH LANJUT" />
+                    <Button
+                      text="BACA LEBIH LANJUT"
+                      clipPath={{
+                        outer:
+                          "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                      }}
+                      margin="1px"
+                      textSize="xl"
+                    />
                   </Link>
                 </div>
               </div>
@@ -140,7 +148,10 @@ export default function InsightsPage() {
           </div>
 
           <div className="news-list space-y-6 md:col-span-1">
-            <Link href="/insights/ring-road-tuban-19-km-diuji-coba" className="block hover:text-blue-primary transition-colors">
+            <Link
+              href="/insights/ring-road-tuban-19-km-diuji-coba"
+              className="block transition-colors hover:text-blue-primary"
+            >
               <div className="flex flex-col gap-1 border-b pb-4">
                 <div>
                   <span className="text-2xl text-black">
@@ -155,7 +166,10 @@ export default function InsightsPage() {
               </div>
             </Link>
 
-            <Link href="/insights/gubernur-resmikan-tiga-nama" className="block hover:text-blue-primary transition-colors">
+            <Link
+              href="/insights/gubernur-resmikan-tiga-nama"
+              className="block transition-colors hover:text-blue-primary"
+            >
               <div className="flex flex-col gap-1 border-b pb-4">
                 <div>
                   <span className="text-2xl text-black">
@@ -170,7 +184,10 @@ export default function InsightsPage() {
               </div>
             </Link>
 
-            <Link href="/insights/gubernur-jatim-resmikan" className="block hover:text-blue-primary transition-colors">
+            <Link
+              href="/insights/gubernur-jatim-resmikan"
+              className="block transition-colors hover:text-blue-primary"
+            >
               <div className="flex flex-col gap-1 border-b pb-4">
                 <div>
                   <span className="text-2xl text-black">
@@ -185,7 +202,10 @@ export default function InsightsPage() {
               </div>
             </Link>
 
-            <Link href="/insights/perkembangan-pembangunan-capai-90" className="block hover:text-blue-primary transition-colors">
+            <Link
+              href="/insights/perkembangan-pembangunan-capai-90"
+              className="block transition-colors hover:text-blue-primary"
+            >
               <div className="flex flex-col gap-1 border-b pb-4">
                 <div>
                   <span className="text-2xl text-black">
@@ -337,7 +357,7 @@ export default function InsightsPage() {
 
             return (
               <div key={newsIndex} className="flex flex-col">
-                <Link href={`/insights/${news.url.split('/').pop()}`}>
+                <Link href={`/insights/${news.url.split("/").pop()}`}>
                   <div
                     className="block h-full w-full overflow-hidden shadow-lg"
                     style={{

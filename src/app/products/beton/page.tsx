@@ -106,8 +106,15 @@ export default function AspalProductPage() {
               <Button
                 text="PILIH BETON INI"
                 height="40px"
-                textSize="base"
+                textSize="xl"
                 className="text-sm md:text-lg"
+                clipPath={{
+                  outer:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
               />
             </div>
           </div>
@@ -126,8 +133,15 @@ export default function AspalProductPage() {
               <Button
                 text="PILIH BETON INI"
                 height="40px"
-                textSize="base"
+                textSize="xl"
                 className="text-sm md:text-lg"
+                clipPath={{
+                  outer:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
               />
             </div>
           </div>
@@ -157,16 +171,16 @@ export default function AspalProductPage() {
               clip-path: polygon(
                 0% 0%,
                 100% 0%,
-                100% 94%,
-                85% 100%,
-                15% 100%,
-                0% 94%
+                100% 100%,
+                100% 100%,
+                0% 100%,
+                0% 100%
               );
             }
           }
         `}</style>
       </div>
-      <span className="mt-24 block px-12 text-center font-noto text-xl text-black sm:text-4xl md:text-5xl lg:text-[48px]">
+      <span className="mt-24 block px-12 text-center font-noto text-3xl text-black sm:text-4xl md:text-5xl lg:text-[48px]">
         Beton Struktural & Infrastruktur
       </span>
       <div className="mt-24 flex w-full flex-col md:flex-row">
@@ -191,8 +205,15 @@ export default function AspalProductPage() {
             <Button
               text="PILIH BETON INI"
               height="40px"
-              textSize="base"
+              textSize="xl"
               className="text-sm md:text-lg"
+              clipPath={{
+                outer:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                inner:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+              }}
+              margin="1px"
             />
           </div>
         </div>
@@ -212,8 +233,15 @@ export default function AspalProductPage() {
             <Button
               text="PILIH BETON INI"
               height="40px"
-              textSize="base"
+              textSize="xl"
               className="text-sm md:text-lg"
+              clipPath={{
+                outer:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                inner:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+              }}
+              margin="1px"
             />
           </div>
         </div>
@@ -248,9 +276,15 @@ export default function AspalProductPage() {
       <div className="flex justify-center pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
+          height="48px"
+          textSize="xl"
           className="text-sm md:text-lg"
+          clipPath={{
+            outer:
+              "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+          }}
         />
       </div>
       <Footer />

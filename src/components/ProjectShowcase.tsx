@@ -102,6 +102,13 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
           <Button
             text="LIHAT LEBIH LENGKAP"
             className="text-lg font-normal md:text-2xl"
+            clipPath={{
+              outer:
+                "polygon(2% 0%, 98% 0%, 100% 16%, 100% 84%, 98% 100%, 2% 100%, 0% 84%, 0% 16%)",
+              inner:
+                "polygon(2% 0%, 98% 0%, 100% 16%, 100% 84%, 98% 100%, 2% 100%, 0% 84%, 0% 16%)",
+            }}
+            margin="1px"
           />
         </div>
       </div>

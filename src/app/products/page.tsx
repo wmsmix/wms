@@ -54,8 +54,14 @@ export default function ProductsPage() {
             <Button
               text="KONSULTASI SEKARANG"
               height="40px"
-              textSize="base"
-              className="text-sm md:text-lg"
+              textSize="xl"
+              className="text-sm md:text-2xl"
+              clipPath={{
+                outer:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                inner:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+              }}
             />
           </div>
         </div>
@@ -181,8 +187,8 @@ export default function ProductsPage() {
       <div className="flex justify-center pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
+          height="48px"
+          textSize="xl"
           className="text-sm md:text-lg"
         />
       </div>

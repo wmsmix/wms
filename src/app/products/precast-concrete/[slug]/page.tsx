@@ -270,9 +270,16 @@ Hemat Waktu dan Biaya"
       <div className="flex justify-center bg-blue-primary pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
+          height="48px"
+          textSize="xl"
           className="text-sm md:text-lg"
+          clipPath={{
+            outer:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"
         />
       </div>
 

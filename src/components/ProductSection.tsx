@@ -27,9 +27,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     isLastItem ? "clip-bottom-corners" : ""
   }`;
 
-  const contentOrder = imagePosition === "left" ? "order-2" : "order-1";
-  const imageOrder = imagePosition === "left" ? "order-1" : "order-2";
-
   return (
     <div className={containerClasses}>
       {/* Image Section */}
@@ -38,12 +35,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           imagePosition === "right" ? "md:order-2" : ""
         }`}
       >
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          className="object-cover"
-        />
+        <Image src={imageSrc} alt={imageAlt} fill className="object-cover" />
       </div>
 
       {/* Content Section */}
@@ -52,17 +44,24 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           imagePosition === "right" ? "md:order-1" : ""
         }`}
       >
-        <h2 className="mb-2 md:mb-4 ps-4 md:ps-24 text-2xl md:text-3xl font-semibold text-black lg:text-5xl">
+        <h2 className="mb-2 ps-4 text-2xl font-semibold text-black md:mb-4 md:ps-24 md:text-3xl lg:text-5xl">
           {title}
         </h2>
-        <p className="ps-4 md:ps-24 pe-4 md:pe-96 pt-2 md:pt-4 text-sm md:text-base text-gray-500 lg:text-[20px]">
+        <p className="pe-4 ps-4 pt-2 text-sm text-gray-500 md:pe-96 md:ps-24 md:pt-4 md:text-base lg:text-[20px]">
           {description}
         </p>
-        <div className="flex justify-start ps-4 md:ps-24 pt-4 md:pt-8">
-          <Button 
-            text={buttonText} 
-            href={buttonHref} 
-            className="text-sm md:text-lg" 
+        <div className="flex justify-start ps-4 pt-4 md:ps-24 md:pt-8">
+          <Button
+            text={buttonText}
+            href={buttonHref}
+            textSize="xl"
+            className="text-sm md:text-lg"
+            clipPath={{
+              outer:
+                "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+              inner:
+                "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+            }}
           />
         </div>
       </div>
@@ -96,4 +95,4 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   );
 };
 
-export default ProductSection; 
+export default ProductSection;

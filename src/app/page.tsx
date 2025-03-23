@@ -86,18 +86,30 @@ export default function HomePage() {
               title="Aspal"
               italicText="(Hot-Mix)"
               description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktrur"
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
             />
             <CardProduct
               imageSrc="/images/img-product-beton.png"
               title="Beton"
               italicText="(Ready-Mix)"
               description="Memiliki tipe dengan kekuatan tekan 10 MPa hingga 30 MPa, dimana tiap tipe dirancang untuk kebutuhan konstruksi ringan hingga proyek infrastruktur berat. "
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
             />
             <CardProduct
               imageSrc="/images/img-product-precast.png"
               title="Paving"
               italicText="(Block)"
               description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
             />
           </div>
           <div className="mt-24 flex w-full flex-col md:flex-row">
@@ -214,12 +226,24 @@ export default function HomePage() {
 
             <ProjectsGrid />
           </div>
-          <div className="flex w-full flex-col items-center bg-white-10 pb-24">
+          <div className="flex w-full flex-col items-center bg-white-10">
             <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-              Kabar Proyek WMS
+              Lihat Insight Proyek
             </span>
 
-            <NewsGrid />
+            <NewsGrid
+              bgColor="bg-blue-primary"
+              textColor="text-black"
+              textBadgeColor="text-white-10"
+            />
+          </div>
+          <div className="flex justify-center pb-6 md:pb-12">
+            <Button
+              text="LIHAT SEMUA"
+              height="56px"
+              textSize="base"
+              className="text-sm md:text-lg"
+            />
           </div>
         </div>
       </main>
