@@ -51,42 +51,78 @@ Solusi cerdas untuk bangunan modern"
       <span className="block pb-12 pt-24 text-center font-noto text-4xl text-black md:text-[64px]">
         Tipe Tipe Precast Concrete
       </span>
-      <div className="mt-16 flex w-full flex-wrap justify-center gap-12 px-12 pb-24 sm:px-12">
-        <CardProduct
-          imageSrc="/images/img-box-culvert.png"
-          title="BOX CULVERT"
-          description="Beton pracetak berbentuk kotak yang digunakan untuk saluran drainase besar, gorong-gorong, atau jembatan kecil. Berfungsi untuk memastikan aliran air agar lancar."
-          fullImage={false}
-          href="/products/precast-concrete/box-culvert"
-        />
-        <CardProduct
-          imageSrc="/images/img-double-u-box.png"
-          title="DOUBLE U-BOX"
-          description="Beton pracetak yang dirancang untuk saluran air dengan kapasitas besar, seperti irigasi dan drainase perkotaan. Bentuk gandanya memungkinkan pengaliran air lebih optimal."
-          fullImage={false}
-          href="/products/precast-concrete/double-u-box"
-        />
-        <CardProduct
-          imageSrc="/images/img-u-ditch.png"
-          title="U-DITCH"
-          description="Beton pracetak yang digunakan untuk mengelola aliran air di saluran terbuka. Produk ini ideal untuk kawasan perumahan, komersial, dan jalan. Tersedia dengan opsi penutup (U-ditch cover)."
-          fullImage={false}
-          href="/products/precast-concrete/u-ditch"
-        />
-        <CardProduct
-          imageSrc="/images/img-u-ditch.png"
-          title="U-DITCH COVER"
-          description="Penutup yang digunakan untuk menutupi bagian atas saluran drainase U-ditch untuk menjaga saluran drainase tetap bersih dari benda asing yang dapat menyumbat aliran air."
-          fullImage={false}
-          href="/products/precast-concrete/u-ditch-cover"
-        />
-        <CardProduct
-          imageSrc="/images/img-kansteen.png"
-          title="KANSTEEN"
-          description="Beton pracetak yang digunakan sebagai pembatas jalan, taman, atau trotoar. Produk ini tersedia dalam berbagai ukuran dan bentuk untuk memenuhi kebutuhan desain infrastruktur anda."
-          fullImage={false}
-          href="/products/precast-concrete/kansteen"
-        />
+      <div className="container mx-auto mt-16 px-4 pb-24">
+        <div className="flex flex-wrap justify-center gap-12 md:gap-24">
+          <div className="w-full max-w-[350px]">
+            <CardProduct
+              imageSrc="/images/img-box-culvert.png"
+              title="BOX CULVERT"
+              description="Beton pracetak berbentuk kotak yang digunakan untuk saluran drainase besar, gorong-gorong, atau jembatan kecil. Berfungsi untuk memastikan aliran air agar lancar."
+              fullImage={false}
+              href="/products/precast-concrete/box-culvert"
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
+            />
+          </div>
+
+          <div className="w-full max-w-[350px]">
+            <CardProduct
+              imageSrc="/images/img-double-u-box.png"
+              title="DOUBLE U-BOX"
+              description="Beton pracetak yang dirancang untuk saluran air dengan kapasitas besar, seperti irigasi dan drainase perkotaan. Bentuk gandanya memungkinkan pengaliran air lebih optimal."
+              fullImage={false}
+              href="/products/precast-concrete/double-u-box"
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
+            />
+          </div>
+
+          <div className="w-full max-w-[350px]">
+            <CardProduct
+              imageSrc="/images/img-u-ditch.png"
+              title="U-DITCH"
+              description="Beton pracetak yang digunakan untuk mengelola aliran air di saluran terbuka. Produk ini ideal untuk kawasan perumahan, komersial, dan jalan. Tersedia dengan opsi penutup (U-ditch cover)."
+              fullImage={false}
+              href="/products/precast-concrete/u-ditch"
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
+            />
+          </div>
+
+          <div className="w-full max-w-[350px]">
+            <CardProduct
+              imageSrc="/images/img-u-ditch.png"
+              title="U-DITCH COVER"
+              description="Penutup yang digunakan untuk menutupi bagian atas saluran drainase U-ditch untuk menjaga saluran drainase tetap bersih dari benda asing yang dapat menyumbat aliran air."
+              fullImage={false}
+              href="/products/precast-concrete/u-ditch-cover"
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
+            />
+          </div>
+
+          <div className="w-full max-w-[350px]">
+            <CardProduct
+              imageSrc="/images/img-kansteen.png"
+              title="KANSTEEN"
+              description="Beton pracetak yang digunakan sebagai pembatas jalan, taman, atau trotoar. Produk ini tersedia dalam berbagai ukuran dan bentuk untuk memenuhi kebutuhan desain infrastruktur anda."
+              fullImage={false}
+              href="/products/precast-concrete/kansteen"
+              borderColor="#CCCCCC"
+              borderWidth="0.5px"
+              backgroundColor="white"
+              height="500px"
+            />
+          </div>
+        </div>
       </div>
       <ClippedSection
         title="Bangunan kokoh tahan lama
@@ -112,9 +148,16 @@ Hemat Waktu dan Biaya"
       <div className="flex justify-center bg-blue-primary pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
+          height="48px"
+          textSize="xl"
           className="text-sm md:text-lg"
+          clipPath={{
+            outer:
+              "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"
         />
       </div>
       <Footer />

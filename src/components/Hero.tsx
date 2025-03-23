@@ -25,7 +25,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   return (
     <section
-      className={`relative h-[700px] sm:h-[964px] w-full overflow-hidden bg-white font-serif text-white-base ${className}`}
+      className={`bg-white text-white-base relative h-[700px] w-full overflow-hidden font-serif sm:h-[964px] ${className}`}
     >
       <div className="absolute inset-0 h-full w-full">
         <Image
@@ -50,28 +50,47 @@ const Hero: React.FC<HeroProps> = ({
         </div>
       </div>
 
-      <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] sm:max-w-5xl -translate-x-1/2 -translate-y-1/2 px-4 sm:px-0">
+      <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] -translate-x-1/2 -translate-y-1/2 px-4 sm:max-w-5xl sm:px-0">
         <div className="grid grid-cols-1 items-center gap-6 sm:gap-12 md:grid-cols-2">
-          <h1 className="text-left pl-12 text-3xl sm:text-5xl leading-tight md:text-left md:text-6xl">
+          <h1 className="pl-12 text-left text-3xl leading-tight sm:text-5xl md:text-left md:text-6xl">
             {headline}
           </h1>
 
-          <div className="text-left pl-12 md:text-left top-0">
-            <p className="mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed font-titillium">{subheadline}</p>
+          <div className="top-0 pl-12 text-left md:text-left">
+            <p className="mb-4 font-titillium text-base leading-relaxed sm:mb-6 sm:text-lg">
+              {subheadline}
+            </p>
             <div className="flex justify-start">
-              <Button text={ctaText} height="48px" textSize="lg" />
+              <Button
+                text={ctaText}
+                height="48px"
+                textSize="lg"
+                clipPath={{
+                  outer:
+                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
+              />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-10 sm:bottom-20 right-4 sm:right-8 z-40">
+      <div className="absolute bottom-10 right-4 z-40 sm:bottom-20 sm:right-8">
         <Button
           text=""
           icon={faWhatsapp}
           height="48px"
-          className=""
-          iconSize="xl"
+          iconSize="2xl"
+          clipPath={{
+            outer:
+              "polygon(8% 0%, 92% 0%, 100% 16%, 100% 84%, 92% 100%, 8% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(8% 0%, 92% 0%, 100% 16%, 100% 84%, 92% 100%, 8% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"
         />
       </div>
 
@@ -89,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({
             0% 5%
           );
         }
-        
+
         /* Clippath dalam untuk mobile */
         .clip-octagon-inner-mobile {
           clip-path: polygon(
@@ -103,7 +122,7 @@ const Hero: React.FC<HeroProps> = ({
             0% 20%
           );
         }
-        
+
         /* Clippath luar untuk desktop */
         .clip-octagon-outer-desktop {
           clip-path: polygon(
@@ -117,7 +136,7 @@ const Hero: React.FC<HeroProps> = ({
             0% 10%
           );
         }
-        
+
         /* Clippath dalam untuk desktop */
         .clip-octagon-inner-desktop {
           clip-path: polygon(

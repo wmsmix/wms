@@ -28,38 +28,50 @@ export default function AspalProductPage() {
         buttonText="TANYA LEBIH LANJUT"
       />
 
-      <div className="pt-12 md:pt-24 px-4 md:px-8">
+      <div className="px-4 pt-12 md:px-8 md:pt-24">
         <span className="block text-center font-noto text-3xl text-black md:text-4xl lg:text-[64px]">
           Laston Lapis Permukaan
         </span>
-        <span className="font-titilium block px-4 md:px-16 lg:px-96 pt-6 md:pt-12 text-center text-base md:text-xl text-black text-gray-500">
+        <span className="font-titilium block px-4 pt-6 text-center text-base text-black text-gray-500 md:px-16 md:pt-12 md:text-xl lg:px-96">
           Lapisan paling atas dari struktur jalan yang berperan sebagai
           penghalang pertama terhadap berbagai tekanan dan gesekan yang terjadi
           selama penggunaan jalan
         </span>
-        <div className="mt-8 md:mt-16 flex w-full flex-col md:flex-row flex-wrap justify-center items-center gap-8 px-4 md:px-6">
+        <div className="mt-8 flex w-full flex-col flex-wrap items-center justify-center gap-8 px-4 md:mt-16 md:flex-row md:px-6">
           <CardProduct
             imageSrc="/images/img-product-aspal.png"
             subtitle="Laston Lapis Permukaan"
             title="(AC-WC)"
             description="Lapisan aspal permukaan yang cocok untuk jalan raya dengan lalu lintas tinggi, jalan tol, dan jalan perkotaan. Permukaan mulus untuk kenyamanan berkendara."
+            borderColor="#CCCCCC"
+            borderWidth="0.5px"
+            backgroundColor="white"
+            height="560px"
           />
           <CardProduct
             imageSrc="/images/img-product-beton.png"
             title="(HRS-AC)"
             subtitle="Laston Lapis Permukaan"
             description="Lapisan aspal permukaan yang menjadi pilihan utama untuk wilayah tropis dan proyek dengan kebutuhan performa permukaan yang lebih halus dan mulus."
+            borderColor="#CCCCCC"
+            borderWidth="0.5px"
+            backgroundColor="white"
+            height="560px"
           />
           <CardProduct
             imageSrc="/images/img-product-precast.png"
             title="(AC-WC MOD)"
             subtitle="Laston Lapis Permukaan"
             description="Lapisan aspal permukaan yang dimodifikasi dengan aditif polimer untuk meningkatkan elastisitas dan ketahanan deformasi. Ideal untuk jalan dengan beban berat dan iklim ekstrem."
+            borderColor="#CCCCCC"
+            borderWidth="0.5px"
+            backgroundColor="white"
+            height="560px"
           />
         </div>
       </div>
       <div
-        className="mt-8 md:mt-12 flex w-screen max-w-full flex-col items-center bg-black py-16 md:py-32"
+        className="mt-8 flex w-screen max-w-full flex-col items-center bg-black py-16 md:mt-12 md:py-32"
         style={{
           clipPath:
             "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
@@ -71,7 +83,7 @@ export default function AspalProductPage() {
         <span className="block px-4 text-center font-noto text-3xl text-white-10 md:text-4xl lg:text-5xl">
           Laston Lapis Antara
         </span>
-        <p className="flex justify-start px-4 md:px-16 lg:px-96 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px]">
+        <p className="flex justify-start px-4 pt-4 text-center text-sm text-gray-500 md:px-16 md:pt-8 md:text-base lg:px-96 lg:text-[20px]">
           Lapisan ini terbuat dari campuran aspal dan agregat, dan memiliki
           peran penting dalam memberikan daya dukung tambahan, mencegah
           deformasi, serta melindungi lapisan di bawahnya
@@ -80,10 +92,10 @@ export default function AspalProductPage() {
       <div>
         <div className="flex w-full flex-col bg-black md:flex-row">
           <div className="order-2 flex w-full flex-col justify-center px-6 py-8 md:order-1 md:w-1/2 md:px-16">
-            <h2 className="mb-4 text-2xl md:text-3xl font-semibold text-white-10 md:text-4xl lg:text-5xl">
+            <h2 className="mb-4 text-2xl font-semibold text-white-10 md:text-3xl md:text-4xl lg:text-5xl">
               Laston Lapis Antara (AC-BC)
             </h2>
-            <p className="text-sm md:text-base text-gray-500 md:text-lg lg:text-[20px]">
+            <p className="text-sm text-gray-500 md:text-base md:text-lg lg:text-[20px]">
               Lapisan aspal antara untuk mendukung distribusi beban dan kekuatan
               struktur jalan
             </p>
@@ -91,8 +103,15 @@ export default function AspalProductPage() {
               <Button
                 text="PILIH LASTON INI"
                 height="40px"
-                textSize="base"
+                textSize="xl"
                 className="text-sm md:text-lg"
+                clipPath={{
+                  outer:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
               />
             </div>
           </div>
@@ -105,7 +124,7 @@ export default function AspalProductPage() {
             />
           </div>
         </div>
-        <div className="bg-white-20 clip-bottom-corners flex w-full flex-col md:flex-row">
+        <div className="clip-bottom-corners flex w-full flex-col bg-white-20 md:flex-row">
           <div className="relative order-1 h-[250px] w-full md:h-[500px] md:w-1/2">
             <Image
               src="/images/img-harga-bersaing.png"
@@ -115,10 +134,10 @@ export default function AspalProductPage() {
             />
           </div>
           <div className="order-2 flex w-full flex-col justify-center px-6 py-8 md:w-1/2 md:px-16">
-            <h2 className="mb-4 text-2xl md:text-3xl font-semibold text-black md:text-4xl lg:text-5xl">
+            <h2 className="mb-4 text-2xl font-semibold text-black md:text-3xl md:text-4xl lg:text-5xl">
               Laston Lapis Antara Modifikasi (AC-BC Mod)
             </h2>
-            <p className="text-sm md:text-base text-gray-500 md:text-lg lg:text-[20px]">
+            <p className="text-sm text-gray-500 md:text-base md:text-lg lg:text-[20px]">
               Lapisan aspal antara yang diperkuat dengan aditif polimer untuk
               aplikasi berat, memberikan ketahanan ekstra terhadap kelelahan dan
               deformasi
@@ -127,8 +146,15 @@ export default function AspalProductPage() {
               <Button
                 text="PILIH LASTON INI"
                 height="40px"
-                textSize="base"
+                textSize="xl"
                 className="text-sm md:text-lg"
+                clipPath={{
+                  outer:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
               />
             </div>
           </div>
@@ -159,16 +185,16 @@ export default function AspalProductPage() {
           }
         `}</style>
       </div>
-      <div className="pt-12 md:pt-24 px-4 md:px-8">
+      <div className="px-4 pt-12 md:px-8 md:pt-24">
         <span className="block text-center font-noto text-3xl text-black md:text-4xl lg:text-[64px]">
           Laston Lapis Pondasi
         </span>
-        <span className="font-titilium block px-4 md:px-16 lg:px-96 pt-6 md:pt-12 text-center text-base md:text-xl text-black text-gray-500">
+        <span className="font-titilium block px-4 pt-6 text-center text-base text-black text-gray-500 md:px-16 md:pt-12 md:text-xl lg:px-96">
           Lapisan yang memiliki peran yang sangat penting dalam mendistribusikan
           beban lalu lintas secara merata ke tanah dasar, sehingga mencegah
           terjadinya penurunan tanah yang tidak merata
         </span>
-        <div className="mt-8 md:mt-16 flex w-full flex-col md:flex-row flex-wrap justify-center items-center gap-8 px-4 md:px-6">
+        <div className="mt-8 flex w-full flex-col flex-wrap items-center justify-center gap-8 px-4 md:mt-16 md:flex-row md:px-6">
           <CardProduct
             imageSrc="/images/img-product-aspal.png"
             subtitle="Laston Lapis Pondasi"
@@ -191,7 +217,7 @@ export default function AspalProductPage() {
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-blue-primary"
       />
-     <div className="flex w-full flex-col items-center bg-white-10">
+      <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>
@@ -205,9 +231,15 @@ export default function AspalProductPage() {
       <div className="flex justify-center pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
+          height="48px"
+          textSize="xl"
           className="text-sm md:text-lg"
+          clipPath={{
+            outer:
+              "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+          }}
         />
       </div>
       <Footer />

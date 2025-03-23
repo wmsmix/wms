@@ -55,8 +55,15 @@ const ClippedSection: React.FC<ClippedSectionProps> = ({
               <Button
                 text={buttonText}
                 height="40px"
-                textSize="base"
+                textSize="xl"
                 className="text-sm md:text-lg"
+                clipPath={{
+                  outer:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
               />
             </div>
           </div>

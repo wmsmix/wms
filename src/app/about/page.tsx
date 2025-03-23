@@ -12,102 +12,92 @@ import ProductSection from "~/components/ProductSection";
 import FeatureCard from "~/components/FeatureCard";
 import ProcessStep from "~/components/ProcessStep";
 import Image from "next/image";
+import ProfileCard from "~/components/ProfileCard";
+import CertificateGallery from "~/components/CertificateGallery";
 
-export default function ProductsPage() {
+export default function AboutPage() {
   const [activeStep, setActiveStep] = useState<number>(1);
-  const processRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const processContainerRef = useRef<HTMLDivElement>(null);
 
-  // Data untuk 6 langkah proses
   const processSteps = [
     {
       number: 1,
       title: "Konsultasi & Perencanaan",
-      description: "Perencanaan awal untuk kebutuhan proyek dan penyusunan jadwal produksi",
-      image: "/images/process/konsultasi.jpg"
+      description:
+        "Perencanaan awal untuk kebutuhan proyek dan penyusunan jadwal produksi",
+      image: "/images/img-alur-produksi-1.png",
     },
     {
       number: 2,
       title: "Mix Design & Uji Bahan Baku",
-      description: "Pemilihan dan Pengujian Material di Laboratorium sesuai dengan kekuatan, daya tahan, dan standar proyek",
-      image: "/images/process/mix-design.jpg"
+      description:
+        "Pemilihan dan Pengujian Material di Laboratorium sesuai dengan kekuatan, daya tahan, dan standar proyek",
+      image: "/images/img-alur-produksi-2.png",
     },
     {
       number: 3,
       title: "Produksi",
-      description: "Pembuatan Hot-mix, Ready-mix, atau Pre-cast di pabrik menggunakan peralatan modern yang telah dikalibrasi",
-      image: "/images/process/produksi.jpg"
+      description:
+        "Pembuatan Hot-mix, Ready-mix, atau Pre-cast di pabrik menggunakan peralatan modern yang telah dikalibrasi",
+      image: "/images/img-alur-produksi-3.png",
     },
     {
       number: 4,
       title: "Quality Control",
-      description: "Pemeriksaan mutu pada setiap tahap produksi untuk memastikan kualitas terbaik",
-      image: "/images/process/quality-control.jpg"
+      description:
+        "Pemeriksaan mutu pada setiap tahap produksi untuk memastikan kualitas terbaik",
+      image: "/images/img-alur-produksi-4.png",
     },
     {
       number: 5,
       title: "Pengiriman",
-      description: "Distribusi material ke lokasi proyek dengan armada transportasi modern",
-      image: "/images/process/pengiriman.jpg"
+      description:
+        "Distribusi material ke lokasi proyek dengan armada transportasi modern",
+      image: "/images/img-alur-produksi-5.png",
     },
     {
       number: 6,
       title: "Implementasi",
-      description: "Penerapan material di lokasi proyek sesuai dengan standar dan spesifikasi yang ditetapkan",
-      image: "/images/process/implementasi.jpg"
-    }
+      description:
+        "Penerapan material di lokasi proyek sesuai dengan standar dan spesifikasi yang ditetapkan",
+      image: "/images/img-alur-produksi-6.png",
+    },
   ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.length > 0 && entries[0]) {
-          const entry = entries[0];
-          if (entry.isIntersecting) {
-            // Mulai dengan step 1 ketika section muncul di viewport
-            setActiveStep(1);
-          }
+    const handleScroll = () => {
+      if (!processContainerRef.current) return;
+
+      const container = processContainerRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const containerTop = containerRect.top;
+      const containerHeight = container.offsetHeight;
+      const viewportHeight = window.innerHeight;
+
+      if (containerTop < viewportHeight && containerTop + containerHeight > 0) {
+        const stepsTotal = processSteps.length;
+        const scrolledAmount = Math.abs(containerTop);
+        const totalScrollableAmount = containerHeight - viewportHeight;
+        const scrollProportion = scrolledAmount / totalScrollableAmount;
+
+        const activeStepIndex = Math.min(
+          stepsTotal - 1,
+          Math.floor(scrollProportion * stepsTotal),
+        );
+
+        const newActiveStep = activeStepIndex + 1;
+
+        if (newActiveStep !== activeStep) {
+          setActiveStep(newActiveStep);
         }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      } else if (containerTop >= viewportHeight) {
+        setActiveStep(1);
       }
     };
-  }, []);
 
-  // Fungsi untuk scroll otomatis ketika mobile
-  const scrollToStep = (stepIndex: number) => {
-    setActiveStep(stepIndex + 1);
-    
-    if (processRef.current) {
-      const stepElement = processRef.current.children[stepIndex] as HTMLElement;
-      if (stepElement) {
-        stepElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
-  // Efek untuk menangani scrolling (hanya berjalan di client-side)
-  useEffect(() => {
-    if (activeStep > 0 && processRef.current) {
-      const isMobile = window.innerWidth < 768;
-      if (isMobile) {
-        const stepIndex = activeStep - 1;
-        const stepElement = processRef.current.children[stepIndex] as HTMLElement;
-        if (stepElement) {
-          stepElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    }
-  }, [activeStep]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [activeStep, processSteps.length]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
@@ -117,7 +107,7 @@ export default function ProductsPage() {
         <div className="hero-container w-full overflow-hidden">
           <Hero
             backgroundImage="/images/img-about.png"
-            headline="20 Tahun membangun, Mengintegrasikan  keahlian, kepercayaan, dan inovasi"
+            headline="20 Tahun membangun, Mengintegrasikan keahlian, kepercayaan, dan inovasi"
             subheadline="Bertahun-tahun berkarya, mengukir Jejak Kualitas dalam Setiap Proyek. Dari proyek kecil hingga berskala besar, kami telah membuktikan komitmen kami terhadap kualitas dan kepuasan pelanggan."
             ctaText="BANGUN DENGAN WMS"
           />
@@ -162,104 +152,302 @@ export default function ProductsPage() {
         <style jsx>{`
           .hero-container {
             position: relative;
-            height: calc(700px * 0.95); /* 95% dari tinggi asli untuk mobile */
+            height: calc(700px * 0.95);
             overflow: hidden;
           }
 
           .hero-container :global(section) {
             position: absolute;
-            top: -5%; /* Geser ke atas sebesar 5% */
+            top: -5%;
             left: 0;
             width: 100%;
           }
 
           @media (min-width: 640px) {
             .hero-container {
-              height: calc(
-                964px * 0.95
-              ); /* 95% dari tinggi asli untuk desktop */
+              height: calc(964px * 0.95);
             }
           }
         `}</style>
       </section>
 
-      <section
-        ref={sectionRef}
-        className="relative overflow-hidden py-16 md:py-24 min-h-screen flex flex-col justify-center"
+      <div
+        className="py-24"
         style={{
           clipPath: "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
           background: "linear-gradient(135deg, #0a2570 0%, #162f87 100%)",
         }}
       >
-        <div className="container mx-auto px-4">
-          <h2 className="mb-14 font-noto text-3xl text-white-10 md:mb-20 md:text-5xl">
-            Alur Proses produksi
-          </h2>
+        <div className="min-h0screen p-10">
+          <div className="mx-auto max-w-6xl space-y-32">
+            <div className="flex space-x-10 items-start">
+              <section className="w-1/2 sticky top-10 ">
+                <span className="font-noto text-2xl">Intro</span>
+              </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
-            {/* Timeline Steps - Scrollable pada desktop */}
-            <div 
-              className="order-2 md:order-1 md:h-[500px] md:overflow-y-auto md:pr-6 process-steps-container"
-              ref={processRef}
-              style={{ scrollbarWidth: 'thin', scrollbarColor: '#ffffff30 transparent' }}
-            >
-              {processSteps.map((step, index) => (
-                <ProcessStep
-                  key={step.number}
-                  number={step.number}
-                  title={step.title}
-                  description={step.description}
-                  isActive={activeStep >= step.number}
-                  isLast={index === processSteps.length - 1}
-                  onClick={() => scrollToStep(index)}
-                />
-              ))}
-            </div>
-
-            {/* Gambar yang berubah sesuai dengan step aktif */}
-            <div className="order-1 md:order-2 mb-10 md:mb-0 flex justify-center items-center h-[300px] md:h-[500px] transition-all duration-500">
-              {processSteps.map((step, index) => (
-                <div 
-                  key={step.number}
-                  className={`absolute w-full h-full transition-opacity duration-500 ${activeStep === step.number ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <div className="relative w-full h-full rounded-lg overflow-hidden shadow-xl">
-                    <Image 
-                      src={step.image}
-                      alt={step.title}
-                      fill
-                      objectFit="cover"
-                      className="rounded-lg"
-                    />
-                  </div>
-                </div>
-              ))}
+              <div className="w-1/2 leading-snug space-y-5">
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <p>
+                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Background elements */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-0 right-0 h-64 w-full rotate-45 bg-white-10 opacity-5"></div>
-          <div className="absolute bottom-0 left-0 h-64 w-full -rotate-45 bg-white-10 opacity-5"></div>
+      <div className="relative z-10 w-full rounded-b-[40px] bg-black py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid items-start gap-12 lg:grid-cols-3">
+            <div className="text-white pt-12 lg:col-span-1">
+              <p className="mb-5 text-base font-normal leading-relaxed text-gray-300">
+                Berdiri di bawah naungan
+                <br />
+                PT Restu Mulya Cipta Mandiri,
+              </p>
+              <h2 className="font-noto text-3xl leading-tight md:text-4xl">
+                PT. WMS telah 20 tahun menyuguhkan produk dan layanan dengan
+                standar tertinggi
+              </h2>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:col-span-2">
+              <ProfileCard
+                title="VISI"
+                description="Mendorong pembangunan infrastruktur melalui produk aspal dan beton berkualitas tinggi yang inovatif serta proses yang ramah lingkungan"
+                imageSrc="/images/img-visi.png"
+                imageAlt="Visi WMS"
+                variant="primary"
+              />
+
+              <ProfileCard
+                title="MISI"
+                description={
+                  <ol className="text-white/60 list-decimal space-y-3 pl-5">
+                    <li>
+                      Menggunakan bahan baku pilihan untuk mendukung upaya
+                      mengurangi dampak lingkungan.
+                    </li>
+                    <li>
+                      Menerapkan teknologi modern untuk memastikan efisiensi
+                      produk dan mutu produk.
+                    </li>
+                    <li>
+                      Memberikan solusi material; konstruksi berdaya tahan
+                      tinggi yang sesuai dengan standar nasional.
+                    </li>
+                    <li>
+                      Menjalin kerjasama strategis dengan mitra proyek untuk
+                      menciptakan pembangunan infrastruktur yang kokoh dan
+                      tangguh
+                    </li>
+                  </ol>
+                }
+                imageSrc="/images/img-misi.png"
+                imageAlt="Misi WMS"
+                variant="secondary"
+              />
+            </div>
+          </div>
         </div>
-        
-        {/* Custom styling untuk scrollbar */}
-        <style jsx>{`
-          .process-steps-container::-webkit-scrollbar {
-            width: 4px;
-          }
-          
-          .process-steps-container::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          
-          .process-steps-container::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-          }
-        `}</style>
-      </section>
+      </div>
+
+      <div
+        className="relative mt-[-40px] w-full bg-orange-secondary px-4 py-12 md:py-16"
+        style={{
+          clipPath: "polygon(0 0, 100% 0, 100% 75%, 95% 100%, 4% 100%, 0 75%)",
+        }}
+      >
+        <div className="container mx-auto mb-[-40] flex items-center justify-center gap-6 md:flex-row md:justify-between md:gap-0 md:px-24">
+          <span className="px-4 text-center font-noto text-4xl text-white-10 md:text-left md:text-6xl">
+            Terjamin
+          </span>
+          <span className="px-4 text-center font-noto text-4xl text-white-10 md:text-left md:text-6xl">
+            Terpercaya
+          </span>
+          <span className="px-4 text-center font-noto text-4xl text-white-10 md:text-left md:text-6xl">
+            Tersertifikat
+          </span>
+        </div>
+      </div>
+
+      <div className="bg-white-10 py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
+            Sertifikat Tingkat Komponen Dalam Negeri
+          </h2>
+
+          <div>
+            <CertificateGallery title="Sertifikat Tingkat Komponen Dalam Negeri" />
+          </div>
+        </div>
+      </div>
+
+      <div className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
+            Surat Keterangan Kelaikan Operasi
+          </h2>
+
+          <div>
+            <CertificateGallery
+              title="Surat Keterangan Kelaikan Operasi"
+              certificates={[
+                {
+                  id: 1,
+                  title: "Surat Keterangan Kelaikan Operasi 1",
+                  image: "/images/img-certificate-SKO.png",
+                  fullImage: "/images/img-certificate-SKO.png",
+                },
+                {
+                  id: 2,
+                  title: "Surat Keterangan Kelaikan Operasi 2",
+                  image: "/images/img-certificate-SKO.png",
+                  fullImage: "/images/img-certificate-SKO.png",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white-10 py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
+            Sertifikat ISO
+          </h2>
+
+          <div>
+            <CertificateGallery
+              title="Sertifikat ISO"
+              certificates={[
+                {
+                  id: 1,
+                  title: "Sertifikat ISO 9001",
+                  image: "/images/img-certificate-ISO.png",
+                  fullImage: "/images/img-certificate-ISO.png",
+                },
+                {
+                  id: 2,
+                  title: "Sertifikat ISO 14001",
+                  image: "/images/img-certificate-ISO.png",
+                  fullImage: "/images/img-certificate-ISO.png",
+                },
+                {
+                  id: 3,
+                  title: "Sertifikat ISO 45001",
+                  image: "/images/img-certificate-ISO.png",
+                  fullImage: "/images/img-certificate-ISO.png",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      <ClippedSection
+        title="Tunggu Apa lagi?
+Jadilah bagian dari kisah sukses kami!"
+        description=""
+        buttonText="HUBUNGI WMS"
+        topBgColor="bg-white-10"
+        bottomBgColor="bg-white-10"
+        clipPathBgColor="bg-blue-primary"
+      />
+      <div className="flex w-full flex-col items-center bg-white-10">
+        <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
+          Lihat Insight Proyek
+        </span>
+
+        <NewsGrid
+          bgColor="bg-blue-primary"
+          textColor="text-black"
+          textBadgeColor="text-white-10"
+        />
+      </div>
+      <div className="flex justify-center pb-6 md:pb-12">
+        <Button
+          text="LIHAT SEMUA"
+          height="48px"
+          textSize="xl"
+          className="text-sm md:text-lg"
+          clipPath={{
+            outer:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"
+        />
+      </div>
 
       <Footer />
     </div>

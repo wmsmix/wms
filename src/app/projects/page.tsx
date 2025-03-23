@@ -161,6 +161,14 @@ export default function AspalProductPage() {
                 text="LIHAT LEBIH LENGKAP"
                 className="text-lg font-normal md:text-2xl"
                 onClick={() => navigateToProjectDetail("jalan-lingkar-tuban")}
+                clipPath={{
+                  outer:
+                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                }}
+                margin="1px"
+                textSize="xl"
               />
             </div>
           </div>
@@ -175,6 +183,14 @@ export default function AspalProductPage() {
           text="DISKUSI PROYEK BERSAMA"
           className="bg-blue-primary text-lg font-normal md:text-2xl"
           bgColor="#0C1F5A"
+          clipPath={{
+            outer:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"
+          textSize="xl"
         />
       </div>
       <div className="flex w-full flex-col items-center bg-white-10 pt-32">
@@ -191,9 +207,16 @@ export default function AspalProductPage() {
       <div className="flex justify-center pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
+          height="48px"
+          textSize="xl"
           className="text-sm md:text-lg"
+          clipPath={{
+            outer:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"  
         />
       </div>
       <Footer />

@@ -19,7 +19,6 @@ const ProductHero: React.FC<ProductHeroProps> = ({
 }) => {
   return (
     <section className="product-hero relative min-h-[500px] w-full overflow-hidden md:min-h-[600px]">
-      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
           src={imageSrc}
@@ -28,11 +27,9 @@ const ProductHero: React.FC<ProductHeroProps> = ({
           className="object-cover"
           priority
         />
-        {/* Overlay gradient untuk memastikan text tetap terbaca */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40" />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 pt-56 flex h-full flex-col items-center justify-center px-4 text-center">
         <h1 className="text-white mb-4 font-noto text-3xl md:mb-6 md:text-5xl lg:text-6xl">
           {title}
@@ -44,8 +41,15 @@ const ProductHero: React.FC<ProductHeroProps> = ({
           <Button
             text={buttonText}
             height="48px"
-            textSize="lg"
+            textSize="xl"
             onClick={onButtonClick}
+            clipPath={{
+              outer:
+                "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+              inner:
+                "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+            }}
+            margin="1px"
           />
         )}
       </div>

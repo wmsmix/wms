@@ -67,6 +67,13 @@ const ContactForm: React.FC = () => {
                 <Button
                   text="KIRIM KE WHATSAPP WMS"
                   className="text-sm sm:text-lg md:text-xl font-normal"
+                  clipPath={{
+                    outer:
+                      "polygon(2% 0%, 98% 0%, 100% 16%, 100% 84%, 98% 100%, 2% 100%, 0% 84%, 0% 16%)",
+                    inner:
+                      "polygon(2% 0%, 98% 0%, 100% 16%, 100% 84%, 98% 100%, 2% 100%, 0% 84%, 0% 16%)",
+                  }}
+                  margin="1px"
                 />
               </div>
             </form>

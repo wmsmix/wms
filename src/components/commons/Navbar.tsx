@@ -78,11 +78,14 @@ const Navbar = () => {
           <Link href="/projects" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             Projects
           </Link>
-          <Link href="/news" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
+          <Link href="/insights" className="cursor-pointer text-sm uppercase text-white-base hover:text-white-10 transition-colors py-2">
             Insights
           </Link>
           <Link href="/contact" className="py-2">
-            <Button text="CONTACT" height="40px" />
+            <Button text="CONTACT" height="40px" clipPath={{
+              outer: "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)",
+              inner: "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)"
+            }} margin="0.2px"/>
           </Link>
         </div>
       </div>

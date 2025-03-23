@@ -19,6 +19,15 @@ interface ButtonProps {
   className?: string;
   textSize?: string;
   href?: string;
+  clipPath?: {
+    outer?: string;
+    inner?: string;
+  };
+  minWidth?: string;
+  maxWidth?: string;
+  padding?: string;
+  margin?: string;
+  helper?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -33,6 +42,15 @@ const Button: React.FC<ButtonProps> = ({
   className = "",
   textSize,
   href,
+  clipPath = {
+    outer: "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)",
+    inner: "polygon(9% 1%, 91.8% 1%, 99% 14%, 99% 86%, 91.8% 99%, 9% 99%, 1% 86%, 1% 14%)"
+  },
+  minWidth,
+  maxWidth,
+  padding = "px-6",
+  margin,
+  helper,
 }) => {
   const baseClasses =
     "relative flex items-center justify-center gap-2 uppercase tracking-wide shadow-md transition duration-300 hover:opacity-80";
@@ -47,8 +65,9 @@ const Button: React.FC<ButtonProps> = ({
           position: "relative",
           color: textColor,
           height,
-          clipPath:
-            "polygon(8% 0%, 92% 0%, 100% 14%, 100% 86%, 92% 100%, 8% 100%, 0% 86%, 0% 14%)",
+          clipPath: clipPath.outer,
+          minWidth: minWidth ?? "auto",
+          maxWidth: maxWidth ?? "none",
         }}
       >
         <span
@@ -60,12 +79,14 @@ const Button: React.FC<ButtonProps> = ({
         ></span>
 
         <span
-          className="bg-white relative flex items-center justify-center gap-2 px-6 font-titillium"
+          className={`bg-white relative flex items-center justify-center gap-2 ${padding} font-titillium`}
           style={{
             backgroundColor: bgColor,
-            clipPath:
-              "polygon(9% 1%, 91.8% 1%, 99% 14%, 99% 86%, 91.8% 99%, 9% 99%, 1% 86%, 1% 14%)",
-            height: `calc(${height} - 0.5px)`,
+            clipPath: clipPath.inner,
+            height: `calc(${height} - 1px)`,
+            minWidth: minWidth ? `calc(${minWidth} - 2px)` : "auto",
+            maxWidth: maxWidth ? `calc(${maxWidth} - 2px)` : "none",
+            margin: margin,
           }}
         >
           {icon && (
@@ -75,7 +96,7 @@ const Button: React.FC<ButtonProps> = ({
             />
           )}
           {text ? (
-            <span className={`text-${textSize} text-white`}>{text}</span>
+            <span className={`text-${textSize} text-white whitespace-normal text-center`}>{text}</span>
           ) : null}
         </span>
       </button>
@@ -83,13 +104,11 @@ const Button: React.FC<ButtonProps> = ({
   );
 
   return href ? (
-    <Link href={href} >
+    <Link href={href}>
       {buttonContent}
     </Link>
   ) : (
-    <button onClick={onClick}>
-      {buttonContent}
-    </button>
+    buttonContent
   );
 };
 

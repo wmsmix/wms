@@ -72,6 +72,14 @@ export default function AspalProductPage() {
                   <Button
                     text="KIRIM KE WHATSAPP WMS"
                     className="text-sm font-normal sm:text-lg md:text-xl"
+                    clipPath={{
+                      outer:
+                        "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                      inner:
+                        "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                    }}
+                    margin="1px"
+                    textSize="xl"
                   />
                 </div>
               </form>

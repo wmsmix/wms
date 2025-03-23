@@ -3,6 +3,8 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { Titillium_Web, Noto_Serif } from "next/font/google";
 import { type Metadata } from "next";
+import { SmoothScrollProvider } from "~/contexts/SmoothScrollContext";
+
 
 export const metadata: Metadata = {
   title: "WMS - PT. Wahana Makmur Sentosa",
@@ -27,7 +29,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${titilliumWeb.variable} ${notoSerif.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
+      </body>
     </html>
   );
 }
