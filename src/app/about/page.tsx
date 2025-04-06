@@ -178,86 +178,112 @@ export default function AboutPage() {
           background: "linear-gradient(135deg, #0a2570 0%, #162f87 100%)",
         }}
       >
-        <div className="min-h0screen p-10">
-          <div className="mx-auto max-w-6xl space-y-32">
-            <div className="flex space-x-10 items-start">
-              <section className="w-1/2 sticky top-10 ">
-                <span className="font-noto text-2xl">Intro</span>
-              </section>
-
-              <div className="w-1/2 leading-snug space-y-5">
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <p>
-                  Lorem Ipsum sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="mb-12 text-center">
+            <span className="font-noto text-4xl md:text-5xl">Alur Proses produksi</span>
+          </div>
+          
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Process Steps Column */}
+            <div className="w-full md:w-1/2">
+              <div className="relative">
+                {/* Position the line exactly in the middle - only between the first and last dots */}
+                <div 
+                  style={{ 
+                    position: "absolute",
+                    left: "76px", 
+                    top: "27px", 
+                    height: "calc(100% - 54px)",
+                    width: "1px", 
+                    backgroundColor: "#ffffff", 
+                    opacity: 0.6,
+                    zIndex: 5 
+                  }}
+                ></div>
+                
+                {processSteps.map((step, index) => (
+                  <div 
+                    key={step.number}
+                    className={`flex relative mb-8 cursor-pointer transition-all duration-300`}
+                    onMouseEnter={() => setActiveStep(step.number)}
+                  >
+                    <div className="flex items-center">
+                      {/* Numbered button */}
+                      <div className="relative mr-14">
+                        <div 
+                          className={`relative flex items-center justify-center w-[42px] h-[42px]`}
+                          style={{ 
+                            zIndex: 10,
+                            opacity: activeStep === step.number ? 1 : 0.6
+                          }}
+                        >
+                          {/* Outer octagon border - using inline style for reliable color */}
+                          <div 
+                            className="absolute inset-0"
+                            style={{ 
+                              backgroundColor: "#ffffff",
+                              clipPath: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)" 
+                            }}
+                          ></div>
+                          
+                          {/* Inner octagon */}
+                          <div 
+                            className={`absolute inset-[1px] flex items-center justify-center`}
+                            style={{ 
+                              backgroundColor: step.number === 1 ? '#F36A2B' : '#A75A42',
+                              clipPath: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)"
+                            }}
+                          >
+                            <span className="font-titillium text-2xl font-bold" style={{ color: "#ffffff" }}>{step.number}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Set white dot to exactly match the line position - always full opacity */}
+                        <div 
+                          className="absolute top-1/2 -translate-y-1/2 transform rounded-full" 
+                          style={{ 
+                            backgroundColor: "#ffffff", 
+                            width: "6px", 
+                            height: "6px",
+                            zIndex: 20,
+                            border: "1px solid rgba(10, 37, 112, 0.3)",
+                            right: "-37px"
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+                    
+                    {/* Content with controlled opacity */}
+                    <div 
+                      className="flex-1 pt-1.5 pl-5"
+                      style={{ opacity: activeStep === step.number ? 1 : 0.6 }}
+                    >
+                      <h3 className="mb-1 text-lg font-semibold font-titillium text-white-10">{step.title}</h3>
+                      <p className="text-sm font-titillium text-gray-300">{step.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Image Column */}
+            <div className="w-full md:w-1/2 flex items-center justify-center">
+              <div className="relative w-full h-[480px] bg-gray-800 rounded overflow-hidden">
+                {processSteps.map((step) => (
+                  <div 
+                    key={step.number}
+                    className={`absolute inset-0 transition-opacity duration-500 ${
+                      activeStep === step.number ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <Image 
+                      src={step.image || "/images/img-alur-produksi-1.png"} 
+                      alt={step.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
