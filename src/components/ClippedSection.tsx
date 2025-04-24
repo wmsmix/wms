@@ -70,32 +70,43 @@ const ClippedSection: React.FC<ClippedSectionProps> = ({
         </div>
       </div>
 
+      <svg style={{visibility: "hidden", position: "absolute"}} width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+        <filter id="round">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />    
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+        </filter>
+    </defs>
+</svg>
+
       <style jsx>{`
         .container-clip {
           clip-path: polygon(
-            6% 0%,
-            94% 0%,
-            100% 12%,
-            100% 88%,
-            94% 100%,
-            6% 100%,
-            0% 88%,
-            0% 12%
+            3.4% 0%,
+            96.6% 0%,
+            100% 19%,
+            100% 81%,
+            96.6% 100%,
+            3.4% 100%,
+            0% 81%,
+            0% 19%
           );
           min-height: 400px;
+          filter: url(#round);
         }
 
         @media (max-width: 768px) {
           .container-clip {
             clip-path: polygon(
-              8% 0%,
-              92% 0%,
-              100% 8%,
-              100% 92%,
-              92% 100%,
-              8% 100%,
-              0% 92%,
-              0% 8%
+              10% 0%,
+              90% 0%,
+              100% 20%,
+              100% 80%,
+              90% 100%,
+              10% 100%,
+              0% 80%,
+              0% 20%
             );
             min-height: 200px;
           }
