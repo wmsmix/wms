@@ -1,0 +1,953 @@
+{
+  "box-culvert": {
+    "title": "Box Culvert",
+    "images": [
+      "/images/img-box-culvert-01.png",
+      "/images/img-box-culvert-02.png"
+    ],
+    "features": [
+      {
+        "icon": "/svgs/icon-fungsi.svg",
+        "title": "Fungsi",
+        "description": "Produk beton pracetak berbentuk kotak yang digunakan untuk saluran drainase besar"
+      },
+      {
+        "icon": "/svgs/icon-lokasi.svg",
+        "title": "Lokasi",
+        "description": "Drainase jalan raya, saluran irigasi besar, gorong-gorong atau jembatan kecil"
+      },
+      {
+        "icon": "/svgs/icon-dayatahan.svg",
+        "title": "Daya Tahan Tinggi",
+        "description": "Dengan daya tahan tinggi, aliran air pasti lancar, disertai pemasangan yang cepat"
+      }
+    ],
+    "specifications": [
+      {
+        "title": "Spesifikasi Teknis",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "S",
+            "key": "s",
+            "unit": "mm"
+          },
+          {
+            "header": "H",
+            "key": "h",
+            "unit": "mm"
+          },
+          {
+            "header": "T",
+            "key": "t",
+            "unit": "mm"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "BC 600",
+            "s": 600,
+            "h": 600,
+            "t": 100,
+            "w": 800,
+            "l": 1200
+          },
+          {
+            "type": "BC 600",
+            "s": 600,
+            "h": 600,
+            "t": 100,
+            "w": 800,
+            "l": 1200
+          },
+          {
+            "type": "BC 600",
+            "s": 600,
+            "h": 600,
+            "t": 100,
+            "w": 800,
+            "l": 1200
+          },
+          {
+            "type": "BC 600",
+            "s": 600,
+            "h": 600,
+            "t": 100,
+            "w": 800,
+            "l": 1200
+          },
+          {
+            "type": "BC 600",
+            "s": 600,
+            "h": 600,
+            "t": 100,
+            "w": 800,
+            "l": 1200
+          },
+          {
+            "type": "BC 600",
+            "s": 600,
+            "h": 600,
+            "t": 100,
+            "w": 800,
+            "l": 1200
+          }
+        ]
+      }
+    ],
+    "runningText": "Mutu beton karakteristik minimum 350 kg/cm² • Mutu baja tulangan U-24, U-40, dan U-50 (JIS A5305, JIS 5345) • Tersedia custom made by order untuk kebutuhan dimensi selain di atas • Mutu beton karakteristik minimum 350 kg/cm²",
+    "schematicImage": "/images/box-culvert-schematic.png"
+  },
+  "double-u-box": {
+    "title": "Double U-Box",
+    "images": [
+      "/images/img-double-u-box-01.png",
+      "/images/img-double-u-box-02.png"
+    ],
+    "features": [
+      {
+        "icon": "/svgs/icon-fungsi.svg",
+        "title": "Fungsi",
+        "description": "Saluran air dengan kapasitas besar, seperti irigasi dan drainase perkotaan."
+      },
+      {
+        "icon": "/svgs/icon-lokasi.svg",
+        "title": "Lokasi",
+        "description": "Diaplikasikan dalam sistem drainase perkotaan, dan irigasi kawasan industri"
+      },
+      {
+        "icon": "/svgs/icon-dayatahan.svg",
+        "title": "Pemasangan Fleksibel",
+        "description": "Bentuk gandanya memungkinkan pengaliran air lebih optimal dan pemasangan lebih fleksibel"
+      }
+    ],
+    "specifications": [
+      {
+        "title": "Spesifikasi Teknis",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "H",
+            "key": "h",
+            "unit": "mm"
+          },
+          {
+            "header": "H1",
+            "key": "h1",
+            "unit": "mm"
+          },
+          {
+            "header": "t1a",
+            "key": "t1a",
+            "unit": "mm"
+          },
+          {
+            "header": "t1b",
+            "key": "t1b",
+            "unit": "mm"
+          },
+          {
+            "header": "t2",
+            "key": "t2",
+            "unit": "mm"
+          },
+          {
+            "header": "t3",
+            "key": "t3",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          },
+          {
+            "type": "120,120",
+            "w": 1200,
+            "h": 1200,
+            "h1": 600,
+            "t1a": 150,
+            "t1b": 165,
+            "t2": 150,
+            "t3": 150,
+            "l": 1200
+          }
+        ]
+      }
+    ],
+    "runningText": "Mutu beton karakteristik minimum 350 kg/cm² dan 400 kg/cm² • Mutu baja tulangan U-24, U-40, dan U-50 (JIS A5305, JIS 5345) • Tersedia custom made by order untuk kebutuhan dimensi selain di atas",
+    "schematicImage": "/images/double-u-box-schematic.png"
+  },
+  "u-ditch": {
+    "title": "U-Ditch",
+    "images": [
+      "/images/img-u-ditch-01.png"
+    ],
+    "features": [
+      {
+        "icon": "/svgs/icon-fungsi.svg",
+        "title": "Fungsi",
+        "description": "Mengelola aliran air di saluran terbuka."
+      },
+      {
+        "icon": "/svgs/icon-lokasi.svg",
+        "title": "Lokasi",
+        "description": "Kawasan perumahan, komersial, dan jalan."
+      },
+      {
+        "icon": "/svgs/icon-dayatahan.svg",
+        "title": "Keamanan Ekstra",
+        "description": "Tersedia dengan opsi penutup untuk mencegah kecelakaan"
+      }
+    ],
+    "specifications": [
+      {
+        "title": "Spesifikasi Teknis",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "H",
+            "key": "h",
+            "unit": "mm"
+          },
+          {
+            "header": "t1a",
+            "key": "t1a",
+            "unit": "mm"
+          },
+          {
+            "header": "t1b",
+            "key": "t1b",
+            "unit": "mm"
+          },
+          {
+            "header": "t2",
+            "key": "t2",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          },
+          {
+            "type": "U 30 X 20 X 120",
+            "w": 300,
+            "h": 200,
+            "t1a": 50,
+            "t1b": 55,
+            "t2": 50,
+            "l": 1200
+          }
+        ]
+      }
+    ],
+    "runningText": "Mutu beton karakteristik minimum 350 kg/cm² • Mutu baja tulangan U-24, U-40, dan U-50 (JIS A5305, JIS 5345) • Tersedia custom made by order untuk kebutuhan dimensi selain di atas",
+    "schematicImage": "/images/u-ditch-schematic.png",
+    "schematicNotes": {
+      "hole": {
+        "label": "Hole",
+        "size": "40 mm"
+      }
+    }
+  },
+  "u-ditch-cover": {
+    "title": "U-Ditch Cover",
+    "images": [
+      "/images/img-u-ditch-cover-hero.png"
+    ],
+    "features": [
+      {
+        "icon": "/svgs/icon-fungsi.svg",
+        "title": "Fungsi",
+        "description": "Menutupi U-ditch agar meningkatkan keamanan, mencegah penyumbatan saluran air"
+      },
+      {
+        "icon": "/svgs/icon-lokasi.svg",
+        "title": "Lokasi",
+        "description": "Kawasan perumahan, komersial, dan jalan"
+      },
+      {
+        "icon": "/svgs/icon-dayatahan.svg",
+        "title": "Perawatan Mudah",
+        "description": "Bisa dibongkar, memudahkan pembersihan saluran drainase"
+      }
+    ],
+    "variants": {
+      "title": "Tipe-Tipe U-Ditch Cover",
+      "types": [
+        {
+          "image": "/images/img-u-ditch-cover-01.png",
+          "label": "Tipe A"
+        },
+        {
+          "image": "/images/img-u-ditch-cover-02.png",
+          "label": "Tipe B"
+        },
+        {
+          "image": "/images/img-u-ditch-cover-03.png",
+          "label": "Tipe C"
+        },
+        {
+          "image": "/images/img-u-ditch-cover-04.png",
+          "label": "Tipe D"
+        }
+      ]
+    },
+    "specifications": [
+      {
+        "title": "Spesifikasi Cover Light Duty (P 2,5 T)",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "T",
+            "key": "t",
+            "unit": "mm"
+          },
+          {
+            "header": "Ta",
+            "key": "ta",
+            "unit": "mm"
+          },
+          {
+            "header": "s1",
+            "key": "s1",
+            "unit": "mm"
+          },
+          {
+            "header": "s2",
+            "key": "s2",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "CU 30",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 40",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 50",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 60",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 70",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 80",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 90",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 100",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 120",
+            "w": 600,
+            "t": 100,
+            "ta": 80,
+            "s1": 100,
+            "s2": 100,
+            "l": 1200
+          }
+        ]
+      },
+      {
+        "title": "Spesifikasi Cover Light Duty (P 5 T)",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "T",
+            "key": "t",
+            "unit": "mm"
+          },
+          {
+            "header": "Ta",
+            "key": "ta",
+            "unit": "mm"
+          },
+          {
+            "header": "s1",
+            "key": "s1",
+            "unit": "mm"
+          },
+          {
+            "header": "s2",
+            "key": "s2",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "CU 30",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 40",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 50",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 60",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 70",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 80",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 90",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 100",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 120",
+            "w": 600,
+            "t": 100,
+            "ta": 80,
+            "s1": 100,
+            "s2": 100,
+            "l": 1200
+          }
+        ]
+      },
+      {
+        "title": "Spesifikasi Cover Light Duty (P 10 T)",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "T",
+            "key": "t",
+            "unit": "mm"
+          },
+          {
+            "header": "Ta",
+            "key": "ta",
+            "unit": "mm"
+          },
+          {
+            "header": "s1",
+            "key": "s1",
+            "unit": "mm"
+          },
+          {
+            "header": "s2",
+            "key": "s2",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "CU 30",
+            "w": 500,
+            "t": 120,
+            "ta": 105,
+            "s1": 110,
+            "s2": 115,
+            "l": 600
+          },
+          {
+            "type": "CU 40",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 50",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 60",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 70",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 80",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 90",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 100",
+            "w": 400,
+            "t": 80,
+            "ta": 65,
+            "s1": 50,
+            "s2": 65,
+            "l": 600
+          },
+          {
+            "type": "CU 120",
+            "w": 600,
+            "t": 100,
+            "ta": 80,
+            "s1": 100,
+            "s2": 100,
+            "l": 1200
+          }
+        ]
+      }
+    ],
+    "runningText": "Mutu beton karakteristik minimum 350 kg/cm² • Mutu baja tulangan U-24, U-40, dan U-50 (JIS A5305, JIS 5345) • Tersedia custom made by order untuk kebutuhan dimensi selain di atas",
+    "schematicImage": "/images/u-ditch-cover-schematic.png"
+  },
+  "kansteen": {
+    "title": "Kansteen",
+    "description": "Kanstin adalah beton precast yang digunakan sebagai pembatas jalan, taman, atau trotoar. Tersedia juga kanstin dengan pemesanan khusus, sesuaikan bentuk dan ukuran kanstin dengan kebutuhan spesifik proyek Anda.",
+    "images": [
+      "/images/img-kansteen.png"
+    ],
+    "features": [
+      {
+        "icon": "/svgs/icon-fungsi.svg",
+        "title": "Fungsi",
+        "description": "Pembatas jalan, taman, mengarahkan aliran air, menahan paving blok agar tidak bergeser"
+      },
+      {
+        "icon": "/svgs/icon-lokasi.svg",
+        "title": "Lokasi",
+        "description": "Trotoar, taman, perumahan, area parkir, areajalan paving"
+      },
+      {
+        "icon": "/svgs/icon-dayatahan.svg",
+        "title": "Multifungsi",
+        "description": "Satu bentuk dengan fungsi beragam dan bisa diletakkan di area manapun"
+      }
+    ],
+    "specifications": [
+      {
+        "title": "Spesifikasi Teknis",
+        "columns": [
+          {
+            "header": "Type",
+            "key": "type"
+          },
+          {
+            "header": "W",
+            "key": "w",
+            "unit": "mm"
+          },
+          {
+            "header": "H",
+            "key": "h",
+            "unit": "mm"
+          },
+          {
+            "header": "L",
+            "key": "l",
+            "unit": "mm"
+          }
+        ],
+        "rows": [
+          {
+            "type": "Kansteen Type A",
+            "w": 150,
+            "h": 300,
+            "l": 600
+          },
+          {
+            "type": "Kansteen Type B",
+            "w": 150,
+            "h": 300,
+            "l": 600
+          },
+          {
+            "type": "Kansteen Type C",
+            "w": 150,
+            "h": 300,
+            "l": 600
+          }
+        ]
+      }
+    ],
+    "runningText": "Mutu beton karakteristik minimum 350 kg/cm² • Mutu baja tulangan U-24, U-40, dan U-50 (JIS A5305, JIS 5345) • Tersedia custom made by order untuk kebutuhan dimensi selain di atas",
+    "schematicImage": "/images/kansteen-schematic.png"
+  }
+}

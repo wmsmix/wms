@@ -17,6 +17,20 @@ const ProductHero: React.FC<ProductHeroProps> = ({
   buttonText = "PELAJARI LEBIH LANJUT",
   onButtonClick,
 }) => {
+  // Fungsi untuk mengubah kata bahasa Inggris menjadi italic
+  const italicizeEnglishWords = (text: string) => {
+    // Daftar kata bahasa Inggris yang umum dalam konteks konstruksi
+    const englishWords = ['ready-mix', 'hot-mix', 'precast', 'concrete', 'ready mix', 'hot mix'];
+    
+    let formattedText = text;
+    englishWords.forEach(word => {
+      const regex = new RegExp(`(${word})`, 'gi');
+      formattedText = formattedText.replace(regex, '<i>$1</i>');
+    });
+    
+    return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
+  };
+
   return (
     <section className="product-hero relative min-h-[500px] w-full overflow-hidden md:min-h-[600px]">
       <div className="absolute inset-0 z-0">
@@ -27,21 +41,21 @@ const ProductHero: React.FC<ProductHeroProps> = ({
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b " />
       </div>
 
       <div className="relative z-10 pt-56 flex h-full flex-col items-center justify-center px-4 text-center">
         <h1 className="text-white mb-4 font-noto text-3xl md:mb-6 md:text-5xl lg:text-6xl">
-          {title}
+          {italicizeEnglishWords(title)}
         </h1>
         <p className="text-white-base opacity-75 mb-8 max-w-3xl text-base md:mb-10 md:text-xl">
-          {description}
+          {italicizeEnglishWords(description)}
         </p>
         {buttonText && (
           <Button
             text={buttonText}
             height="48px"
-            textSize="xl"
+            textSize="2xl"
             onClick={onButtonClick}
             clipPath={{
               outer:

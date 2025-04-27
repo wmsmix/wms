@@ -25,16 +25,22 @@ export default function ProductsPage() {
         <div className="hero-container w-full overflow-hidden">
           <Hero
             backgroundImage="/images/product-background.png"
+            mobileBackgroundImage="/images/product-background-mobile.png"
             headline="Dari Pasokan hingga Pemeliharaan, Kami Ada untuk Anda"
             subheadline="Mulai dari pengadaan material berkualitas seperti aspal dan beton hingga pelaksanaan proyek konstruksi secara profesional, kami siap menjadi mitra terpercaya Anda."
             ctaText="KONSULTASI SEKARANG"
+            ctaHref="/contact"
           />
         </div>
         <div
-          className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16"
+          className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16 text-gray-base"
           style={{
-            clipPath:
-              "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
+            clipPath: `polygon(${
+              // Untuk mobile, gunakan sudut yang lebih kecil
+              window.innerWidth < 768
+                ? "6% 0%, 94% 0%, 100% 12%, 100% 100%, 94% 100%, 6% 100%, 0% 100%, 0% 12%"
+                : "4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%"
+            })`,
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
             width: "100vw",
@@ -56,6 +62,7 @@ export default function ProductsPage() {
               height="40px"
               textSize="xl"
               className="text-sm md:text-2xl"
+              href="/contact"
               clipPath={{
                 outer:
                   "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -91,7 +98,8 @@ export default function ProductsPage() {
       </section>
       <section className="bg-blue-primary">
         <ProductSection
-          title="Aspal (Hot-Mix)"
+          title="Aspal"
+          italicText="(Hot-Mix)"
           description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktrur"
           imageSrc="/images/img-product-aspal.png"
           imageAlt="Aspal Hot-Mix"
@@ -100,7 +108,8 @@ export default function ProductsPage() {
         />
 
         <ProductSection
-          title="Beton (Ready-Mix)"
+          title="Beton"
+          italicText="(Ready-Mix)"
           description="Memiliki tipe dengan kekuatan tekan 10 MPa hingga 30 MPa, dimana tiap tipe dirancang untuk kebutuhan konstruksi ringan hingga proyek infrastruktur berat."
           imageSrc="/images/img-product-beton.png"
           imageAlt="Beton Ready-Mix"
@@ -109,7 +118,8 @@ export default function ProductsPage() {
         />
 
         <ProductSection
-          title="Precast Concrete"
+          title=""
+          italicText="Precast Concrete"
           description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
           imageSrc="/images/img-product-precast.png"
           imageAlt="Precast Concrete"
@@ -130,36 +140,39 @@ export default function ProductsPage() {
           }}
         >
           <span className="text-white-base block px-4 text-center font-noto text-3xl md:text-4xl lg:text-5xl">
-            Servis Satu Atap
+            Layanan Satu Atap
           </span>
           <p className="text-white-base px-4 pt-4 text-center text-sm md:pt-8 md:text-base lg:text-[20px]">
             Dari Konsep hingga Realisasi,
             <br className="hidden md:block" />
             Kami membantu dari perencanaan hingga pelaksanaan
           </p>
-          <div className="grid grid-cols-1 px-4 py-8 md:grid-cols-2 md:px-8 md:py-16 lg:md:grid-cols-4 lg:px-48">
+          <div className="grid grid-cols-1 px-4 py-8 md:grid-cols-2 md:px-8 md:py-16 lg:md:grid-cols-4 lg:px-24">
             <ServiceCard
-              imageSrc="/images/img-product-aspal.png"
+              imageSrc="/images/img-jasa-gelar-aspal.png"
               title="JASA GELAR ASPAL"
               description="Jasa pengaspalan hot-mix dengan tim profesional dan peralatan modern."
+              italicWords={["hot-mix"]}
               imagePosition="top"
             />
             <ServiceCard
-              imageSrc="/images/img-product-beton.png"
+              imageSrc="/images/img-pengecoran-beton.png"
               title="PENGECORAN BETON"
               description="Layanan pengecoran beton langsung di lokasi proyek menggunakan campuran beton berkualitas tinggi."
               imagePosition="bottom"
             />
             <ServiceCard
-              imageSrc="/images/img-product-precast.png"
-              title="SOLUSI KHUSUS"
-              description="Semua kebutuhan dan solusi masalah infrastruktur Proyek Anda."
+              imageSrc="/images/img-support-letter.png"
+              title="SUPPORT LETTER"
+              italicTitle={true}
+              description="Surat dukungan resmi untuk memenuhi persyaratan tender dan memastikan kelancaran pengadaan material konstruksi."
+              italicWords={["tender"]}
               imagePosition="top"
             />
             <ServiceCard
-              imageSrc="/images/img-product-aspal.png"
-              title="SUPPORT LETTER"
-              description="Surat dukungan resmi untuk memenuhi persyaratan tender dan memastikan kelancaran pengadaan material konstruksi."
+              imageSrc="/images/img-solusi-khusus.png"
+              title="SOLUSI KHUSUS"
+              description="Semua kebutuhan dan solusi masalah infrastruktur Proyek Anda."
               imagePosition="bottom"
             />
           </div>
@@ -172,6 +185,7 @@ export default function ProductsPage() {
         topBgColor="bg-blue-primary"
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-black"
+        buttonHref="/contact"
       />
       <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
@@ -188,8 +202,9 @@ export default function ProductsPage() {
         <Button
           text="LIHAT SEMUA"
           height="48px"
-          textSize="xl"
+          textSize="2xl"
           className="text-sm md:text-lg"
+          href="/insights"
         />
       </div>
       <Footer />

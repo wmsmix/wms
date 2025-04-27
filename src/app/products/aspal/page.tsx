@@ -23,9 +23,12 @@ export default function AspalProductPage() {
 
       <ProductHero
         title="Aspal (Hot-Mix)"
-        description="Campuran material agregat (batu-batuan) dengan aspal dalam keadaan panas. Campuran ini kemudian dipadatkan menjadi lapisan jalan yang kuat dan tahan lama."
+        description="Campuran material agregat dengan aspal dalam keadaan panas. Campuran ini kemudian dipadatkan menjadi lapisan jalan yang kuat dan tahan lama."
         imageSrc="/images/img-aspal.png"
         buttonText="TANYA LEBIH LANJUT"
+        onButtonClick={() => {
+          window.location.href = "/contact";
+        }}
       />
 
       <div className="px-4 pt-12 md:px-8 md:pt-24">
@@ -39,7 +42,7 @@ export default function AspalProductPage() {
         </span>
         <div className="mt-8 flex w-full flex-col flex-wrap items-center justify-center gap-8 px-4 md:mt-16 md:flex-row md:px-6">
           <CardProduct
-            imageSrc="/images/img-product-aspal.png"
+            imageSrc="/images/img-laston-ac.png"
             subtitle="Laston Lapis Permukaan"
             title="(AC-WC)"
             description="Lapisan aspal permukaan yang cocok untuk jalan raya dengan lalu lintas tinggi, jalan tol, dan jalan perkotaan. Permukaan mulus untuk kenyamanan berkendara."
@@ -47,9 +50,10 @@ export default function AspalProductPage() {
             borderWidth="0.5px"
             backgroundColor="white"
             height="560px"
+            whatsappOnClick={true}
           />
           <CardProduct
-            imageSrc="/images/img-product-beton.png"
+            imageSrc="/images/img-laston-hrs.png"
             title="(HRS-AC)"
             subtitle="Laston Lapis Permukaan"
             description="Lapisan aspal permukaan yang menjadi pilihan utama untuk wilayah tropis dan proyek dengan kebutuhan performa permukaan yang lebih halus dan mulus."
@@ -57,9 +61,10 @@ export default function AspalProductPage() {
             borderWidth="0.5px"
             backgroundColor="white"
             height="560px"
+            whatsappOnClick={true}
           />
           <CardProduct
-            imageSrc="/images/img-product-precast.png"
+            imageSrc="/images/img-laston-ac-wc.png"
             title="(AC-WC MOD)"
             subtitle="Laston Lapis Permukaan"
             description="Lapisan aspal permukaan yang dimodifikasi dengan aditif polimer untuk meningkatkan elastisitas dan ketahanan deformasi. Ideal untuk jalan dengan beban berat dan iklim ekstrem."
@@ -67,6 +72,7 @@ export default function AspalProductPage() {
             borderWidth="0.5px"
             backgroundColor="white"
             height="560px"
+            whatsappOnClick={true}
           />
         </div>
       </div>
@@ -74,16 +80,16 @@ export default function AspalProductPage() {
         className="mt-8 flex w-screen max-w-full flex-col items-center bg-black py-16 md:mt-12 md:py-32"
         style={{
           clipPath:
-            "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
+            "polygon(4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%)",
           marginLeft: "calc(-50vw + 50%)",
           marginRight: "calc(-50vw + 50%)",
           width: "100vw",
         }}
       >
-        <span className="block px-4 text-center font-noto text-3xl text-white-10 md:text-4xl lg:text-5xl">
+        <span className="block px-4 text-center font-noto text-4xl text-white-10  lg:text-4xl">
           Laston Lapis Antara
         </span>
-        <p className="flex justify-start px-4 pt-4 text-center text-sm text-gray-500 md:px-16 md:pt-8 md:text-base lg:px-96 lg:text-[20px]">
+        <p className="flex justify-start px-4 pt-4 text-center text-2xl text-gray-500 md:px-16 md:pt-8 md:text-base lg:px-96 lg:text-2xl leading-loose">
           Lapisan ini terbuat dari campuran aspal dan agregat, dan memiliki
           peran penting dalam memberikan daya dukung tambahan, mencegah
           deformasi, serta melindungi lapisan di bawahnya
@@ -103,7 +109,7 @@ export default function AspalProductPage() {
               <Button
                 text="PILIH LASTON INI"
                 height="40px"
-                textSize="xl"
+                textSize="2xl"
                 className="text-sm md:text-lg"
                 clipPath={{
                   outer:
@@ -117,7 +123,7 @@ export default function AspalProductPage() {
           </div>
           <div className="relative order-1 h-[250px] w-full md:order-2 md:h-[500px] md:w-1/2">
             <Image
-              src="/images/img-sertifikasi.png"
+              src="/images/img-laston-lapis-antara.png"
               alt="Sertifikasi"
               fill
               className="object-cover"
@@ -127,7 +133,7 @@ export default function AspalProductPage() {
         <div className="clip-bottom-corners flex w-full flex-col bg-white-20 md:flex-row">
           <div className="relative order-1 h-[250px] w-full md:h-[500px] md:w-1/2">
             <Image
-              src="/images/img-harga-bersaing.png"
+              src="/images/img-laston-lapis-antara-modifikasi.png"
               alt="Harga Bersaing"
               fill
               className="object-cover"
@@ -146,7 +152,7 @@ export default function AspalProductPage() {
               <Button
                 text="PILIH LASTON INI"
                 height="40px"
-                textSize="xl"
+                textSize="2xl"
                 className="text-sm md:text-lg"
                 clipPath={{
                   outer:
@@ -196,16 +202,26 @@ export default function AspalProductPage() {
         </span>
         <div className="mt-8 flex w-full flex-col flex-wrap items-center justify-center gap-8 px-4 md:mt-16 md:flex-row md:px-6">
           <CardProduct
-            imageSrc="/images/img-product-aspal.png"
+            imageSrc="/images/img-laston-ac-base.png"
             subtitle="Laston Lapis Pondasi"
             title="(AC-BASE)"
             description="Lapisan Aspal Pondasi dengan gradasi agregat yang presisi dan kandungan bitumen optimal, memastikan daya tahan jangka panjang."
+            backgroundColor="white"
+            borderColor="#CCCCCC"
+            borderWidth="0.5px"
+            height="560px"
+            whatsappOnClick={true}
           />
           <CardProduct
-            imageSrc="/images/img-product-beton.png"
+            imageSrc="/images/img-laston-ac-base-mod.png"
             title="(AC-BASE MOD)"
             subtitle="Laston Lapis Pondasi Modifikasi"
             description="Lapisan Aspal Pondasi pilihan terbaik untuk proyek infrastruktur yang membutuhkan kekuatan pondasi luar biasa kuat"
+            backgroundColor="white"
+            borderColor="#CCCCCC"
+            borderWidth="0.5px"
+            height="560px"
+            whatsappOnClick={true}
           />
         </div>
       </div>

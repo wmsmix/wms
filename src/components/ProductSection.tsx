@@ -4,6 +4,7 @@ import Button from "~/components/commons/Button";
 
 interface ProductSectionProps {
   title: string;
+  italicText?: string;
   description: string;
   imageSrc: string;
   imageAlt: string;
@@ -15,15 +16,16 @@ interface ProductSectionProps {
 
 const ProductSection: React.FC<ProductSectionProps> = ({
   title,
+  italicText,
   description,
   imageSrc,
   imageAlt,
   imagePosition = "left",
   isLastItem = false,
-  buttonText = "LIHAT DETAIL",
+  buttonText = "PELAJARI PRODUK",
   buttonHref,
 }) => {
-  const containerClasses = `flex w-full -translate-y-[1%] flex-col bg-white-10 md:flex-row ${
+  const containerClasses = `flex w-full -translate-y-[1%] flex-col bg-white-10 md:flex-row -mt-1 ${
     isLastItem ? "clip-bottom-corners" : ""
   }`;
 
@@ -31,7 +33,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     <div className={containerClasses}>
       {/* Image Section */}
       <div
-        className={`relative order-1 h-[250px] w-full md:h-[500px] md:w-1/3 ${
+        className={`relative order-1 h-96 w-full md:h-96 md:w-[597px] ${
           imagePosition === "right" ? "md:order-2" : ""
         }`}
       >
@@ -44,13 +46,13 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           imagePosition === "right" ? "md:order-1" : ""
         }`}
       >
-        <h2 className="mb-2 ps-4 text-2xl font-semibold text-black md:mb-4 md:ps-24 md:text-3xl lg:text-5xl">
-          {title}
+        <h2 className="mb-2 ps-4 text-3xl font-semibold text-black md:mb-4 md:ps-24 lg:text-5xl font-noto font-thin pt-8 md:pt-0">
+          {title} {italicText && <span className="italic">{italicText}</span>}
         </h2>
-        <p className="pe-4 ps-4 pt-2 text-sm text-gray-500 md:pe-96 md:ps-24 md:pt-4 md:text-base lg:text-[20px]">
+        <p className="pe-4 ps-4 pt-2 md:pb-0 text-base text-gray-light md:pe-48 md:ps-24 md:pt-4 lg:text-xl leading-loose">
           {description}
         </p>
-        <div className="flex justify-start ps-4 pt-4 md:ps-24 md:pt-8">
+        <div className="flex justify-start pb-8 ps-4 pt-4 md:ps-24 md:pt-8">
           <Button
             text={buttonText}
             href={buttonHref}

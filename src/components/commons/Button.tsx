@@ -28,15 +28,16 @@ interface ButtonProps {
   padding?: string;
   margin?: string;
   helper?: string;
+  width?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   text,
   icon,
   iconSize = "lg",
-  bgColor = "#E87722",
+  bgColor = "#FF7028",
   textColor = "#FFFFFF",
-  borderColor = "#FFFFFF",
+  borderColor = "#DDDDDD",
   height = "48px",
   onClick,
   className = "",
@@ -48,12 +49,13 @@ const Button: React.FC<ButtonProps> = ({
   },
   minWidth,
   maxWidth,
-  padding = "px-6",
+  padding = "px-4",
   margin,
   helper,
+  width = "auto",
 }) => {
   const baseClasses =
-    "relative flex items-center justify-center gap-2 uppercase tracking-wide shadow-md transition duration-300 hover:opacity-80";
+    "relative flex items-center justify-center uppercase tracking-wide shadow-md transition duration-300 hover:opacity-80";
   const buttonClasses = `${baseClasses} ${className}`;
 
   const buttonContent = (
@@ -65,6 +67,7 @@ const Button: React.FC<ButtonProps> = ({
           position: "relative",
           color: textColor,
           height,
+          width,
           clipPath: clipPath.outer,
           minWidth: minWidth ?? "auto",
           maxWidth: maxWidth ?? "none",
@@ -79,7 +82,7 @@ const Button: React.FC<ButtonProps> = ({
         ></span>
 
         <span
-          className={`bg-white relative flex items-center justify-center gap-2 ${padding} font-titillium`}
+          className={`bg-white relative flex items-center justify-center gap-2 ${padding} font-titillium font-light w-full`}
           style={{
             backgroundColor: bgColor,
             clipPath: clipPath.inner,

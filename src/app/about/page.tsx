@@ -106,7 +106,8 @@ export default function AboutPage() {
       <section className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
         <div className="hero-container w-full overflow-hidden">
           <Hero
-            backgroundImage="/images/img-about.png"
+            backgroundImage="/images/img-hero-about.png"
+            mobileBackgroundImage="/images/img-hero-about.png"
             headline="20 Tahun membangun, Mengintegrasikan keahlian, kepercayaan, dan inovasi"
             subheadline="Bertahun-tahun berkarya, mengukir Jejak Kualitas dalam Setiap Proyek. Dari proyek kecil hingga berskala besar, kami telah membuktikan komitmen kami terhadap kualitas dan kepuasan pelanggan."
             ctaText="BANGUN DENGAN WMS"

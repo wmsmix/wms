@@ -12,6 +12,7 @@ import Button from "~/components/commons/Button";
 import PrecastFeatures from "~/components/PrecastFeatures";
 import ClippedSection from "~/components/ClippedSection";
 import NewsGrid from "~/components/NewsGrid";
+import precastProductsData from "~/data/precast-products.json";
 
 interface Feature {
   icon: string;
@@ -40,6 +41,7 @@ interface Specification {
 
 interface ProductData {
   title: string;
+  description?: string;
   images: string[];
   features?: Feature[];
   variants?: {
@@ -48,116 +50,8 @@ interface ProductData {
   };
   specifications?: Specification[];
   runningText?: string;
+  schematicImage?: string;
 }
-
-const productData: Record<string, ProductData> = {
-  "u-ditch-cover": {
-    title: "U-Ditch Cover",
-    images: ["/images/img-u-ditch-cover-01.png"],
-    features: [
-      {
-        icon: "/svgs/icon-saluran-air.svg",
-        title: "Fungsi",
-        description:
-          "Menutupi saluran U-ditch dan mencegah sampah atau benda asing masuk ke saluran air.",
-      },
-      {
-        icon: "/svgs/icon-pembatas-jalan.svg",
-        title: "Lokasi",
-        description: "Kawasan perumahan, komersial, dan jalan.",
-      },
-      {
-        icon: "/svgs/icon-trotoar.svg",
-        title: "Perawatan Mudah",
-        description: "Bisa dibongkar untuk keperluan pembersihan saluran.",
-      },
-    ],
-    variants: {
-      title: "Tipe-Tipe U-Ditch Cover",
-      types: [
-        { image: "/images/img-u-ditch-cover-02.png", label: "Tipe A" },
-        { image: "/images/img-u-ditch-cover-03.png", label: "Tipe B" },
-        { image: "/images/img-u-ditch-cover-04.png", label: "Tipe C" },
-        { image: "/images/img-u-ditch-cover-05.png", label: "Tipe D" },
-      ],
-    },
-    specifications: [
-      {
-        title: "Spesifikasi Cover Light Duty (P 2,5 T)",
-        columns: [
-          { header: "Tipe", key: "type" },
-          { header: "W", key: "w", unit: "mm" },
-          { header: "T", key: "t", unit: "mm" },
-          { header: "Ta", key: "ta", unit: "mm" },
-          { header: "S1", key: "s1", unit: "mm" },
-          { header: "S2", key: "s2", unit: "mm" },
-        ],
-        rows: [
-          { type: "CU 30", w: 400, t: 80, ta: 65, s1: 50, s2: 65 },
-          { type: "CU 40", w: 400, t: 80, ta: 65, s1: 50, s2: 65 },
-        ],
-      },
-      {
-        title: "Spesifikasi Cover Light Duty (P 5 T)",
-        columns: [
-          { header: "Tipe", key: "type" },
-          { header: "W", key: "w", unit: "mm" },
-          { header: "T", key: "t", unit: "mm" },
-          { header: "Ta", key: "ta", unit: "mm" },
-          { header: "S1", key: "s1", unit: "mm" },
-          { header: "S2", key: "s2", unit: "mm" },
-          { header: "L", key: "l", unit: "mm" },
-        ],
-        rows: [
-          { type: "CU 30", w: 400, t: 80, ta: 65, s1: 50, s2: 65, l: 600 },
-          { type: "CU 40", w: 400, t: 80, ta: 65, s1: 50, s2: 65, l: 600 },
-        ],
-      },
-    ],
-    runningText:
-      "Mutu beton karakteristik 350 kg/cm² • Mutu baja tulangan (fy = 240 MPa) dan (fy = 390 MPa) • Tersedia custom ready to order untuk kebutuhan minimal order 50 unit • Mutu beton karakteristik 350 kg/cm²",
-  },
-  "box-culvert": {
-    title: "Box Culvert",
-    images: [
-      "/images/img-box-culvert-01.png",
-      "/images/img-box-culvert-02.png",
-    ],
-  },
-  "u-ditch": {
-    title: "U-Ditch",
-    images: ["/images/img-u-ditch.png"],
-  },
-  kansteen: {
-    title: "Kansteen",
-    images: ["/images/img-kansteen.png"],
-  },
-  "double-u-box": {
-    title: "Double U-Box",
-    images: ["/images/img-double-u-box.png"],
-  },
-};
-
-const precastFeatures = [
-  {
-    icon: "/svgs/icon-saluran-air.svg",
-    title: "Saluran Air",
-    description:
-      "Produk box culvert dan dinding penahan dapat mempercepat proses pembangunan saluran irigasi.",
-  },
-  {
-    icon: "/svgs/icon-pembatas-jalan.svg",
-    title: "Pembatas Jalan",
-    description:
-      "Beton pracetak memiliki kualitas yang lebih konsisten, sehingga meningkatkan daya tahan jalan.",
-  },
-  {
-    icon: "/svgs/icon-trotoar.svg",
-    title: "Trotoar",
-    description:
-      "Trotoar beton pracetak memiliki kemampuan tinggi dalam menahan beban kendaraan berat.",
-  },
-];
 
 export default function PrecastConcreteProductDetail() {
   const params = useParams();
@@ -175,8 +69,14 @@ export default function PrecastConcreteProductDetail() {
             ? params.slug[0]
             : "";
 
-      if (slug && Object.prototype.hasOwnProperty.call(productData, slug)) {
-        setProduct(productData[slug] ?? null);
+      // Ambil data dari precast-products.json berdasarkan slug
+      if (
+        slug &&
+        Object.prototype.hasOwnProperty.call(precastProductsData, slug)
+      ) {
+        setProduct(
+          precastProductsData[slug as keyof typeof precastProductsData] ?? null,
+        );
       } else {
         setProduct(null);
       }
@@ -220,13 +120,29 @@ export default function PrecastConcreteProductDetail() {
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
+      <div className="container mx-auto px-4 pt-36">
+        <h1 className="block text-center font-noto text-4xl italic text-black md:text-[64px]">
+          {product.title}
+        </h1>
+
+        {product.description && (
+          <div className="mx-auto mt-4 max-w-5xl">
+            <p className="text-center font-titillium text-lg text-black md:text-xl">
+              {product.description}
+            </p>
+          </div>
+        )}
+      </div>
+
       <ProductHeader
-        title={product.title}
+        title=""
         images={product.images}
         features={product.features}
       />
 
-      <PrecastFeatures features={precastFeatures} bgColor="bg-white-10" />
+      {product.features && (
+        <PrecastFeatures features={product.features} bgColor="bg-white-10" />
+      )}
 
       {product.variants && (
         <ProductTypeVariants

@@ -42,8 +42,11 @@ export default function AspalProductPage() {
         title="Precast Concrete"
         description="Hemat biaya, hemat waktu
 Solusi cerdas untuk bangunan modern"
-        imageSrc="/images/img-aspal.png"
+        imageSrc="/images/img-hero-precast.png"
         buttonText="TANYA LEBIH LANJUT"
+        onButtonClick={() => {
+          window.location.href = "/contact";
+        }}
       />
 
       <PrecastFeatures features={precastFeatures} bgColor="bg-white-10" />
@@ -64,6 +67,7 @@ Solusi cerdas untuk bangunan modern"
               borderWidth="0.5px"
               backgroundColor="white"
               height="500px"
+              buttonText="LIHAT DETAIL"
             />
           </div>
 

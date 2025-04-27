@@ -29,13 +29,11 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
   const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    // Inisialisasi Lenis hanya di sisi klien
     if (typeof window !== "undefined") {
       const lenisInstance = initSmoothScroll(options);
       setLenis(lenisInstance);
       setIsReady(true);
 
-      // Cleanup
       return () => {
         destroyLenis();
         setLenis(null);

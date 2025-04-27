@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Button from "./commons/Button";
+import Link from "next/link";
 import {
   FontAwesomeIcon,
   type FontAwesomeIconProps,
@@ -10,17 +10,21 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 interface HeroProps {
   backgroundImage: string;
+  mobileBackgroundImage?: string;
   headline: string;
   subheadline: string;
   ctaText: string;
+  ctaHref?: string;
   className?: string;
 }
 
 const Hero: React.FC<HeroProps> = ({
   backgroundImage = "/images/default-bg.png",
+  mobileBackgroundImage = "/images/home-background-mobile.png",
   headline = "Default Headline",
   subheadline = "Default subheadline text here.",
   ctaText = "Lihat Produk",
+  ctaHref = "/products",
   className = "",
 }) => {
   return (
@@ -28,29 +32,47 @@ const Hero: React.FC<HeroProps> = ({
       className={`bg-white text-white-base relative h-[700px] w-full overflow-hidden font-serif sm:h-[964px] ${className}`}
     >
       <div className="absolute inset-0 h-full w-full">
-        <Image
-          src={backgroundImage}
-          alt="Hero Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gray-900 opacity-30"></div>
+        {/* Image untuk Mobile */}
+        <div className="block md:hidden">
+          <Image
+            src={mobileBackgroundImage}
+            alt="Hero Background Mobile"
+            fill
+            className="object-cover"
+            style={{
+              objectPosition: 'left bottom'
+            }}
+          />
+        </div>
+        
+        {/* Image untuk Desktop */}
+        <div className="hidden md:block">
+          <Image
+            src={backgroundImage}
+            alt="Hero Background Desktop"
+            fill
+            className="object-cover"
+            style={{
+              objectPosition: 'left bottom'
+            }}
+          />
+        </div>
+        <div className="absolute inset-0 opacity-30"></div>
       </div>
 
-      <div className="absolute left-1/2 top-1/2 z-10 flex h-[700px] w-[1200px] -translate-x-[16%] -translate-y-[54%] transform items-center justify-center md:hidden">
-        <div className="clip-octagon-outer-mobile relative h-full w-full overflow-hidden bg-gray-300 opacity-10">
+      {/* <div className="absolute left-1/2 top-1/2 z-10 flex h-[700px] w-[1200px] -translate-x-[16%] -translate-y-[54%] transform items-center justify-center md:hidden">
+        <div className="clip-octagon-outer-mobile relative h-full w-full overflow-hidden bg-gray-300 opacity-20">
           <div className="clip-octagon-inner-mobile absolute left-1/2 top-1/2 h-[640px] w-[1200px] -translate-x-[46%] -translate-y-[56%] bg-gray-900"></div>
         </div>
       </div>
 
       <div className="absolute left-1/2 top-1/2 z-10 hidden h-[1200px] w-[1800px] -translate-x-[42%] -translate-y-[65.5%] transform items-center justify-center md:flex">
-        <div className="clip-octagon-outer-desktop relative h-full w-full overflow-hidden bg-gray-300 opacity-10">
-          <div className="clip-octagon-inner-desktop absolute left-1/2 top-1/2 h-[880px] w-[1800px] -translate-x-[46%] -translate-y-[40%] bg-gray-900"></div>
+        <div className="clip-octagon-outer-desktop relative h-full w-full overflow-hidden opacity-10">
+          <div className="clip-octagon-inner-desktop absolute left-1/2 top-1/2 h-[880px] w-[1800px] -translate-x-[46%] -translate-y-[40%] bg-gray-900 opacity-90"></div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] -translate-x-1/2 -translate-y-1/2 px-4 sm:max-w-5xl sm:px-0">
+      <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-5xl sm:px-0">
         <div className="grid grid-cols-1 items-center gap-6 sm:gap-12 md:grid-cols-2">
           <h1 className="pl-12 text-left text-3xl leading-tight sm:text-5xl md:text-left md:text-6xl">
             {headline}
@@ -61,37 +83,18 @@ const Hero: React.FC<HeroProps> = ({
               {subheadline}
             </p>
             <div className="flex justify-start">
-              <Button
-                text={ctaText}
-                height="48px"
-                textSize="lg"
-                clipPath={{
-                  outer:
-                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                  inner:
-                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                }}
-                margin="1px"
-              />
+              <Link href={ctaHref}>
+                <div className="custom-cta-button">
+                  <div className="custom-cta-button-inner">
+                    <span className="text-white whitespace-normal text-center font-titillium text-2xl font-light uppercase tracking-wide">
+                      {ctaText}
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-10 right-4 z-40 sm:bottom-20 sm:right-8">
-        <Button
-          text=""
-          icon={faWhatsapp}
-          height="48px"
-          iconSize="2xl"
-          clipPath={{
-            outer:
-              "polygon(8% 0%, 92% 0%, 100% 16%, 100% 84%, 92% 100%, 8% 100%, 0% 84%, 0% 16%)",
-            inner:
-              "polygon(8% 0%, 92% 0%, 100% 16%, 100% 84%, 92% 100%, 8% 100%, 0% 84%, 0% 16%)",
-          }}
-          margin="1px"
-        />
       </div>
 
       <style jsx>{`
@@ -149,6 +152,57 @@ const Hero: React.FC<HeroProps> = ({
             0% 85%,
             0% 15%
           );
+        }
+
+        .custom-cta-button {
+          position: relative;
+          height: 52px;
+          min-width: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          clip-path: polygon(
+            4% 0%,
+            96% 0%,
+            100% 16%,
+            100% 84%,
+            96% 100%,
+            4% 100%,
+            0% 84%,
+            0% 16%
+          );
+          background-color: #ffffff;
+          transition: opacity 0.3s;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-cta-button:hover {
+          opacity: 0.8;
+        }
+
+        .custom-cta-button-inner {
+          position: relative;
+          height: calc(52px - 2px);
+          width: calc(100% - 2px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          clip-path: polygon(
+            4% 0%,
+            96% 0%,
+            100% 16%,
+            100% 84%,
+            96% 100%,
+            4% 100%,
+            0% 84%,
+            0% 16%
+          );
+          background-color: #ff7028;
+          margin: 1px;
+        }
+
+        .custom-cta-button-inner span {
+          padding: 0 24px;
         }
       `}</style>
     </section>

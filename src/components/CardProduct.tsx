@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "~/components/commons/Button";
+import { useRouter } from "next/navigation";
 
 interface CardProductProps {
   imageSrc: string;
@@ -23,6 +24,8 @@ interface CardProductProps {
     outer: string;
     inner: string;
   };
+  whatsappOnClick?: boolean;
+  buttonText?: string;
 }
 
 const CardProduct: React.FC<CardProductProps> = ({
@@ -49,7 +52,10 @@ const CardProduct: React.FC<CardProductProps> = ({
     inner:
       "polygon(4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%, 0% 4%)",
   },
+  whatsappOnClick = false,
+  buttonText = "PILIH LASTON INI",
 }) => {
+  const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -68,12 +74,37 @@ const CardProduct: React.FC<CardProductProps> = ({
   }, []);
 
   const clipPath = isMobile ? mobileClipPath : desktopClipPath;
-  const borderWidthNum = typeof borderWidth === 'string' ? parseFloat(borderWidth) || 1 : 1;
+  const borderWidthNum =
+    typeof borderWidth === "string" ? parseFloat(borderWidth) || 1 : 1;
+
+  const handleCardClick = () => {
+    if (href) {
+      router.push(href);
+    }
+  };
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = "6282337900700";
+    const productName = subtitle ? `${subtitle} ${title} ${italicText ?? ''}` : `${title} ${italicText ?? ''}`;
+    const message = `Halo, saya tertarik dengan produk ${productName}. Boleh minta informasi lebih lanjut?`;
+    
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const handleButtonClick = () => {
+    if (whatsappOnClick) {
+      handleWhatsAppClick();
+    } else if (href) {
+      router.push(href);
+    }
+  };
 
   const cardContent = (
     <div
-      className="relative h-full w-full max-w-[400px]"
-      style={{ height: height || "500px" }}
+      className={`relative h-full w-full max-w-[400px] ${href ? "cursor-pointer" : ""}`}
+      style={{ height: isMobile ? "450px" : (height || "500px") }}
+      onClick={href ? handleCardClick : undefined}
     >
       {!imageSrc && (
         <div className="absolute inset-0 z-50 bg-red-200 p-4 text-center text-red-600">
@@ -130,45 +161,44 @@ const CardProduct: React.FC<CardProductProps> = ({
           </div>
         </div>
 
-        <div className="flex flex-grow flex-col bg-white-20 p-4 sm:p-5 md:p-6">
-          <div className="flex-grow">
+        <div className="flex flex-grow flex-col bg-white-20 p-5 sm:p-5 md:p-6">
+          <div className="flex h-full flex-col">
             {subtitle && (
               <h3 className="text-[16px] font-semibold text-black sm:text-[17px] md:text-[18px]">
                 {subtitle}
               </h3>
             )}
-            <h2 className="mb-2 text-[22px] font-semibold text-black sm:text-[24px] md:mb-3 md:text-[28px]">
+            <h2 className="mb-2 text-xl font-semibold text-black md:mb-3 md:text-3xl font-light">
               {title} <span className="italic">{italicText}</span>
             </h2>
-            <p className="mb-4 text-sm text-gray-base sm:text-base md:mb-5">
-              {description}
-            </p>
-          </div>
-          <div className="mt-auto">
-            <Button
-              text="Pelajari Produk"
-              height="38px"
-              textSize="lg"
-              clipPath={{
-                outer:
-                  "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                inner:
-                  "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-              }}
-            />
+
+            <div className="mb-4 h-[72px] md:h-[96px] sm:mb-5">
+              <p className="text-sm leading-loose text-gray-base sm:text-base line-clamp-4">
+                {description}
+              </p>
+            </div>
+
+            <div className="flex-grow"></div>
+
+            <div className="mt-auto">
+              <Button
+                text={buttonText}
+                height="42px"
+                textSize="lg"
+                onClick={handleButtonClick}
+                clipPath={{
+                  outer:
+                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-
-  if (href) {
-    return (
-      <Link href={href} className="block h-full w-full">
-        {cardContent}
-      </Link>
-    );
-  }
 
   return cardContent;
 };

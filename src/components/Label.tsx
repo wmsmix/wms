@@ -36,7 +36,7 @@ export default function Labels() {
               transform: "translateY(-90%)",
               zIndex: 10,
               clipPath:
-                "polygon(6% 0%, 94% 0%, 100% 12%, 100% 88%, 94% 100%, 6% 100%, 0% 88%, 0% 12%)",
+                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 86%, 96% 100%, 4% 100%, 0% 86%, 0% 16%)",
             }}
           >
             <Image

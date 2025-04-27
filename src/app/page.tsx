@@ -12,11 +12,16 @@ import ProjectShowcase from "~/components/ProjectShowcase";
 import ContactForm from "~/components/ContactForm";
 import ProjectsGrid from "~/components/ProjectsGrid";
 import NewsGrid from "~/components/NewsGrid";
+import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton";
 
 const certifications = [
   {
     title: "Sertifikat ISO",
-    subtitle: "Mandala Certification",
+    subtitle: (
+      <span>
+        Mandala <i>Certification</i>
+      </span>
+    ),
     image: "/images/img-mandala.png",
   },
   {
@@ -25,7 +30,7 @@ const certifications = [
     image: "/images/img-kemendustri.png",
   },
   {
-    title: "Surat Keterangan\nKelayakan Operasi",
+    title: "Surat Keterangan\nKelaikan Operasi",
     subtitle: "Kementerian PUPR",
     image: "/images/img-kemenpupr.png",
   },
@@ -40,9 +45,11 @@ export default function HomePage() {
         <div className="hero-container w-full overflow-hidden">
           <Hero
             backgroundImage="/images/home-background.png"
+            mobileBackgroundImage="/images/home-background-mobile.png"
             headline="Aspal & Beton Terbaik, Dirancang oleh Ahli Konstruksi"
             subheadline="PT Wahana Makmur Sentosa (WMS) adalah pabrik aspal dan beton di Jawa Timur yang telah bersertifikasi SLO dan diakui Kementerian PUPR. Dengan teknologi modern, WMS siap menyajikan produk dengan kualitas tertinggi."
             ctaText="Lihat Produk"
+            ctaHref="/products"
           />
         </div>
 
@@ -56,8 +63,8 @@ export default function HomePage() {
                 <Image
                   src={cert.image}
                   alt={cert.title}
-                  width={50}
-                  height={44}
+                  width={96}
+                  height={96}
                 />
               </div>
               <h3 className="mt-4 whitespace-pre-line text-xl font-normal sm:text-2xl">
@@ -83,33 +90,39 @@ export default function HomePage() {
           <div className="mt-16 flex w-full flex-wrap justify-center gap-8 px-6 sm:px-0">
             <CardProduct
               imageSrc="/images/img-product-aspal.png"
-              title="Aspal"
-              italicText="(Hot-Mix)"
+              title="ASPAL"
+              italicText="(HOT-MIX)"
               description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktrur"
               borderColor="#CCCCCC"
               borderWidth="0.5px"
               backgroundColor="white"
               height="500px"
+              whatsappOnClick={true}
+              href="/products/aspal"
             />
             <CardProduct
               imageSrc="/images/img-product-beton.png"
-              title="Beton"
-              italicText="(Ready-Mix)"
+              title="BETON"
+              italicText="(READY-MIX)"
               description="Memiliki tipe dengan kekuatan tekan 10 MPa hingga 30 MPa, dimana tiap tipe dirancang untuk kebutuhan konstruksi ringan hingga proyek infrastruktur berat. "
               borderColor="#CCCCCC"
               borderWidth="0.5px"
               backgroundColor="white"
               height="500px"
+              whatsappOnClick={true}
+              href="/products/beton"
             />
             <CardProduct
               imageSrc="/images/img-product-precast.png"
-              title="Paving"
-              italicText="(Block)"
+              title=""
+              italicText="PRECAST CONCRETE"
               description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
               borderColor="#CCCCCC"
               borderWidth="0.5px"
               backgroundColor="white"
               height="500px"
+              whatsappOnClick={true}
+              href="/products/precast-concrete"
             />
           </div>
           <div className="mt-24 flex w-full flex-col md:flex-row">
@@ -119,9 +132,72 @@ export default function HomePage() {
               </h2>
               <p className="text-base text-gray-500 md:text-lg lg:text-[20px]">
                 Seluruh produk dan layanan memenuhi standar tertinggi melalui
-                sertifikasi oleh Kementrian Pekerjaan Umum dan Perumahan Rakyat
-                (PUPR), Kementrian Perindustrian dan Lembaga Lainnya.
+                sertifikasi oleh Kementerian Pekerjaan Umum dan Perumahan Rakyat
+                (PUPR), Kementerian Perindustrian dan Lembaga Lainnya.
               </p>
+              <div className="mt-[24px] flex justify-start">
+                <Link href={"/about"}>
+                  <div className="custom-cta-button">
+                    <div className="custom-cta-button-inner">
+                      <span className="text-white whitespace-normal text-center font-titillium text-2xl font-light uppercase tracking-wide">
+                        PELAJARI SELENGKAPNYA
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+                <style jsx>{`
+                  .custom-cta-button {
+                    position: relative;
+                    height: 52px;
+                    min-width: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    clip-path: polygon(
+                      2% 0%,
+                      98% 0%,
+                      100% 18%,
+                      100% 82%,
+                      98% 100%,
+                      2% 100%,
+                      0% 82%,
+                      0% 16%
+                    );
+                    background-color: #ffffff;
+                    transition: opacity 0.3s;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                  }
+
+                  .custom-cta-button:hover {
+                    opacity: 0.8;
+                  }
+
+                  .custom-cta-button-inner {
+                    position: relative;
+                    height: calc(52px - 2px);
+                    width: calc(100% - 2px);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    clip-path: polygon(
+                      2% 0%,
+                      98% 0%,
+                      100% 18%,
+                      100% 82%,
+                      98% 100%,
+                      2% 100%,
+                      0% 82%,
+                      0% 18%
+                    );
+                    background-color: #ff7028;
+                    margin: 1px;
+                  }
+
+                  .custom-cta-button-inner span {
+                    padding: 0 16px;
+                  }
+                `}</style>
+              </div>
             </div>
             <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
               <Image
@@ -181,10 +257,12 @@ export default function HomePage() {
             <ProjectShowcase
               period="(2022-2024)"
               title="Jalan Lingkar Tuban"
-              description="Pembangunan Jalan Lingkar Tuban yang berlokasi di Desa Prunggahan Kulon, Tuban, sepanjang 7,98 km. Ruang lingkup WMS berada pada penyediaan dan aplikasi material konstruksi Aspal Hot-mix, Beton Ready-mix, dan Beton Precast."
+              description="Pembangunan Jalan Lingkar Tuban yang berlokasi di Desa Prunggahan Kulon, Tuban, sepanjang 7,98 km. Ruang lingkup WMS berada pada penyediaan dan aplikasi material konstruksi Hot-mix, Ready-mix, dan Precast."
+              italicWords={["Hot-mix", "Ready-mix", "Precast"]}
               imageSrc="/images/img-jejak.png"
               projectValue="103M"
               projectLength="7.98 KM"
+              projectSlug="jalan-lingkar-tuban"
             />
 
             <style jsx>{`
@@ -219,13 +297,6 @@ export default function HomePage() {
             </span>
             <ContactForm />
           </div>
-          <div className="flex w-full flex-col items-center bg-white-10 pb-24">
-            <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-              Lihat Proyek WMS
-            </span>
-
-            <ProjectsGrid />
-          </div>
           <div className="flex w-full flex-col items-center bg-white-10">
             <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
               Lihat Insight Proyek
@@ -241,13 +312,26 @@ export default function HomePage() {
             <Button
               text="LIHAT SEMUA"
               height="56px"
-              textSize="base"
+              textSize="xl"
               className="text-sm md:text-lg"
+              href="/insights"
+              clipPath={{
+                outer:
+                  "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                inner:
+                  "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+              }}
             />
           </div>
         </div>
       </main>
       <Footer />
+
+      {/* Floating WhatsApp Button dengan desain yang sama seperti di Hero */}
+      <FloatingWhatsAppButton
+        message="Halo, saya tertarik dengan produk WMS"
+        position="bottom-right"
+      />
     </div>
   );
 }

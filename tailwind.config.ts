@@ -32,6 +32,7 @@ export default {
         yellow: "#FABB05",
         gray: {
           base: "#808080",
+          light: "#7C7C7C",
           dark: "#5B5B5B",
           extraDark: "#323232",
         },

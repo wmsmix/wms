@@ -9,6 +9,7 @@ interface ClippedSectionProps {
   topBgColor?: string;
   bottomBgColor?: string;
   clipPathBgColor?: string;
+  buttonHref?: string;
 }
 
 const ClippedSection: React.FC<ClippedSectionProps> = ({
@@ -18,6 +19,7 @@ const ClippedSection: React.FC<ClippedSectionProps> = ({
   topBgColor = "bg-blue-primary", // default warna biru
   bottomBgColor = "bg-white-10", // default warna putih
   clipPathBgColor = "bg-black", // default warna hitam untuk clippath
+  buttonHref = "/contact",
 }) => {
   return (
     <section className="relative w-full overflow-hidden py-12 md:py-24">
@@ -55,8 +57,9 @@ const ClippedSection: React.FC<ClippedSectionProps> = ({
               <Button
                 text={buttonText}
                 height="40px"
-                textSize="xl"
+                textSize="2xl"
                 className="text-sm md:text-lg"
+                href={buttonHref}
                 clipPath={{
                   outer:
                     "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
