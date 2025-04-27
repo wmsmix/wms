@@ -1,6 +1,147 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Button from "./commons/Button";
+
+// Tambahkan komponen MapWithCustomMarker untuk peta kustom
+const MapWithCustomMarker = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<unknown>(null);
+
+  useEffect(() => {
+    const loadMap = async () => {
+      if (typeof window === 'undefined' || !mapRef.current || mapInstanceRef.current) {
+        return;
+      }
+      
+      try {
+        const L = await import('leaflet');
+        
+        // Tambahkan CSS Leaflet
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+        
+        const latitude = -7.011416668680984;
+        const longitude = 112.13599997596744;
+        
+        // Buat peta dengan style yang mirip Google Maps
+        const map = L.map(mapRef.current, {
+          center: [latitude, longitude],
+          zoom: 15,
+          zoomControl: true,
+          attributionControl: false
+        });
+        
+        // Gunakan Google Maps tile layer
+        L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+          maxZoom: 20,
+          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        }).addTo(map);
+        
+        // Tambahkan marker dengan div marker kustom (tidak menggunakan scaling otomatis)
+        const customHtmlIcon = L.divIcon({
+          className: 'custom-marker', // Tidak menggunakan class default Leaflet
+          html: `<img src="images/img-marker.png" style="width: auto; height: auto; max-width: none;" alt="Marker" />`,
+          iconSize: undefined, // Biarkan ukuran ditentukan oleh gambar asli
+          iconAnchor: [25, 25] // Perkiraan pusat gambar
+        });
+        
+        const marker = L.marker([latitude, longitude], { 
+          icon: customHtmlIcon,
+          interactive: true,
+          keyboard: true
+        }).addTo(map);
+        
+        // Tambahkan event untuk membuka Google Maps saat marker di klik
+        marker.on('click', () => {
+          window.open('https://maps.app.goo.gl/b73VAyRA2Hhi6JCn7', '_blank');
+        });
+        
+        // Tambahkan style untuk marker kustom
+        const style = document.createElement('style');
+        style.textContent = `
+          .custom-marker {
+            background: none;
+            border: none;
+          }
+          .custom-marker img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: none;
+            transform: translate(-50%, -50%) scale(0.7);
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Tambahkan kotak info lokasi seperti di Google Maps dengan alamat WMS
+        const locationInfoDiv = document.createElement('div');
+        locationInfoDiv.innerHTML = `
+          <div style="
+            background: white; 
+            padding: 10px; 
+            border-radius: 2px; 
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            margin-top: 10px;
+            margin-left: 10px;
+            font-family: Arial, sans-serif;
+            min-width: 200px;
+            max-width: 300px;
+          ">
+            <strong style="display: block; color: #333; font-size: 14px;">Aspal dan Beton PT. Wahana Makmur Sentosa</strong>
+            <span style="color: #777; font-size: 12px;">Asphalt Mixing Plant (AMP), Batching Plant, Cement, Ready Mix, Hot Mix, Precast</span>
+            <a href="https://maps.app.goo.gl/b73VAyRA2Hhi6JCn7" target="_blank" style="
+              display: block;
+              color: #1a73e8;
+              font-size: 12px;
+              margin-top: 5px;
+              text-decoration: none;
+            ">View larger map</a>
+          </div>
+        `;
+        
+        // Tambahkan control info lokasi menggunakan createCorner
+        const infoContainer = L.DomUtil.create('div');
+        infoContainer.appendChild(locationInfoDiv);
+        
+        // Secara manual tambahkan info lokasi ke sudut kiri atas
+        const controlCorner = map.getContainer().querySelector('.leaflet-top.leaflet-left');
+        if (controlCorner) {
+          controlCorner.appendChild(infoContainer);
+        }
+        
+        mapInstanceRef.current = map;
+        
+        // Menambahkan attribution di pojok bawah kanan
+        const attribution = L.control.attribution({
+          position: 'bottomright'
+        }).addTo(map);
+        attribution.setPrefix('');
+        attribution.addAttribution('Map data ©2025 Google | Terms');
+        
+      } catch (error) {
+        console.error("Error loading map:", error);
+      }
+    };
+    
+    void loadMap();
+    
+    return () => {
+      if (mapInstanceRef.current) {
+        try {
+          const map = mapInstanceRef.current as { remove: () => void };
+          map.remove();
+          mapInstanceRef.current = null;
+        } catch (error) {
+          console.error("Error removing map:", error);
+        }
+      }
+    };
+  }, []);
+
+  return <div ref={mapRef} style={{ height: '100%', width: '100%', position: 'relative' }} />;
+};
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -283,15 +424,7 @@ Detail Proyek: ${formData.message}
 
           <div className="relative w-full p-6 sm:p-10 md:w-1/2 md:py-24 md:pe-12">
             <div className="h-[300px] w-full md:h-full">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4996.3833551630405!2d112.13599997596744!3d-7.011416668680984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77916b161d4a63%3A0xc79b36e52315d7d!2sAspal%20dan%20Beton%20PT.%20Wahana%20Makmur%20Sentosa%20(Asphalt%20Mixing%20Plant%20(AMP)%2C%20Batching%20Plant%2C%20Cement%2C%20Ready%20Mix%2C%20Hot%20Mix%2C%20Precast)!5e1!3m2!1sid!2sid!4v1741960336476!5m2!1sid!2sid"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <MapWithCustomMarker />
             </div>
           </div>
         </div>

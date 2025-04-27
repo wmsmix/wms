@@ -36,7 +36,6 @@ export default function ProductsPage() {
           className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16 text-gray-base"
           style={{
             clipPath: `polygon(${
-              // Untuk mobile, gunakan sudut yang lebih kecil
               // window.innerWidth < 768
                 // ? "6% 0%, 94% 0%, 100% 12%, 100% 100%, 94% 100%, 6% 100%, 0% 100%, 0% 12%"
                  "4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%"

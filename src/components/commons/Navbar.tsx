@@ -9,6 +9,8 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [hide, setHide] = useState(false);
+  const [showPrecastSubmenu, setShowPrecastSubmenu] = useState(false);
+  const [mobileMenuLevel, setMobileMenuLevel] = useState("main"); // 'main', 'products', 'precast'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +39,18 @@ const Navbar: React.FC = () => {
     }
   }, [hide]);
 
+  // Fungsi untuk menangani navigasi menu mobile
+  const handleMobileNavigation = (level: string) => {
+    setMobileMenuLevel(level);
+  };
+
+  // Reset menu level saat menu ditutup
+  useEffect(() => {
+    if (!isOpen) {
+      setMobileMenuLevel("main");
+    }
+  }, [isOpen]);
+
   console.log("Navbar state:", { hide, scrollPosition });
 
   return (
@@ -59,13 +73,111 @@ const Navbar: React.FC = () => {
           </Link>
 
           <div className="text-white-base flex items-center gap-6 text-sm font-normal uppercase tracking-wide lg:gap-10">
-            {/* <Link href="/" className="cursor-pointer hover:text-white-10 transition-colors">Home</Link> */}
-            <Link
-              href="/products"
-              className="cursor-pointer transition-colors hover:text-white-10"
-            >
-              PRODUK & LAYANAN
-            </Link>
+            {/* Dropdown menu untuk PRODUK & LAYANAN */}
+            <div className="group relative">
+              <Link
+                href="/products"
+                className="flex cursor-pointer items-center transition-colors hover:text-white-10"
+              >
+                PRODUK & LAYANAN
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="ml-1 h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </Link>
+
+              {/* Dropdown level 1 */}
+              <div className="invisible absolute left-0 z-50 mt-4 w-56 rounded-sm bg-blue-primary opacity-0 shadow-lg transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                <Link
+                  href="/products/aspal"
+                  className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                >
+                  Aspal
+                </Link>
+                <Link
+                  href="/products/beton"
+                  className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                >
+                  Beton
+                </Link>
+
+                {/* Item dengan submenu */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setShowPrecastSubmenu(true)}
+                  onMouseLeave={() => setShowPrecastSubmenu(false)}
+                >
+                  <div className="text-white-base hover:bg-blue-secondary flex cursor-pointer items-center justify-between px-6 py-3 transition-colors">
+                    <span>Precast Concrete</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="ml-3 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Dropdown level 2 */}
+                  <div
+                    className={`absolute left-full top-0 ml-1 w-56 rounded-sm bg-blue-primary shadow-lg ${
+                      showPrecastSubmenu
+                        ? "visible opacity-100"
+                        : "invisible opacity-0"
+                    } transition-all duration-300`}
+                  >
+                    <Link
+                      href="/products/precast-concrete/box-culvert"
+                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                    >
+                      Box Culvert
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/double-u-box"
+                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                    >
+                      Double U-Box
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/u-ditch"
+                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                    >
+                      U-Ditch
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/u-ditch-cover"
+                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                    >
+                      U-Ditch Cover
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/kansteen"
+                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                    >
+                      Kansteen
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <Link
               href="/about"
               className="cursor-pointer transition-colors hover:text-white-10"
@@ -139,9 +251,9 @@ const Navbar: React.FC = () => {
           }`}
           style={{ height: "100vh" }}
         >
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col overflow-hidden">
             {/* Header dengan Logo dan Close button */}
-            <div className="mb-16 flex items-center justify-between px-4 py-6">
+            <div className="mb-8 flex items-center justify-between px-4 py-6">
               <Link href="/">
                 <Image
                   src="/svgs/wms-logo.svg"
@@ -161,50 +273,214 @@ const Navbar: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex-1 px-4">
-              <div className="space-y-6">
-                <Link
-                  href="/products"
-                  className="text-white flex items-center justify-between pb-6 border-b border-white/10"
-                >
-                  <span className="text-lg">PRODUK & LAYANAN</span>
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-white block pb-6 text-lg border-b border-white/10"
-                >
-                  <span>TENTANG KAMI</span>
-                </Link>
-                <Link
-                  href="/projects"
-                  className="text-white block pb-6 text-lg border-b border-white/10"
-                >
-                  <span>PROYEK KAMI</span>
-                </Link>
-                <Link
-                  href="/insights"
-                  className="text-white block pb-6 text-lg border-b border-white/10"
-                >
-                  <span>INSIGHT</span>
-                </Link>
+            {/* Menu container dengan layout relatif untuk slide effect */}
+            <div className="relative flex-1 overflow-hidden pb-80">
+              {/* Main Menu */}
+              <div
+                className={`absolute inset-0 transition-transform duration-300 ease-in-out ${
+                  mobileMenuLevel === "main"
+                    ? "translate-x-0"
+                    : "-translate-x-full"
+                }`}
+              >
+                <div className="space-y-6 px-4">
+                  <div
+                    onClick={() => handleMobileNavigation("products")}
+                    className="text-white border-white/10 flex cursor-pointer items-center justify-between border-b pb-6"
+                  >
+                    <span className="text-lg">PRODUK & LAYANAN</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+
+                  <Link
+                    href="/about"
+                    className="text-white border-white/10 block border-b pb-6 text-lg"
+                  >
+                    <span>TENTANG KAMI</span>
+                  </Link>
+                  <Link
+                    href="/projects"
+                    className="text-white border-white/10 block border-b pb-6 text-lg"
+                  >
+                    <span>PROYEK KAMI</span>
+                  </Link>
+                  <Link
+                    href="/insights"
+                    className="text-white border-white/10 block border-b pb-6 text-lg"
+                  >
+                    <span>INSIGHT</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Products Submenu */}
+              <div
+                className={`absolute inset-0 transition-transform duration-300 ease-in-out ${
+                  mobileMenuLevel === "products"
+                    ? "translate-x-0"
+                    : mobileMenuLevel === "precast" 
+                        ? "-translate-x-full" 
+                        : "translate-x-full"
+                }`}
+              >
+                <div className="px-4">
+                  {/* Tombol kembali */}
+                  <button
+                    onClick={() => handleMobileNavigation("main")}
+                    className="text-white mb-6 flex items-center space-x-2"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                    <span className="text-lg">PRODUK & LAYANAN</span>
+                  </button>
+
+                  <div className="mt-8 space-y-6">
+                    <Link
+                      href="/products/aspal"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">Aspal</span>
+                    </Link>
+                    <Link
+                      href="/products/beton"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">Beton</span>
+                    </Link>
+
+                    <div
+                      onClick={() => handleMobileNavigation("precast")}
+                      className="text-white border-white/10 flex cursor-pointer items-center justify-between border-b pb-6"
+                    >
+                      <span className="text-lg">Precast Concrete</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Precast Concrete Submenu */}
+              <div
+                className={`absolute inset-0 transition-transform duration-300 ease-in-out ${
+                  mobileMenuLevel === "precast"
+                    ? "translate-x-0"
+                    : "translate-x-full"
+                }`}
+              >
+                <div className="px-4">
+                  {/* Tombol kembali */}
+                  <button
+                    onClick={() => handleMobileNavigation("products")}
+                    className="text-white mb-6 flex items-center space-x-2"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                    <span className="text-lg">Precast Concrete</span>
+                  </button>
+
+                  <div className="mt-8 space-y-6">
+                    <Link
+                      href="/products/precast-concrete/box-culvert"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">Box Culvert</span>
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/double-u-box"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">Double U-Box</span>
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/u-ditch"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">U-Ditch</span>
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/u-ditch-cover"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">U-Ditch Cover</span>
+                    </Link>
+                    <Link
+                      href="/products/precast-concrete/kansteen"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">Kansteen</span>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Bottom section */}
-            <div className="mt-auto">
+            {/* Bottom section - Memindahkan ke posisi absolute */}
+            <div className="absolute bottom-0 left-0 right-0 bg-blue-primary">
               {/* Kontak Kami button */}
               <div className="mb-8 px-4">
-                <Button
-                  text="KONTAK KAMI"
-                  className="w-full text-2xl"
-                  clipPath={{
-                    outer: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
-                    inner: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
-                  }}
-                  margin="1px"
-                  width="100%"
-                  padding="px-8 py-4"
-                />
+                <Link href="/contact">
+                  <Button
+                    text="KONTAK KAMI"
+                    className="w-full text-2xl"
+                    clipPath={{
+                      outer: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
+                      inner: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
+                    }}
+                    margin="1px"
+                    width="100%"
+                    padding="px-8 py-4"
+                  />
+                </Link>
               </div>
 
               {/* Social media icons */}
@@ -248,13 +524,13 @@ const Navbar: React.FC = () => {
                       alt="Phone"
                       width={28}
                       height={28}
-                    /> 
+                    />
                   </Link>
                 </div>
 
                 {/* Copyright dengan padding bottom */}
                 <div className="px-4 pb-8">
-                  <div className="text-white text-center text-sm flex items-center justify-center space-x-2">
+                  <div className="text-white flex items-center justify-center space-x-2 text-center text-sm">
                     <span>Copyright 2025 © WMS</span>
                     <span className="text-white/50">|</span>
                     <span>
