@@ -37,9 +37,9 @@ export default function ProductsPage() {
           style={{
             clipPath: `polygon(${
               // Untuk mobile, gunakan sudut yang lebih kecil
-              window.innerWidth < 768
-                ? "6% 0%, 94% 0%, 100% 12%, 100% 100%, 94% 100%, 6% 100%, 0% 100%, 0% 12%"
-                : "4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%"
+              // window.innerWidth < 768
+                // ? "6% 0%, 94% 0%, 100% 12%, 100% 100%, 94% 100%, 6% 100%, 0% 100%, 0% 12%"
+                 "4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%"
             })`,
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
