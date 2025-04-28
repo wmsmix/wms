@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface RunningTextProps {
   text: string;
@@ -10,11 +10,48 @@ interface RunningTextProps {
 
 const RunningText: React.FC<RunningTextProps> = ({
   text,
-  speed = 30,
+  speed = 120, // Much slower animation (120 seconds for complete cycle)
   backgroundColor,
   textColor = "white",
   clipAngle = 12,
 }) => {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    // Apply animation directly to the element
+    if (marqueeRef.current) {
+      marqueeRef.current.style.animation = `marquee ${speed}s linear infinite`;
+    }
+  }, [speed]);
+
+  // Define the keyframes style
+  useEffect(() => {
+    // Check if the keyframes style already exists
+    if (!document.getElementById('marquee-keyframes')) {
+      const keyframesStyle = document.createElement('style');
+      keyframesStyle.id = 'marquee-keyframes';
+      keyframesStyle.innerHTML = `
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+      `;
+      document.head.appendChild(keyframesStyle);
+
+      // Clean up on unmount
+      return () => {
+        const styleElement = document.getElementById('marquee-keyframes');
+        if (styleElement) {
+          document.head.removeChild(styleElement);
+        }
+      };
+    }
+  }, []);
+
   return (
     <div 
       className={`w-full py-4 overflow-hidden ${backgroundColor} relative`} 
@@ -24,29 +61,18 @@ const RunningText: React.FC<RunningTextProps> = ({
       }}
     >
       <div 
-        className={`whitespace-nowrap animate-marquee ${textColor}`}
+        ref={marqueeRef}
+        className={`whitespace-nowrap ${textColor}`}
+        style={{
+          display: 'inline-block',
+          willChange: 'transform',
+        }}
       >
         <span className="inline-block mx-4 text-sm font-medium">{text}</span>
         <span className="inline-block mx-4 text-sm font-medium">{text}</span>
         <span className="inline-block mx-4 text-sm font-medium">{text}</span>
         <span className="inline-block mx-4 text-sm font-medium">{text}</span>
       </div>
-
-      <style jsx>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-        
-        .animate-marquee {
-          display: inline-block;
-          animation: marquee ${speed}s linear infinite;
-        }
-      `}</style>
     </div>
   );
 };
