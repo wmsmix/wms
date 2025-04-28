@@ -1071,52 +1071,6 @@
         "description": "Satu bentuk dengan fungsi beragam dan bisa diletakkan di area manapun"
       }
     ],
-    "specifications": [
-      {
-        "title": "Spesifikasi Teknis",
-        "columns": [
-          {
-            "header": "Type",
-            "key": "type"
-          },
-          {
-            "header": "W",
-            "key": "w",
-            "unit": "mm"
-          },
-          {
-            "header": "H",
-            "key": "h",
-            "unit": "mm"
-          },
-          {
-            "header": "L",
-            "key": "l",
-            "unit": "mm"
-          }
-        ],
-        "rows": [
-          {
-            "type": "Kansteen Type A",
-            "w": 150,
-            "h": 300,
-            "l": 600
-          },
-          {
-            "type": "Kansteen Type B",
-            "w": 150,
-            "h": 300,
-            "l": 600
-          },
-          {
-            "type": "Kansteen Type C",
-            "w": 150,
-            "h": 300,
-            "l": 600
-          }
-        ]
-      }
-    ],
     "schematicImage": "/images/kansteen-schematic.png"
   }
 }
