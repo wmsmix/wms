@@ -34,6 +34,11 @@ const certifications = [
     subtitle: "Kementerian PUPR",
     image: "/images/img-kemenpupr.png",
   },
+  {
+    title: "Standar Nasional Indonesia",
+    subtitle: "PT. Global Inspeksi Sertifikasi",
+    image: "/images/img-sni.png",
+  },
 ];
 
 export default function HomePage() {
@@ -56,7 +61,7 @@ export default function HomePage() {
         <span className="mx-auto block max-w-[90vw] py-24 text-center font-noto text-[40px] text-white-10 sm:max-w-4xl sm:text-[64px]">
           Berpengalaman, Terpercaya, dan Ahli di Bidangnya
         </span>
-        <div className="mx-auto mt-8 grid w-full max-w-[90vw] grid-cols-1 gap-8 px-4 sm:max-w-5xl sm:grid-cols-2 md:grid-cols-3">
+        <div className="mx-auto mt-8 grid w-full max-w-[90vw] grid-cols-1 gap-8 px-4 sm:max-w-5xl sm:grid-cols-2 md:grid-cols-4">
           {certifications.map((cert, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white-10">

@@ -373,7 +373,10 @@ export default function AboutPage() {
           </h2>
 
           <div>
-            <CertificateGallery title="Sertifikat Tingkat Komponen Dalam Negeri" />
+            <CertificateGallery 
+              title="Sertifikat Tingkat Komponen Dalam Negeri" 
+              isDefault={true} 
+            />
           </div>
         </div>
       </div>
@@ -433,6 +436,34 @@ export default function AboutPage() {
                   title: "Sertifikat ISO 45001",
                   image: "/images/img-certificate-ISO.png",
                   fullImage: "/images/img-certificate-ISO.png",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
+            Sertifikat SNI
+          </h2>
+
+          <div>
+            <CertificateGallery
+              title="Sertifikat SNI"
+              certificates={[
+                {
+                  id: 1,
+                  title: "Sertifikat SNI",
+                  image: "/images/img-sertifikat-sni-1.png",
+                  fullImage: "/images/img-sertifikat-sni-1.png",
+                },
+                {
+                  id: 2,
+                  title: "Sertifikat SNI",
+                  image: "/images/img-sertifikat-sni-2.png",
+                  fullImage: "/images/img-sertifikat-sni-2.png",
                 },
               ]}
             />

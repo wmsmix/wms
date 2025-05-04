@@ -305,9 +305,6 @@ export default function ProjectDetailPage() {
               <p className="text-sm text-gray-500 md:text-base">
                 Source : {"Ahmad Adirin/Liputan6.com"}
               </p>
-              <p className="text-sm text-gray-500 md:text-base">
-                25 Februari 2021
-              </p>
             </div>
 
             <h2 className="mb-6 mt-16 font-noto text-2xl text-black md:text-[32px]">
@@ -346,9 +343,6 @@ export default function ProjectDetailPage() {
               <p className="text-sm text-gray-500 md:text-base">
                 Source : {"Ahmad Adirin/Liputan6.com"}
               </p>
-              <p className="text-sm text-gray-500 md:text-base">
-                25 Februari 2021
-              </p>
             </div>
             <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden md:mt-12">
               <Image
@@ -361,9 +355,6 @@ export default function ProjectDetailPage() {
             <div className="mb-2 flex items-end justify-between">
               <p className="text-sm text-gray-500 md:text-base">
                 Source : {"Ahmad Adirin/Liputan6.com"}
-              </p>
-              <p className="text-sm text-gray-500 md:text-base">
-                25 Februari 2021
               </p>
             </div>
           </div>

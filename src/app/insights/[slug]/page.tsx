@@ -279,8 +279,9 @@ export default function InsightDetailPage() {
                   paragraph.includes("Pengoperasian Masih Terbatas") ? (
                     <h2 className="mb-4 mt-8 text-2xl">{paragraph}</h2>
                   ) : paragraph.includes("Untuk meminimalisir") ? (
-                    <blockquote className="my-6 border-l-4 border-blue-primary bg-gray-50 py-2 pl-4 italic">
-                      {paragraph}
+                    <blockquote className="relative my-6 border-l-4 border-blue-primary pl-8 py-4">
+                      <span className="absolute left-2 top-0 text-blue-primary text-5xl font-serif">&ldquo;</span>
+                      <p className="text-lg">{paragraph}</p>
                     </blockquote>
                   ) : (
                     <p className="mb-6 leading-relaxed">{paragraph}</p>

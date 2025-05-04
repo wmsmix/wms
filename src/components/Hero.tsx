@@ -72,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({
         </div>
       </div> */}
 
-      <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-5xl sm:px-0">
+      <div className="absolute left-1/2 top-1/2 z-30 w-full max-w-[90vw] -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-6xl sm:px-0">
         <div className="grid grid-cols-1 items-center gap-6 sm:gap-12 md:grid-cols-2">
           <h1 className="pl-12 text-left text-3xl leading-tight sm:text-5xl md:text-left md:text-6xl">
             {headline}

@@ -331,9 +331,9 @@ const Navbar: React.FC = () => {
                 className={`absolute inset-0 transition-transform duration-300 ease-in-out ${
                   mobileMenuLevel === "products"
                     ? "translate-x-0"
-                    : mobileMenuLevel === "precast" 
-                        ? "-translate-x-full" 
-                        : "translate-x-full"
+                    : mobileMenuLevel === "precast"
+                      ? "-translate-x-full"
+                      : "translate-x-full"
                 }`}
               >
                 <div className="px-4">
@@ -393,6 +393,12 @@ const Navbar: React.FC = () => {
                         />
                       </svg>
                     </div>
+                    <Link
+                      href="/products#support-letter"
+                      className="text-white border-white/10 block border-b pb-6"
+                    >
+                      <span className="text-lg">Support Letter</span>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -473,8 +479,10 @@ const Navbar: React.FC = () => {
                     text="KONTAK KAMI"
                     className="w-full text-2xl"
                     clipPath={{
-                      outer: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
-                      inner: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
+                      outer:
+                        "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
+                      inner:
+                        "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
                     }}
                     margin="1px"
                     width="100%"

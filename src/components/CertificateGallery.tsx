@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 interface Certificate {
@@ -11,38 +11,100 @@ interface Certificate {
 interface CertificateGalleryProps {
   certificates?: Certificate[];
   title?: string;
+  isDefault?: boolean; // Flag untuk menandai apakah ini gallery default (TKDN)
 }
 
-// Data default jika tidak ada props yang diberikan
-const defaultCertificates: Certificate[] = [
+// Sertifikat dari folder img-sertifikat
+const sertifikatImages: Certificate[] = [
   {
     id: 1,
-    title: "Sertifikat PC 12 Mpa",
-    image: "/images/img-certificate.png",
-    fullImage: "/images/img-certificate.png",
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-1.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-1.png",
   },
   {
     id: 2,
-    title: "Sertifikat AC-Base",
-    image: "/images/img-certificate.png",
-    fullImage: "/images/img-certificate.png",
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-2.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-2.png",
   },
   {
     id: 3,
-    title: "Sertifikat Lapis Pondasi Agregat CTB",
-    image: "/images/img-certificate.png",
-    fullImage: "/images/img-certificate.png",
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-3.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-3.png",
+  },
+  {
+    id: 4,
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-4.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-4.png",
+  },
+  {
+    id: 5,
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-5.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-5.png",
+  },
+  {
+    id: 6,
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-6.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-6.png",
+  },
+  {
+    id: 7,
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-7.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-7.png",
+  },
+  {
+    id: 8,
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-8.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-8.png",
+  },
+  {
+    id: 9,
+    title: "Sertifikat Tingkat Komponen Dalam Negeri",
+    image: "/images/img-sertifikat/img-sertifikat-9.png",
+    fullImage: "/images/img-sertifikat/img-sertifikat-9.png",
   },
 ];
+
+// Data default jika tidak ada props yang diberikan
+const defaultCertificates: Certificate[] = sertifikatImages;
 
 const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   certificates = defaultCertificates,
   title = "Sertifikat Tingkat Komponen Dalam Negeri",
+  isDefault = false, // Default adalah false, harus di-set true untuk TKDN
 }) => {
   const [selectedCertificate, setSelectedCertificate] =
     useState<Certificate | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  
+  // Jumlah item yang ditampilkan pada slider berdasarkan lebar layar
+  const [itemsPerView, setItemsPerView] = useState(3);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2);
+      } else {
+        setItemsPerView(3);
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const openModal = (certificate: Certificate) => {
     setSelectedCertificate(certificate);
@@ -82,40 +144,198 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
       setZoomLevel(zoomLevel - 0.25);
     }
   };
+  
+  const nextSlide = () => {
+    const newIndex = Math.min(sliderIndex + 1, certificates.length - itemsPerView);
+    setSliderIndex(newIndex);
+  };
+  
+  const prevSlide = () => {
+    const newIndex = Math.max(sliderIndex - 1, 0);
+    setSliderIndex(newIndex);
+  };
+
+  // Fungsi untuk menentukan opacity item berdasarkan posisi (hanya untuk default gallery)
+  const getItemOpacity = (index: number) => {
+    if (!isDefault) return 1; // Full opacity untuk non-default gallery
+    
+    const position = index - sliderIndex;
+
+    // Item tengah memiliki opacity penuh
+    if (position >= 0 && position < itemsPerView) {
+      // Untuk efek gradient opacity pada item pinggir dalam view
+      if (itemsPerView > 1) {
+        if (position === 0) return 0.7; // Item paling kiri
+        if (position === itemsPerView - 1) return 0.7; // Item paling kanan
+      }
+      return 1; // Item tengah
+    }
+    
+    // Item di luar view memiliki opacity rendah
+    return 0.4;
+  };
+
+  // Fungsi untuk menentukan scale item berdasarkan posisi (hanya untuk default gallery)
+  const getItemScale = (index: number) => {
+    if (!isDefault) return 1; // Full scale untuk non-default gallery
+    
+    const position = index - sliderIndex;
+    
+    // Item tengah memiliki scale penuh
+    if (position > 0 && position < itemsPerView - 1) return 1;
+    
+    // Item pinggir dalam view memiliki scale lebih kecil
+    if (position === 0 || position === itemsPerView - 1) return 0.95;
+    
+    // Item di luar view
+    return 0.9;
+  };
+
+  // Render gallery dalam dua mode berbeda
+  const renderGallery = () => {
+    if (isDefault) {
+      // Gallery dengan background hijau dan arrow untuk TKDN
+      return (
+        <div className="relative mx-auto max-w-6xl">
+          {/* Slider Container with Custom Navigation */}
+          <div className="w-full overflow-hidden relative py-6">
+            {/* Left Navigation Arrow - Using octagon shape like modal */}
+            <div className="absolute inset-y-0 left-0 z-20 flex items-center ml-3">
+              <div
+                className={`relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
+                  sliderIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                onClick={sliderIndex === 0 ? undefined : prevSlide}
+              >
+                <div
+                  className="absolute inset-0 bg-white-10"
+                  style={{
+                    clipPath:
+                      "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
+                  }}
+                ></div>
+
+                <div
+                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary text-xl"
+                  style={{
+                    clipPath:
+                      "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
+                  }}
+                >
+                  &lt;
+                </div>
+              </div>
+            </div>
+            
+            <div 
+              ref={sliderRef}
+              className="flex transition-transform duration-500 ease-in-out px-16"
+              style={{ transform: `translateX(-${sliderIndex * (100 / itemsPerView)}%)` }}
+            >
+              {certificates.map((certificate, index) => (
+                <div
+                  key={certificate.id}
+                  className="flex-shrink-0 cursor-pointer px-2 transition-all duration-300"
+                  style={{ 
+                    width: `${100 / itemsPerView}%`,
+                    opacity: getItemOpacity(index),
+                    transform: `scale(${getItemScale(index)})`,
+                    zIndex: index === sliderIndex + Math.floor(itemsPerView / 2) ? 10 : 5
+                  }}
+                  onClick={() => openModal(certificate)}
+                >
+                  <div className="overflow-hidden border-8 border-[#d1d68d] rounded-md bg-[#ffffea] p-1 shadow-md transition-transform duration-300 hover:shadow-lg">
+                    <div className="aspect-[3/4] relative">
+                      <Image
+                        src={certificate.image}
+                        alt={certificate.title}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Right Navigation Arrow - Using octagon shape like modal */}
+            <div className="absolute inset-y-0 right-0 z-20 flex items-center mr-3">
+              <div
+                className={`relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
+                  sliderIndex >= certificates.length - itemsPerView ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                onClick={sliderIndex >= certificates.length - itemsPerView ? undefined : nextSlide}
+              >
+                <div
+                  className="absolute inset-0 bg-white-10"
+                  style={{
+                    clipPath:
+                      "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
+                  }}
+                ></div>
+
+                <div
+                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary text-xl"
+                  style={{
+                    clipPath:
+                      "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
+                  }}
+                >
+                  &gt;
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Indicators/Pagination */}
+          <div className="flex justify-center mt-2 space-x-2">
+            {Array.from({ length: Math.ceil(certificates.length / itemsPerView) }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setSliderIndex(index)}
+                className={`h-2 w-2 rounded-full ${
+                  sliderIndex === index ? 'bg-blue-700' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    } else {
+      // Gallery standar untuk jenis sertifikat lainnya
+      return (
+        <div className="mx-auto max-w-6xl">
+          <div className="flex justify-center gap-8">
+            {certificates.map((certificate) => (
+              <div
+                key={certificate.id}
+                className="cursor-pointer"
+                onClick={() => openModal(certificate)}
+              >
+                <div className="overflow-hidden transition-all duration-300 hover:opacity-90">
+                  <div className="aspect-[3/4] relative w-[250px]">
+                    <Image
+                      src={certificate.image}
+                      alt={certificate.title}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center">
-        <div
-          className={`mx-auto grid max-w-5xl grid-cols-1 place-items-center gap-8 ${
-            certificates.length === 2
-              ? "md:grid-cols-2"
-              : certificates.length === 1
-                ? "md:grid-cols-1"
-                : "md:grid-cols-3"
-          }`}
-        >
-          {certificates.map((certificate) => (
-            <div
-              key={certificate.id}
-              className="flex cursor-pointer flex-col items-center"
-              onClick={() => openModal(certificate)}
-            >
-              <div className="border-yellow-100 bg-yellow-50 overflow-hidden border-4 p-1 shadow-md transition-transform duration-300 hover:scale-105">
-                <Image
-                  src={certificate.image}
-                  alt={certificate.title}
-                  width={700}
-                  height={1000}
-                  className="h-auto w-full"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {renderGallery()}
 
-      {/* Modal */}
+      {/* Modal - sama untuk semua jenis gallery */}
       {selectedCertificate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-blue-primary bg-opacity-80">
           <div className="relative flex h-screen w-screen flex-col items-center px-4 py-6">
@@ -158,7 +378,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
             </div>
 
             <div className="mb-12 flex w-full flex-1 items-center justify-between px-4">
-              {/* Left arrow navigation - smaller size with hover effect */}
+              {/* Left arrow navigation */}
               <div
                 className="relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
                 onClick={prevCertificate}
@@ -184,7 +404,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
 
               <div className="mx-4 flex max-h-[90vh] flex-1 justify-center">
                 <div
-                  className="flex items-center justify-center"
+                  className={`flex items-center justify-center overflow-hidden ${isDefault ? 'border-8 border-[#d1d68d] rounded-md bg-[#ffffea]' : ''}`}
                   style={{
                     transform: `scale(${zoomLevel})`,
                     transformOrigin: "center center",
@@ -202,7 +422,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 </div>
               </div>
 
-              {/* Right arrow navigation - smaller size with hover effect */}
+              {/* Right arrow navigation */}
               <div
                 className="relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
                 onClick={nextCertificate}
