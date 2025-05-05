@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export default function GlobalError({
   error,
@@ -13,11 +13,11 @@ export default function GlobalError({
         <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
           <div className="hero-container w-full overflow-hidden">
             <div className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
-              <h1 className="text-4xl font-bold text-white">Server Error</h1>
-              <p className="mt-4 text-white">Terjadi kesalahan pada server</p>
+              <h1 className="text-white text-4xl font-bold">Server Error</h1>
+              <p className="text-white mt-4">Terjadi kesalahan pada server</p>
               <button
                 onClick={() => reset()}
-                className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="text-white mt-4 rounded bg-blue-500 px-4 py-2 hover:bg-blue-600"
               >
                 Coba Lagi
               </button>
@@ -27,4 +27,4 @@ export default function GlobalError({
       </body>
     </html>
   );
-} 
+}
