@@ -9,57 +9,67 @@ const MapWithCustomMarker = () => {
 
   useEffect(() => {
     const loadMap = async () => {
-      if (typeof window === 'undefined' || !mapRef.current || mapInstanceRef.current) {
+      if (
+        typeof window === "undefined" ||
+        !mapRef.current ||
+        mapInstanceRef.current
+      ) {
         return;
       }
-      
+
       try {
-        const L = await import('leaflet');
-        
+        const L = await import("leaflet");
+
         // Tambahkan CSS Leaflet
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
         document.head.appendChild(link);
-        
+
         const latitude = -7.011416668680984;
         const longitude = 112.13599997596744;
-        
+
+        // Tentukan zoom level berdasarkan lebar layar
+        let zoomLevel = 15;
+        if (typeof window !== 'undefined' && window.innerWidth < 640) {
+          zoomLevel = 12;
+        }
+
         // Buat peta dengan style yang mirip Google Maps
         const map = L.map(mapRef.current, {
           center: [latitude, longitude],
-          zoom: 15,
+          zoom: zoomLevel,
           zoomControl: true,
-          attributionControl: false
+          attributionControl: false,
         });
-        
+
         // Gunakan Google Maps tile layer
-        L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        L.tileLayer("https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
           maxZoom: 20,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+          subdomains: ["mt0", "mt1", "mt2", "mt3"],
         }).addTo(map);
-        
+
         // Tambahkan marker dengan div marker kustom (tidak menggunakan scaling otomatis)
         const customHtmlIcon = L.divIcon({
-          className: 'custom-marker', // Tidak menggunakan class default Leaflet
+          className: "custom-marker", // Tidak menggunakan class default Leaflet
           html: `<img src="images/img-marker.png" style="width: auto; height: auto; max-width: none;" alt="Marker" />`,
           iconSize: undefined, // Biarkan ukuran ditentukan oleh gambar asli
-          iconAnchor: [25, 25] // Perkiraan pusat gambar
+          iconAnchor: [25, 25], // Perkiraan pusat gambar
         });
-        
-        const marker = L.marker([latitude, longitude], { 
+
+        const marker = L.marker([latitude, longitude], {
           icon: customHtmlIcon,
           interactive: true,
-          keyboard: true
+          keyboard: true,
         }).addTo(map);
-        
+
         // Tambahkan event untuk membuka Google Maps saat marker di klik
-        marker.on('click', () => {
-          window.open('https://maps.app.goo.gl/b73VAyRA2Hhi6JCn7', '_blank');
+        marker.on("click", () => {
+          window.open("https://maps.app.goo.gl/b73VAyRA2Hhi6JCn7", "_blank");
         });
-        
+
         // Tambahkan style untuk marker kustom
-        const style = document.createElement('style');
+        const style = document.createElement("style");
         style.textContent = `
           .custom-marker {
             background: none;
@@ -74,9 +84,9 @@ const MapWithCustomMarker = () => {
           }
         `;
         document.head.appendChild(style);
-        
+
         // Tambahkan kotak info lokasi seperti di Google Maps dengan alamat WMS
-        const locationInfoDiv = document.createElement('div');
+        const locationInfoDiv = document.createElement("div");
         locationInfoDiv.innerHTML = `
           <div style="
             background: white; 
@@ -100,33 +110,36 @@ const MapWithCustomMarker = () => {
             ">View larger map</a>
           </div>
         `;
-        
+
         // Tambahkan control info lokasi menggunakan createCorner
-        const infoContainer = L.DomUtil.create('div');
+        const infoContainer = L.DomUtil.create("div");
         infoContainer.appendChild(locationInfoDiv);
-        
+
         // Secara manual tambahkan info lokasi ke sudut kiri atas
-        const controlCorner = map.getContainer().querySelector('.leaflet-top.leaflet-left');
+        const controlCorner = map
+          .getContainer()
+          .querySelector(".leaflet-top.leaflet-left");
         if (controlCorner) {
           controlCorner.appendChild(infoContainer);
         }
-        
+
         mapInstanceRef.current = map;
-        
+
         // Menambahkan attribution di pojok bawah kanan
-        const attribution = L.control.attribution({
-          position: 'bottomright'
-        }).addTo(map);
-        attribution.setPrefix('');
-        attribution.addAttribution('Map data ©2025 Google | Terms');
-        
+        const attribution = L.control
+          .attribution({
+            position: "bottomright",
+          })
+          .addTo(map);
+        attribution.setPrefix("");
+        attribution.addAttribution("Map data ©2025 Google | Terms");
       } catch (error) {
         console.error("Error loading map:", error);
       }
     };
-    
+
     void loadMap();
-    
+
     return () => {
       if (mapInstanceRef.current) {
         try {
@@ -140,7 +153,12 @@ const MapWithCustomMarker = () => {
     };
   }, []);
 
-  return <div ref={mapRef} style={{ height: '100%', width: '100%', position: 'relative' }} />;
+  return (
+    <div
+      ref={mapRef}
+      style={{ height: "100%", width: "100%", position: "relative" }}
+    />
+  );
 };
 
 const ContactForm: React.FC = () => {
@@ -432,14 +450,14 @@ Detail Proyek: ${formData.message}
         <style jsx global>{`
           .contact-form-container {
             clip-path: polygon(
-              8% 0%,
-              92% 0%,
-              100% 8%,
-              100% 92%,
-              92% 100%,
-              8% 100%,
-              0% 92%,
-              0% 8%
+              4% 0%,
+              96% 0%,
+              100% 6%,
+              100% 94%,
+              96% 100%,
+              4% 100%,
+              0% 94%,
+              0% 6%
             );
           }
 

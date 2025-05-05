@@ -12,6 +12,8 @@ interface CertificateGalleryProps {
   certificates?: Certificate[];
   title?: string;
   isDefault?: boolean; // Flag untuk menandai apakah ini gallery default (TKDN)
+  large?: boolean; // Untuk memperbesar sertifikat pada gallery non-default
+  landscape?: boolean; // Untuk sertifikat landscape (aspect ratio lebih lebar)
 }
 
 // Sertifikat dari folder img-sertifikat
@@ -79,6 +81,8 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   certificates = defaultCertificates,
   title = "Sertifikat Tingkat Komponen Dalam Negeri",
   isDefault = false, // Default adalah false, harus di-set true untuk TKDN
+  large = false,
+  landscape = false,
 }) => {
   const [selectedCertificate, setSelectedCertificate] =
     useState<Certificate | null>(null);
@@ -200,9 +204,9 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
           {/* Slider Container with Custom Navigation */}
           <div className="w-full overflow-hidden relative py-6">
             {/* Left Navigation Arrow - Using octagon shape like modal */}
-            <div className="absolute inset-y-0 left-0 z-20 flex items-center ml-3">
+            <div className="absolute inset-y-0 left-0 z-20 hidden md:flex items-center ml-3">
               <div
-                className={`relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
+                className={`relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
                   sliderIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 onClick={sliderIndex === 0 ? undefined : prevSlide}
@@ -216,20 +220,26 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 ></div>
 
                 <div
-                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary text-xl"
+                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary p-4"
                   style={{
                     clipPath:
                       "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
                   }}
                 >
-                  &lt;
+                  <Image
+                    src="/images/img-arrow-left.png"
+                    alt="Previous"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>
             
             <div 
               ref={sliderRef}
-              className="flex transition-transform duration-500 ease-in-out px-16"
+              className="flex transition-transform duration-500 ease-in-out px-4 md:px-16"
               style={{ transform: `translateX(-${sliderIndex * (100 / itemsPerView)}%)` }}
             >
               {certificates.map((certificate, index) => (
@@ -259,9 +269,9 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
             </div>
             
             {/* Right Navigation Arrow - Using octagon shape like modal */}
-            <div className="absolute inset-y-0 right-0 z-20 flex items-center mr-3">
+            <div className="absolute inset-y-0 right-0 z-20 hidden md:flex items-center mr-3">
               <div
-                className={`relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
+                className={`relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
                   sliderIndex >= certificates.length - itemsPerView ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 onClick={sliderIndex >= certificates.length - itemsPerView ? undefined : nextSlide}
@@ -275,13 +285,19 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 ></div>
 
                 <div
-                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary text-xl"
+                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary p-4"
                   style={{
                     clipPath:
                       "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
                   }}
                 >
-                  &gt;
+                  <Image
+                    src="/images/img-arrow-right.png"
+                    alt="Next"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>
@@ -314,7 +330,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 onClick={() => openModal(certificate)}
               >
                 <div className="overflow-hidden transition-all duration-300 hover:opacity-90">
-                  <div className="aspect-[3/4] relative w-[250px]">
+                  <div className={`${landscape ? 'aspect-[4/3] w-[340px] md:w-[520px]' : (large ? 'aspect-[3/4] w-[340px] md:w-[480px]' : 'aspect-[3/4] w-[340px]') } relative`}>
                     <Image
                       src={certificate.image}
                       alt={certificate.title}
@@ -380,7 +396,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
             <div className="mb-12 flex w-full flex-1 items-center justify-between px-4">
               {/* Left arrow navigation */}
               <div
-                className="relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
+                className="relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
                 onClick={prevCertificate}
               >
                 <div
@@ -392,13 +408,19 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 ></div>
 
                 <div
-                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary text-xl"
+                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary p-4"
                   style={{
                     clipPath:
                       "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
                   }}
                 >
-                  &lt;
+                  <Image
+                    src="/images/img-arrow-left.png"
+                    alt="Previous"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
                 </div>
               </div>
 
@@ -424,7 +446,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
 
               {/* Right arrow navigation */}
               <div
-                className="relative h-10 w-10 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
+                className="relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
                 onClick={nextCertificate}
               >
                 <div
@@ -436,13 +458,19 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 ></div>
 
                 <div
-                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary text-xl"
+                  className="text-white absolute inset-[1px] flex items-center justify-center bg-blue-primary p-4"
                   style={{
                     clipPath:
                       "polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%)",
                   }}
                 >
-                  &gt;
+                  <Image
+                    src="/images/img-arrow-right.png"
+                    alt="Next"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>

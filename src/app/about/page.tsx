@@ -382,7 +382,7 @@ export default function AboutPage() {
       </div>
 
       <div className="py-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2">
           <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
             Surat Keterangan Kelaikan Operasi
           </h2>
@@ -394,16 +394,18 @@ export default function AboutPage() {
                 {
                   id: 1,
                   title: "Surat Keterangan Kelaikan Operasi 1",
-                  image: "/images/img-certificate-SKO.png",
-                  fullImage: "/images/img-certificate-SKO.png",
+                  image: "/images/img-laik-1.png",
+                  fullImage: "/images/img-laik-1.png",
                 },
                 {
                   id: 2,
                   title: "Surat Keterangan Kelaikan Operasi 2",
-                  image: "/images/img-certificate-SKO.png",
-                  fullImage: "/images/img-certificate-SKO.png",
+                  image: "/images/img-laik-2.png",
+                  fullImage: "/images/img-laik-2.png",
                 },
               ]}
+              large={true}
+              landscape={true}
             />
           </div>
         </div>
@@ -422,20 +424,20 @@ export default function AboutPage() {
                 {
                   id: 1,
                   title: "Sertifikat ISO 9001",
-                  image: "/images/img-certificate-ISO.png",
-                  fullImage: "/images/img-certificate-ISO.png",
+                  image: "/images/img-iso-3.png",
+                  fullImage: "/images/img-iso-3.png",
                 },
                 {
                   id: 2,
                   title: "Sertifikat ISO 14001",
-                  image: "/images/img-certificate-ISO.png",
-                  fullImage: "/images/img-certificate-ISO.png",
+                  image: "/images/img-iso-1.png",
+                  fullImage: "/images/img-iso-1.png",
                 },
                 {
                   id: 3,
                   title: "Sertifikat ISO 45001",
-                  image: "/images/img-certificate-ISO.png",
-                  fullImage: "/images/img-certificate-ISO.png",
+                  image: "/images/img-iso-2.png",
+                  fullImage: "/images/img-iso-2.png",
                 },
               ]}
             />
@@ -456,14 +458,14 @@ export default function AboutPage() {
                 {
                   id: 1,
                   title: "Sertifikat SNI",
-                  image: "/images/img-sertifikat-sni-1.png",
-                  fullImage: "/images/img-sertifikat-sni-1.png",
+                  image: "/images/img-sni-1.jpg",
+                  fullImage: "/images/img-sni-1.jpg",
                 },
                 {
                   id: 2,
                   title: "Sertifikat SNI",
-                  image: "/images/img-sertifikat-sni-2.png",
-                  fullImage: "/images/img-sertifikat-sni-2.png",
+                  image: "/images/img-sni-2.jpg",
+                  fullImage: "/images/img-sni-2.jpg",
                 },
               ]}
             />

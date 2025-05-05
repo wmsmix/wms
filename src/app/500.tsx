@@ -8,7 +8,7 @@ import Link from "next/link";
 import Button from "~/components/commons/Button";
 import Image from "next/image";
 
-export default function Error({
+export default function custom500({
   error,
   reset,
 }: {
