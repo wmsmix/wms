@@ -1,16 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Hero from "~/components/Hero";
-import Link from "next/link";
-import Button from "~/components/commons/Button";
-import Image from "next/image";
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
@@ -61,4 +56,4 @@ export default function Error({
       <Footer />
     </div>
   );
-} 
+}
