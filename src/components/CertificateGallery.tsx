@@ -90,6 +90,8 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   const [zoomLevel, setZoomLevel] = useState(1);
   const [sliderIndex, setSliderIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Jumlah item yang ditampilkan pada slider berdasarkan lebar layar
   const [itemsPerView, setItemsPerView] = useState(3);
@@ -109,6 +111,33 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Touch event handlers untuk mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches?.[0]?.clientX ?? null);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches?.[0]?.clientX ?? null);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && sliderIndex < certificates.length - itemsPerView) {
+      nextSlide();
+    }
+    if (isRightSwipe && sliderIndex > 0) {
+      prevSlide();
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   const openModal = (certificate: Certificate) => {
     setSelectedCertificate(certificate);
@@ -201,12 +230,10 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   // Render gallery dalam dua mode berbeda
   const renderGallery = () => {
     if (isDefault) {
-      // Gallery dengan background hijau dan arrow untuk TKDN
       return (
         <div className="relative mx-auto max-w-6xl">
-          {/* Slider Container with Custom Navigation */}
           <div className="relative w-full overflow-hidden py-6">
-            {/* Left Navigation Arrow - Using octagon shape like modal */}
+            {/* Left Navigation Arrow - Hidden on mobile */}
             <div className="absolute inset-y-0 left-0 z-20 ml-3 hidden items-center md:flex">
               <div
                 className={`relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
@@ -246,6 +273,9 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               style={{
                 transform: `translateX(-${sliderIndex * (100 / itemsPerView)}%)`,
               }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               {certificates.map((certificate, index) => (
                 <div
@@ -255,10 +285,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                     width: `${100 / itemsPerView}%`,
                     opacity: getItemOpacity(index),
                     transform: `scale(${getItemScale(index)})`,
-                    zIndex:
-                      index === sliderIndex + Math.floor(itemsPerView / 2)
-                        ? 10
-                        : 5,
+                    zIndex: index === sliderIndex + Math.floor(itemsPerView / 2) ? 10 : 5,
                   }}
                   onClick={() => openModal(certificate)}
                 >
@@ -276,7 +303,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               ))}
             </div>
 
-            {/* Right Navigation Arrow - Using octagon shape like modal */}
+            {/* Right Navigation Arrow - Hidden on mobile */}
             <div className="absolute inset-y-0 right-0 z-20 mr-3 hidden items-center md:flex">
               <div
                 className={`relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
@@ -335,11 +362,15 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
         </div>
       );
     } else {
-      // Gallery standar untuk jenis sertifikat lainnya
       return (
         <div className="mx-auto max-w-6xl">
-          <div className="flex justify-center gap-8">
-            {certificates.map((certificate) => (
+          <div 
+            className="relative flex justify-start gap-8 overflow-x-auto px-4 md:justify-center md:px-0"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {certificates.map((certificate, index) => (
               <div
                 key={certificate.id}
                 className="cursor-pointer"
@@ -347,7 +378,13 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               >
                 <div className="overflow-hidden transition-all duration-300 hover:opacity-90">
                   <div
-                    className={`${landscape ? "aspect-[4/3] w-[340px] md:w-[520px]" : large ? "aspect-[3/4] w-[340px] md:w-[480px]" : "aspect-[3/4] w-[340px]"} relative`}
+                    className={`${
+                      landscape
+                        ? "aspect-[4/3] w-[340px] md:w-[520px]"
+                        : large
+                        ? "aspect-[3/4] w-[340px] md:w-[480px]"
+                        : "aspect-[3/4] w-[340px]"
+                    } relative`}
                   >
                     <Image
                       src={certificate.image}
@@ -360,6 +397,18 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               </div>
             ))}
           </div>
+
+          {/* Mobile Indicators */}
+          <div className="mt-4 flex justify-center space-x-2 md:hidden">
+            {certificates.map((_, index) => (
+              <div
+                key={index}
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                  index === sliderIndex ? "bg-blue-700" : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       );
     }
@@ -369,7 +418,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
     <div>
       {renderGallery()}
 
-      {/* Modal - sama untuk semua jenis gallery */}
+      {/* Modal */}
       {selectedCertificate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-blue-primary bg-opacity-80">
           <div className="relative flex h-screen w-screen flex-col items-center px-4 py-6">
@@ -442,7 +491,9 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
 
               <div className="mx-4 flex max-h-[90vh] flex-1 justify-center">
                 <div
-                  className={`flex items-center justify-center overflow-hidden ${isDefault ? "rounded-md border-8 border-[#d1d68d] bg-[#ffffea]" : ""}`}
+                  className={`flex items-center justify-center overflow-hidden ${
+                    isDefault ? "rounded-md border-8 border-[#d1d68d] bg-[#ffffea]" : ""
+                  }`}
                   style={{
                     transform: `scale(${zoomLevel})`,
                     transformOrigin: "center center",
