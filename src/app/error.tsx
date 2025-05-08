@@ -23,7 +23,7 @@ export default function Error({
           mobileBackgroundImage="/images/img-500.png"
           headline="Server Sedang Sibuk, Beban Melebihi Kapasitas!"
           subheadline="Banyak permintaan yang sedang kami proses. Coba muat ulang halaman dalam beberapa detik."
-          ctaText="MUAT ULANG HALAMAN"
+          ctaText="MUAT ULANG"
           ctaHref="/"
         />
       </div>

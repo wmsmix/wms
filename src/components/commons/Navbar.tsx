@@ -175,6 +175,13 @@ const Navbar: React.FC = () => {
                     </Link>
                   </div>
                 </div>
+
+                <Link
+                  href="/products#support-letter"
+                  className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                >
+                  Support Letter
+                </Link>
               </div>
             </div>
 
