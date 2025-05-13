@@ -19,6 +19,7 @@ export default function NotFound() {
           subheadline="Halaman yang Anda cari tidak dapat ditemukan, mungkin kami bisa membantu Anda kembali ke jalan utama."
           ctaText="KEMBALI KE BERANDA"
           ctaHref="/"
+          showBreadcrumbs={false}
         />
       </div>
 

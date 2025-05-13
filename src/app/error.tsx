@@ -25,6 +25,7 @@ export default function Error({
           subheadline="Banyak permintaan yang sedang kami proses. Coba muat ulang halaman dalam beberapa detik."
           ctaText="MUAT ULANG"
           ctaHref="/"
+          showBreadcrumbs={false}
         />
       </div>
 

@@ -228,17 +228,17 @@ const Footer = () => {
         <div className="flex gap-5">
           {[
             {
-              href: "https://facebook.com",
+              href: "https://www.facebook.com/wmsmixindonesia",
               icon: "/svgs/icon-facebook.svg",
               alt: "Facebook",
             },
             {
-              href: "https://instagram.com",
+              href: "https://www.instagram.com/wmsmix.indonesia",
               icon: "/svgs/icon-instagram.svg",
               alt: "Instagram",
             },
             {
-              href: "https://linkedin.com",
+              href: "https://www.linkedin.com/company/pt-wms",
               icon: "/svgs/icon-linkedin.svg",
               alt: "LinkedIn",
             },
