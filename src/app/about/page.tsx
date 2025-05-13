@@ -6,7 +6,6 @@ import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import Hero from "~/components/Hero";
 import NewsGrid from "~/components/NewsGrid";
-import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
 import FeatureCard from "~/components/FeatureCard";
@@ -72,7 +71,7 @@ export default function AboutPage() {
       const containerRect = container.getBoundingClientRect();
       const containerTop = containerRect.top;
       const containerHeight = container.offsetHeight;
-      const viewportHeight = window.innerHeight;
+      const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
 
       if (containerTop < viewportHeight && containerTop + containerHeight > 0) {
         const stepsTotal = processSteps.length;
@@ -95,8 +94,10 @@ export default function AboutPage() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, [activeStep, processSteps.length]);
 
   return (
@@ -175,8 +176,7 @@ export default function AboutPage() {
       <div
         className="relative bg-blue-primary py-24"
         style={{
-          clipPath:
-            window.innerWidth <= 768
+          clipPath: typeof window !== 'undefined' && window.innerWidth <= 768
               ? "polygon(0 3%, 8% 0, 92% 0, 100% 3%, 100% 100%, 0 100%)"
               : "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
         }}
