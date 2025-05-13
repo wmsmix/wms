@@ -13,6 +13,7 @@ import PrecastFeatures from "~/components/PrecastFeatures";
 import ClippedSection from "~/components/ClippedSection";
 import NewsGrid from "~/components/NewsGrid";
 import precastProductsData from "~/data/precast-products.json";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 interface Feature {
   icon: string;
@@ -57,6 +58,8 @@ export default function PrecastConcreteProductDetail() {
   const params = useParams();
   const [product, setProduct] = useState<ProductData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isKansteen, setIsKansteen] = useState(false);
+  const [currentSlug, setCurrentSlug] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -68,6 +71,14 @@ export default function PrecastConcreteProductDetail() {
           : Array.isArray(params.slug)
             ? params.slug[0]
             : "";
+      
+      // Set current slug for breadcrumbs
+      if (slug) {
+        setCurrentSlug(slug);
+      }
+      
+      // Set isKansteen flag
+      setIsKansteen(slug === "kansteen");
 
       // Ambil data dari precast-products.json berdasarkan slug
       if (
@@ -120,6 +131,15 @@ export default function PrecastConcreteProductDetail() {
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
+      {/* Breadcrumbs */}
+      <div className="relative pt-20">
+        <Breadcrumbs items={[
+          { label: "Produk & Layanan", href: "/products" },
+          { label: "Precast Concrete", href: "/products/precast-concrete" },
+          { label: product.title }
+        ]} textColor="text-black" hoverColor="hover:text-gray-700" />
+      </div>
+
       <div className="container mx-auto px-4 pt-36">
         <h1 className="block text-center font-noto text-4xl italic text-black md:text-[64px]">
           {product.title}
@@ -161,18 +181,34 @@ export default function PrecastConcreteProductDetail() {
           isPrimaryBackground={
             index === (product.specifications?.length ?? 0) - 1
           }
+          className={index === (product.specifications?.length ?? 0) - 1 ?  "mb-[-1px]" : ""}
         />
       ))}
-      <ClippedSection
-        title="Bangunan kokoh tahan lama
+      
+      {isKansteen ? (
+        <div className="relative ">
+          <ClippedSection
+            title="Butuh Kanstin Kustom Untuk Proyek Anda?"
+            description="Kami menyediakan layanan pemesanan khusus, di mana bentuk dan ukuran kanstin dapat disesuaikan dengan kebutuhan spesifik proyek Anda."
+            buttonText="PESAN SEKARANG"
+            topBgColor="bg-white-10" 
+            bottomBgColor="bg-blue-primary"
+            clipPathBgColor="bg-black"
+          />
+        </div>
+      ) : (
+        <ClippedSection
+          title="Bangunan kokoh tahan lama
 Hemat Waktu dan Biaya"
-        description="Solusi sempurna untuk proyek Anda. Dengan desain fleksibel, kualitas terjamin, dan proses instalasi yang cepat, beton pracetak akan membantu Anda mewujudkan bangunan impian dengan lebih efisien"
-        buttonText="COBA SEKARANG"
-        topBgColor="bg-blue-primary"
-        bottomBgColor="bg-blue-primary"
-        clipPathBgColor="bg-black"
-      />
-      <div className="flex w-full flex-col items-center bg-blue-primary px-4 pb-6 md:px-8">
+          description="Solusi sempurna untuk proyek Anda. Dengan desain fleksibel, kualitas terjamin, dan proses instalasi yang cepat, beton pracetak akan membantu Anda mewujudkan bangunan impian dengan lebih efisien"
+          buttonText="COBA SEKARANG"
+          topBgColor="bg-blue-primary"
+          bottomBgColor="bg-blue-primary"
+          clipPathBgColor="bg-black"
+        />
+      )}
+      
+      <div className="flex w-full flex-col items-center bg-blue-primary px-4 pb-6 md:px-8 mt-[-1px]">
         <span className="mb-8 block text-center font-noto text-3xl text-white-10 sm:text-4xl md:mb-16 md:text-5xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>
@@ -183,7 +219,7 @@ Hemat Waktu dan Biaya"
           textBadgeColor="text-black"
         />
       </div>
-      <div className="flex justify-center bg-blue-primary pb-6 md:pb-12">
+      <div className="flex justify-center bg-blue-primary pb-6 md:pb-12 mt-[-1px]">
         <Button
           text="LIHAT SEMUA"
           height="48px"

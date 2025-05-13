@@ -15,6 +15,7 @@ interface ProductSpecTableProps {
   rows: TableRow[];
   runningText?: string;
   isPrimaryBackground?: boolean;
+  className?: string;
 }
 
 const ProductSpecTable: React.FC<ProductSpecTableProps> = ({
@@ -23,23 +24,29 @@ const ProductSpecTable: React.FC<ProductSpecTableProps> = ({
   rows,
   runningText,
   isPrimaryBackground = false,
+  className = "",
 }) => {
   return (
-    <div className={`mt-10 w-full ${isPrimaryBackground ? 'bg-blue-primary' : 'bg-white-10'} ${isPrimaryBackground ? 'pb-12' : ''}`}>
-      <div className={`container max-w-full bg-white-10`}>
-        <h2 className="mb-8 text-center font-noto text-2xl text-black md:text-4xl">
+    <div className={`mt-24 w-full ${isPrimaryBackground ? 'bg-blue-primary' : 'bg-white-10'} ${isPrimaryBackground ? 'pb-12' : ''} ${className}`}>
+      <div className={`container max-w-full bg-white-10 `}>
+        <h2 className="mb-8 text-center font-noto text-2xl px-10 text-black md:text-4xl mt-[-1px]">
           {title}
         </h2>
 
-        <div className="relative w-full overflow-x-auto bg-transparent text-blue-light">
+        <div className="relative w-full overflow-x-auto bg-transparent text-blue-light mt-[-1px]">
           <div className="relative overflow-x-auto rounded-t-lg">
-            <table className="w-full whitespace-nowrap min-w-[640px]">
-              <thead>
-                <tr>
+            <table className="w-full whitespace-nowrap min-w-[640px] border-collapse relative">
+              <thead className="relative">
+                <tr className="bg-white">
                   {columns.map((column, index) => (
                     <th
                       key={index}
-                      className={`border-b border-t border-gray-300 px-4 py-2 text-center font-normal ${index !== 0 ? "border-l" : ""} ${index !== columns.length - 1 ? "border-r" : ""} `}
+                      className={`border-b border-t border-gray-300 px-4 py-2 text-center font-normal 
+                        ${index !== 0 ? "border-l" : ""} 
+                        ${index !== columns.length - 1 ? "border-r" : ""}
+                        ${index === 0 ? "sticky left-0 bg-white z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]" : ""}
+                      `}
+                      style={index === 0 ? { backgroundColor: "white" } : {}}
                     >
                       {column.header}
                     </th>
@@ -48,11 +55,16 @@ const ProductSpecTable: React.FC<ProductSpecTableProps> = ({
               </thead>
               <tbody>
                 {rows.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
+                  <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                     {columns.map((column, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`border-b border-t border-gray-300 px-4 py-2 text-center ${colIndex !== 0 ? "border-l" : ""} ${colIndex !== columns.length - 1 ? "border-r" : ""} `}
+                        className={`border-b border-t border-gray-300 px-4 py-2 text-center 
+                          ${colIndex !== 0 ? "border-l" : ""} 
+                          ${colIndex !== columns.length - 1 ? "border-r" : ""}
+                          ${colIndex === 0 ? "sticky left-0 z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]" : ""}
+                        `}
+                        style={colIndex === 0 ? { backgroundColor: rowIndex % 2 === 0 ? "#F9FAFB" : "white" } : {}}
                       >
                         {column.unit ? (
                           <>

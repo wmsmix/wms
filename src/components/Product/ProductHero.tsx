@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Button from "~/components/commons/Button";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 interface ProductHeroProps {
   title: string;
@@ -8,6 +9,10 @@ interface ProductHeroProps {
   imageSrc: string;
   buttonText?: string;
   onButtonClick?: () => void;
+  breadcrumbItems?: Array<{
+    label: string;
+    href?: string;
+  }>;
 }
 
 const ProductHero: React.FC<ProductHeroProps> = ({
@@ -16,6 +21,7 @@ const ProductHero: React.FC<ProductHeroProps> = ({
   imageSrc,
   buttonText = "PELAJARI LEBIH LANJUT",
   onButtonClick,
+  breadcrumbItems = []
 }) => {
   // Fungsi untuk mengubah kata bahasa Inggris menjadi italic
   const italicizeEnglishWords = (text: string) => {
@@ -44,8 +50,10 @@ const ProductHero: React.FC<ProductHeroProps> = ({
         <div className="absolute inset-0 bg-gradient-to-b " />
       </div>
 
+      <Breadcrumbs items={breadcrumbItems} />
+
       <div className="relative z-10 pt-56 flex h-full flex-col items-center justify-center px-4 text-center">
-        <h1 className="text-white mb-4 font-noto text-3xl md:mb-6 md:text-5xl lg:text-6xl">
+        <h1 className="text-white mb-4 font-noto text-3xl md:mb-6 md:text-3xl lg:text-4xl sm:text-xl">
           {italicizeEnglishWords(title)}
         </h1>
         <p className="text-white-base opacity-75 mb-8 max-w-3xl text-base md:mb-10 md:text-xl">
@@ -70,7 +78,7 @@ const ProductHero: React.FC<ProductHeroProps> = ({
 
       <style jsx>{`
         .product-hero {
-          clip-path: polygon(0 0, 100% 0, 100% 76%, 90% 100%, 8% 100%, 0 78%);
+          clip-path: polygon(0 0, 100% 0, 100% 76%, 92% 100%, 8% 100%, 0 76%);
         }
 
         @media (max-width: 768px) {
@@ -78,10 +86,10 @@ const ProductHero: React.FC<ProductHeroProps> = ({
             clip-path: polygon(
               0 0,
               100% 0,
-              100% 94%,
-              80% 100%,
-              20% 100%,
-              0 94%
+              100% 90%,
+              90% 100%,
+              10% 100%,
+              0 90%
             );
           }
         }

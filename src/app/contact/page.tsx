@@ -11,146 +11,8 @@ import ProductHero from "~/components/Product/ProductHero";
 import ClippedSection from "~/components/ClippedSection";
 import PrecastFeatures from "~/components/PrecastFeatures";
 import CardProduct from "~/components/CardProduct";
-
-const MapWithCustomMarker = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<unknown>(null);
-
-  useEffect(() => {
-    const loadMap = async () => {
-      if (typeof window === 'undefined' || !mapRef.current || mapInstanceRef.current) {
-        return;
-      }
-      
-      try {
-        const L = await import('leaflet');
-        
-        // Tambahkan CSS Leaflet
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        document.head.appendChild(link);
-        
-        const latitude = -7.011416668680984;
-        const longitude = 112.13599997596744;
-        
-        // Buat peta dengan style yang mirip Google Maps
-        const map = L.map(mapRef.current, {
-          center: [latitude, longitude],
-          zoom: 15,
-          zoomControl: true,
-          attributionControl: false
-        });
-        
-        // Gunakan Google Maps tile layer
-        L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-          maxZoom: 20,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-        }).addTo(map);
-        
-        // Tambahkan marker dengan div marker kustom (tidak menggunakan scaling otomatis)
-        const customHtmlIcon = L.divIcon({
-          className: 'custom-marker', // Tidak menggunakan class default Leaflet
-          html: `<img src="images/img-marker.png" style="width: auto; height: auto; max-width: none;" alt="Marker" />`,
-          iconSize: undefined, // Biarkan ukuran ditentukan oleh gambar asli
-          iconAnchor: [25, 25] // Perkiraan pusat gambar
-        });
-        
-        const marker = L.marker([latitude, longitude], { 
-          icon: customHtmlIcon,
-          interactive: true,
-          keyboard: true
-        }).addTo(map);
-        
-        // Tambahkan event untuk membuka Google Maps saat marker di klik
-        marker.on('click', () => {
-          window.open('https://maps.app.goo.gl/b73VAyRA2Hhi6JCn7', '_blank');
-        });
-        
-        // Tambahkan style untuk marker kustom
-        const style = document.createElement('style');
-        style.textContent = `
-          .custom-marker {
-            background: none;
-            border: none;
-          }
-          .custom-marker img {
-            display: block;
-            width: auto;
-            height: auto;
-            max-width: none;
-            transform: translate(-50%, -50%) scale(0.7);
-          }
-        `;
-        document.head.appendChild(style);
-        
-        // Tambahkan kotak info lokasi seperti di Google Maps dengan alamat WMS
-        const locationInfoDiv = document.createElement('div');
-        locationInfoDiv.innerHTML = `
-          <div style="
-            background: white; 
-            padding: 10px; 
-            border-radius: 2px; 
-            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-            margin-top: 10px;
-            margin-left: 10px;
-            font-family: Arial, sans-serif;
-            min-width: 200px;
-            max-width: 300px;
-          ">
-            <strong style="display: block; color: #333; font-size: 14px;">Aspal dan Beton PT. Wahana Makmur Sentosa</strong>
-            <span style="color: #777; font-size: 12px;">Asphalt Mixing Plant (AMP), Batching Plant, Cement, Ready Mix, Hot Mix, Precast</span>
-            <a href="https://maps.app.goo.gl/b73VAyRA2Hhi6JCn7" target="_blank" style="
-              display: block;
-              color: #1a73e8;
-              font-size: 12px;
-              margin-top: 5px;
-              text-decoration: none;
-            ">View larger map</a>
-          </div>
-        `;
-        
-        // Tambahkan control info lokasi menggunakan createCorner
-        const infoContainer = L.DomUtil.create('div');
-        infoContainer.appendChild(locationInfoDiv);
-        
-        // Secara manual tambahkan info lokasi ke sudut kiri atas
-        const controlCorner = map.getContainer().querySelector('.leaflet-top.leaflet-left');
-        if (controlCorner) {
-          controlCorner.appendChild(infoContainer);
-        }
-        
-        mapInstanceRef.current = map;
-        
-        // Menambahkan attribution di pojok bawah kanan
-        const attribution = L.control.attribution({
-          position: 'bottomright'
-        }).addTo(map);
-        attribution.setPrefix('');
-        attribution.addAttribution('Map data ©2025 Google | Terms');
-        
-      } catch (error) {
-        console.error("Error loading map:", error);
-      }
-    };
-    
-    void loadMap();
-    
-    return () => {
-      if (mapInstanceRef.current) {
-        try {
-          const map = mapInstanceRef.current as { remove: () => void };
-          map.remove();
-          mapInstanceRef.current = null;
-        } catch (error) {
-          console.error("Error removing map:", error);
-        }
-      }
-    };
-  }, []);
-
-  return <div ref={mapRef} style={{ height: '100%', width: '100%', position: 'relative' }} />;
-};
+import { MapWithCustomMarker } from "~/components/ContactForm";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -161,10 +23,12 @@ export default function ContactPage() {
     location: "",
     message: "",
   });
-  
+
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { id, value } = e.target;
     setFormData({
       ...formData,
@@ -186,8 +50,14 @@ export default function ContactPage() {
   const handleSubmit = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.company || !formData.projectName || 
-        !formData.phone || !formData.location || !formData.message) {
+    if (
+      !formData.name ||
+      !formData.company ||
+      !formData.projectName ||
+      !formData.phone ||
+      !formData.location ||
+      !formData.message
+    ) {
       alert("Harap isi semua field sebelum mengirim pesan");
       return;
     }
@@ -224,8 +94,14 @@ Detail Proyek: ${formData.message}
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
-      <span className="block text-center font-noto text-4xl text-black md:text-[64px] mt-36">
-        Hubungi Kami
+      <div className="relative pt-20">
+        <Breadcrumbs items={[
+          { label: "Kontak", href: "/contact" }
+        ]} textColor="text-black" hoverColor="hover:text-gray-700" />
+      </div>
+      <span className="mt-36 block leading-tight text-center font-noto text-4xl text-black md:text-[64px]">
+        Siap Bangun <br />
+        Infratstruktur Berkualitas?
       </span>
       <div className="mx-auto w-full max-w-7xl">
         <div className="contact-form-container bg-white relative overflow-hidden">
@@ -235,8 +111,8 @@ Detail Proyek: ${formData.message}
                 {status === "idle" ? (
                   <>
                     <span className="mb-6 block text-base text-black sm:text-lg md:text-xl">
-                      Hubungi kami dan wujudkan proyek Anda. Lengkapi formulir di
-                      bawah ini untuk memulai proses kerja sama.
+                      Hubungi kami dan wujudkan proyek Anda. Lengkapi formulir
+                      di bawah ini untuk memulai proses kerja sama.
                     </span>
                     <form className="mt-8">
                       <div className="mb-4">
@@ -319,8 +195,10 @@ Detail Proyek: ${formData.message}
                             text="KIRIM PESAN"
                             className="text-sm font-normal sm:text-lg md:text-xl"
                             clipPath={{
-                              outer: "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                              inner: "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                              outer:
+                                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                              inner:
+                                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
                             }}
                             margin="1px"
                             textSize="xl"
@@ -338,15 +216,18 @@ Detail Proyek: ${formData.message}
                             Pesan Anda Berhasil Dikirim
                           </h2>
                           <p className="mb-8 text-lg text-gray-600">
-                            Terima kasih telah mengubungi PT WMS. Mohon ditunggu,
-                            admin kami akan segera membalas pesan Anda.
+                            Terima kasih telah mengubungi PT WMS. Mohon
+                            ditunggu, admin kami akan segera membalas pesan
+                            Anda.
                           </p>
                           <Button
                             text="KEMBALI"
                             className="text-2xl font-normal sm:text-2xl"
                             clipPath={{
-                              outer: "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                              inner: "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                              outer:
+                                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                              inner:
+                                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
                             }}
                             margin="1px"
                             onClick={() => setStatus("idle")}
@@ -391,8 +272,10 @@ Detail Proyek: ${formData.message}
                             text="ISI FORMULIR LAGI"
                             className="text-2xl font-normal sm:text-2xl"
                             clipPath={{
-                              outer: "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                              inner: "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                              outer:
+                                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                              inner:
+                                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
                             }}
                             margin="1px"
                             onClick={() => setStatus("idle")}
@@ -415,14 +298,14 @@ Detail Proyek: ${formData.message}
           <style jsx global>{`
             .contact-form-container {
               clip-path: polygon(
-                8% 0%,
-                92% 0%,
-                100% 8%,
-                100% 92%,
-                92% 100%,
-                8% 100%,
-                0% 92%,
-                0% 8%
+                4% 0%,
+                96% 0%,
+                100% 6%,
+                100% 94%,
+                96% 100%,
+                4% 100%,
+                0% 94%,
+                0% 6%
               );
               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             }
@@ -430,12 +313,12 @@ Detail Proyek: ${formData.message}
             @media (max-width: 768px) {
               .contact-form-container {
                 clip-path: polygon(
-                  4% 0%,
-                  96% 0%,
+                  8% 0%,
+                  92% 0%,
                   100% 4%,
                   100% 96%,
-                  96% 100%,
-                  4% 100%,
+                  92% 100%,
+                  8% 100%,
                   0% 96%,
                   0% 4%
                 );

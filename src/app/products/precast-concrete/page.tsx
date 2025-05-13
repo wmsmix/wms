@@ -40,13 +40,16 @@ export default function AspalProductPage() {
 
       <ProductHero
         title="Precast Concrete"
-        description="Hemat biaya, hemat waktu
-Solusi cerdas untuk bangunan modern"
+        description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dan berbagai kebutuhan infrastruktur lainnya."
         imageSrc="/images/img-hero-precast.png"
         buttonText="TANYA LEBIH LANJUT"
         onButtonClick={() => {
           window.location.href = "/contact";
         }}
+        breadcrumbItems={[
+          { label: "Produk & Layanan", href: "/products" },
+          { label: "Precast Concrete", href: "/products/precast-concrete" }
+        ]}
       />
 
       <PrecastFeatures features={precastFeatures} bgColor="bg-white-10" />
@@ -67,7 +70,6 @@ Solusi cerdas untuk bangunan modern"
               borderWidth="0.5px"
               backgroundColor="white"
               height="500px"
-              buttonText="LIHAT DETAIL"
             />
           </div>
 
@@ -138,7 +140,7 @@ Hemat Waktu dan Biaya"
         clipPathBgColor="bg-black"
       />
 
-      <div className="flex w-full flex-col items-center bg-blue-primary px-4 pb-6 md:px-8">
+      <div className="flex w-full flex-col items-center bg-blue-primary px-4 pb-6 md:px-8 mt-[-1px]">
         <span className="mb-8 block text-center font-noto text-3xl text-white-10 sm:text-4xl md:mb-16 md:text-5xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>

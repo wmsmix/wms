@@ -123,12 +123,12 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
 
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe && sliderIndex < certificates.length - itemsPerView) {
+    if (isLeftSwipe && sliderIndex < certificates.length - 1) {
       nextSlide();
     }
     if (isRightSwipe && sliderIndex > 0) {
@@ -179,10 +179,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   };
 
   const nextSlide = () => {
-    const newIndex = Math.min(
-      sliderIndex + 1,
-      certificates.length - itemsPerView,
-    );
+    const newIndex = Math.min(sliderIndex + 1, certificates.length - 1);
     setSliderIndex(newIndex);
   };
 
@@ -191,49 +188,121 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
     setSliderIndex(newIndex);
   };
 
-  // Fungsi untuk menentukan opacity item berdasarkan posisi (hanya untuk default gallery)
+  // Fungsi untuk menentukan opacity item berdasarkan posisi (untuk semua gallery)
   const getItemOpacity = (index: number) => {
-    if (!isDefault) return 1; // Full opacity untuk non-default gallery
+    const activeIndex = sliderIndex;
+    const distance = Math.abs(index - activeIndex);
 
-    const position = index - sliderIndex;
+    // Pada tampilan mobile gunakan opacity 1 untuk semua item
+    if (itemsPerView === 1) return 1;
 
-    // Item tengah memiliki opacity penuh
-    if (position >= 0 && position < itemsPerView) {
-      // Untuk efek gradient opacity pada item pinggir dalam view
-      if (itemsPerView > 1) {
-        if (position === 0) return 0.7; // Item paling kiri
-        if (position === itemsPerView - 1) return 0.7; // Item paling kanan
-      }
-      return 1; // Item tengah
+    // Untuk desktop, semua item memiliki opacity yang sama
+    return 1;
+  };
+
+  // Fungsi untuk menentukan scale item berdasarkan posisi (untuk semua gallery)
+  const getItemScale = (index: number) => {
+    const activeIndex = sliderIndex;
+    const distance = Math.abs(index - activeIndex);
+
+    // Pada tampilan mobile, gunakan skala yang berbeda (lebih besar)
+    if (itemsPerView === 1) {
+      return index === activeIndex ? 1 : 0.95;
     }
 
-    // Item di luar view memiliki opacity rendah
-    return 0.4;
+    // Untuk desktop, semua sertifikat memiliki skala yang sama
+    return 1;
   };
 
-  // Fungsi untuk menentukan scale item berdasarkan posisi (hanya untuk default gallery)
-  const getItemScale = (index: number) => {
-    if (!isDefault) return 1; // Full scale untuk non-default gallery
-
-    const position = index - sliderIndex;
-
-    // Item tengah memiliki scale penuh
-    if (position > 0 && position < itemsPerView - 1) return 1;
-
-    // Item pinggir dalam view memiliki scale lebih kecil
-    if (position === 0 || position === itemsPerView - 1) return 0.95;
-
-    // Item di luar view
-    return 0.9;
-  };
-
-  // Render gallery dalam dua mode berbeda
+  // Render gallery menggunakan style yang konsisten
   const renderGallery = () => {
-    if (isDefault) {
+    // Pendekatan baru: Untuk mobile (itemsPerView === 1), gunakan scroll snapping
+    // yang selalu mencentering item
+    
+    if (itemsPerView === 1) {
+      // Mobile view dengan scroll snapping
       return (
         <div className="relative mx-auto max-w-6xl">
           <div className="relative w-full overflow-hidden py-6">
-            {/* Left Navigation Arrow - Hidden on mobile */}
+            <div 
+              ref={sliderRef}
+              className="flex snap-x snap-mandatory overflow-x-auto hide-scrollbar px-4"
+              style={{
+                scrollBehavior: 'smooth',
+                WebkitOverflowScrolling: 'touch',
+                scrollSnapType: 'x mandatory',
+                paddingRight: '15%', // Mengurangi padding kanan agar item utama lebih besar
+              }}
+            >
+              {certificates.map((certificate, index) => (
+                <div
+                  key={certificate.id}
+                  className="flex-shrink-0 cursor-pointer px-4 snap-center"
+                  style={{
+                    width: '100%', // Memperbesar lebar item untuk tampilan yang lebih besar
+                    scrollSnapAlign: 'center',
+                    // Hanya kurangi scale untuk item non-aktif, tetapi tetap opacity 1
+                    opacity: 1,
+                    transform: `scale(${index === sliderIndex ? 1 : 0.95})`,
+                    zIndex: index === sliderIndex ? 10 : 5,
+                  }}
+                  onClick={() => {
+                    openModal(certificate);
+                    setSliderIndex(index);
+                  }}
+                >
+                  <div
+                    className={`overflow-hidden transition-transform duration-300 hover:shadow-lg ${isDefault ? "shadow-md" : ""}`}
+                  >
+                    <div
+                      className={`relative ${
+                        landscape
+                          ? "aspect-[4/3] w-full"
+                          : large || isDefault
+                            ? "aspect-[3/4] w-full"
+                            : "aspect-[3/4] w-full"
+                      }`}
+                    >
+                      <Image
+                        src={certificate.image}
+                        alt={certificate.title}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    // Desktop view dengan slider normal
+    // Menghitung offset untuk memastikan item aktif selalu di tengah
+    const centerOffset = Math.floor(itemsPerView / 2);
+    
+    // Tentukan berapa banyak item yang tersisa di kanan dan kiri
+    const maxStartPosition = Math.max(0, certificates.length - itemsPerView);
+    
+    // Hitung posisi slide yang ideal (sertifikat aktif di tengah)
+    let idealPosition = sliderIndex - centerOffset;
+    
+    // Batasi ideal position agar tidak keluar batas
+    idealPosition = Math.max(0, Math.min(idealPosition, maxStartPosition));
+    
+    // Hitung translateX berdasarkan posisi yang sudah dibatasi
+    const translateX = -(idealPosition * 100) / itemsPerView;
+
+    // Cek apakah perlu menampilkan navigasi arrow (hanya jika sertifikat > 3)
+    const showNavigation = certificates.length > 3;
+
+    return (
+      <div className="relative mx-auto max-w-6xl">
+        <div className="relative w-full overflow-hidden py-6">
+          {/* Left Navigation Arrow - Hidden pada mobile atau jika sertifikat <= 3 */}
+          {showNavigation && (
             <div className="absolute inset-y-0 left-0 z-20 ml-3 hidden items-center md:flex">
               <div
                 className={`relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
@@ -266,55 +335,74 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 </div>
               </div>
             </div>
+          )}
 
-            <div
-              ref={sliderRef}
-              className="flex px-4 transition-transform duration-500 ease-in-out md:px-16"
-              style={{
-                transform: `translateX(-${sliderIndex * (100 / itemsPerView)}%)`,
-              }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              {certificates.map((certificate, index) => (
+          <div
+            ref={sliderRef}
+            className={`flex px-4 transition-transform duration-500 ease-in-out md:px-16 ${certificates.length <= 3 ? 'justify-center' : ''}`}
+            style={{
+              transform: certificates.length <= 3 ? 'none' : `translateX(${translateX}%)`,
+            }}
+          >
+            {certificates.map((certificate, index) => (
+              <div
+                key={certificate.id}
+                className="flex-shrink-0 cursor-pointer px-3 transition-all duration-300 md:px-4"
+                style={{
+                  width: certificates.length <= 3 
+                    ? '100%' 
+                    : `${120 / itemsPerView}%`, // Ukuran lebih besar untuk <= 3 sertifikat
+                  opacity: getItemOpacity(index),
+                  transform: `scale(${getItemScale(index)})`,
+                  zIndex: index === sliderIndex ? 10 : 5,
+                  // Ukuran khusus berdasarkan tipe sertifikat
+                  maxWidth: certificates.length <= 3 
+                    ? landscape ? '560px' : '400px' // Ukuran lebih besar untuk kedua tipe
+                    : 'none',
+                }}
+                onClick={() => {
+                  openModal(certificate);
+                  setSliderIndex(index); // Fokus pada sertifikat yang diklik
+                }}
+              >
                 <div
-                  key={certificate.id}
-                  className="flex-shrink-0 cursor-pointer px-2 transition-all duration-300"
-                  style={{
-                    width: `${100 / itemsPerView}%`,
-                    opacity: getItemOpacity(index),
-                    transform: `scale(${getItemScale(index)})`,
-                    zIndex: index === sliderIndex + Math.floor(itemsPerView / 2) ? 10 : 5,
-                  }}
-                  onClick={() => openModal(certificate)}
+                  className={`overflow-hidden transition-transform duration-300 hover:shadow-lg ${isDefault ? "shadow-md" : ""}`}
                 >
-                  <div className="overflow-hidden rounded-md border-8 border-[#d1d68d] bg-[#ffffea] p-1 shadow-md transition-transform duration-300 hover:shadow-lg">
-                    <div className="relative aspect-[3/4]">
-                      <Image
-                        src={certificate.image}
-                        alt={certificate.title}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
+                  <div
+                    className={`relative ${
+                      landscape
+                        ? "aspect-[4/3] w-full"
+                        : large || isDefault
+                          ? "aspect-[3/4] w-full"
+                          : "aspect-[3/4] w-full"
+                    }`}
+                    style={{
+                      maxHeight: landscape ? '70vh' : '80vh', // Memastikan tinggi tidak melebihi viewport
+                    }}
+                  >
+                    <Image
+                      src={certificate.image}
+                      alt={certificate.title}
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
 
-            {/* Right Navigation Arrow - Hidden on mobile */}
+          {/* Right Navigation Arrow - Hidden pada mobile atau jika sertifikat <= 3 */}
+          {showNavigation && (
             <div className="absolute inset-y-0 right-0 z-20 mr-3 hidden items-center md:flex">
               <div
                 className={`relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 ${
-                  sliderIndex >= certificates.length - itemsPerView
+                  sliderIndex >= certificates.length - 1
                     ? "cursor-not-allowed opacity-50"
                     : ""
                 }`}
                 onClick={
-                  sliderIndex >= certificates.length - itemsPerView
-                    ? undefined
-                    : nextSlide
+                  sliderIndex >= certificates.length - 1 ? undefined : nextSlide
                 }
               >
                 <div
@@ -342,77 +430,57 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Indicators/Pagination */}
-          <div className="mt-2 flex justify-center space-x-2">
-            {Array.from({
-              length: Math.ceil(certificates.length / itemsPerView),
-            }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setSliderIndex(index)}
-                className={`h-2 w-2 rounded-full ${
-                  sliderIndex === index ? "bg-blue-700" : "bg-gray-300"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
+          )}
         </div>
-      );
-    } else {
-      return (
-        <div className="mx-auto max-w-6xl">
-          <div 
-            className="relative flex justify-start gap-8 overflow-x-auto px-4 md:justify-center md:px-0"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {certificates.map((certificate, index) => (
-              <div
-                key={certificate.id}
-                className="cursor-pointer"
-                onClick={() => openModal(certificate)}
-              >
-                <div className="overflow-hidden transition-all duration-300 hover:opacity-90">
-                  <div
-                    className={`${
-                      landscape
-                        ? "aspect-[4/3] w-[340px] md:w-[520px]"
-                        : large
-                        ? "aspect-[3/4] w-[340px] md:w-[480px]"
-                        : "aspect-[3/4] w-[340px]"
-                    } relative`}
-                  >
-                    <Image
-                      src={certificate.image}
-                      alt={certificate.title}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile Indicators */}
-          <div className="mt-4 flex justify-center space-x-2 md:hidden">
-            {certificates.map((_, index) => (
-              <div
-                key={index}
-                className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                  index === sliderIndex ? "bg-blue-700" : "bg-gray-300"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      );
-    }
+      </div>
+    );
   };
+
+  // Tambahkan style khusus untuk menghilangkan scrollbar
+  useEffect(() => {
+    // Hanya tambahkan style jika itemsPerView adalah 1 (mobile)
+    if (itemsPerView === 1) {
+      const style = document.createElement('style');
+      style.textContent = `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, [itemsPerView]);
+
+  // Update event handler untuk mobile
+  useEffect(() => {
+    if (itemsPerView === 1 && sliderRef.current) {
+      const handleScroll = () => {
+        if (!sliderRef.current) return;
+        
+        const scrollLeft = sliderRef.current.scrollLeft;
+        const itemWidth = sliderRef.current.clientWidth;
+        const newIndex = Math.round(scrollLeft / itemWidth);
+        
+        if (newIndex !== sliderIndex) {
+          setSliderIndex(newIndex);
+        }
+      };
+      
+      const currentRef = sliderRef.current;
+      currentRef.addEventListener('scroll', handleScroll);
+      
+      return () => {
+        currentRef.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [itemsPerView, sliderIndex]);
 
   return (
     <div>
@@ -492,7 +560,9 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               <div className="mx-4 flex max-h-[90vh] flex-1 justify-center">
                 <div
                   className={`flex items-center justify-center overflow-hidden ${
-                    isDefault ? "rounded-md border-8 border-[#d1d68d] bg-[#ffffea]" : ""
+                    isDefault
+                      ? "rounded-md border-8 border-[#d1d68d] bg-[#ffffea]"
+                      : ""
                   }`}
                   style={{
                     transform: `scale(${zoomLevel})`,

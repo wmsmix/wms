@@ -8,6 +8,7 @@ import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import GallerySection from "~/components/GallerySection";
 import NewsGrid from "~/components/NewsGrid";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 export default function AspalProductPage() {
   const router = useRouter();
@@ -31,6 +32,13 @@ export default function AspalProductPage() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40" />
+        </div>
+
+        {/* Breadcrumbs */}
+        <div className="absolute top-0 left-0 z-50 w-full pt-20">
+          <Breadcrumbs items={[
+            { label: "Proyek", href: "/projects" }
+          ]} />
         </div>
 
         {/* Content */}
@@ -77,10 +85,10 @@ export default function AspalProductPage() {
       </section>
 
       <div className="flex w-full flex-col px-4 py-16 md:flex-row md:px-16 md:py-32">
-        <div className="relative order-1 mb-8 h-[350px] w-full px-6 md:mb-0 md:h-[500px] md:w-1/2 md:px-0 md:ps-24">
+        <div className="relative order-1 mb-8 h-[217px] w-full px-6 md:mb-0 md:h-[500px] md:w-1/2 md:px-0 md:ps-24">
           <div className="relative h-full w-full">
             <div
-              className="relative h-full w-full cursor-pointer overflow-hidden"
+              className="relative h-full w-full cursor-pointer overflow-hidden main-image"
               onClick={() => navigateToProjectDetail("jalan-lingkar-tuban")}
             >
               <Image
@@ -88,27 +96,42 @@ export default function AspalProductPage() {
                 alt="Jalan Lingkar Tuban"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+              <style jsx>{`
+                .main-image {
+                  clip-path: polygon(6% 0%, 94% 0%, 100% 6%, 100% 94%, 94% 100%, 6% 100%, 0% 94%, 0% 6%);
+                }
+                
+                @media (max-width: 768px) {
+                  .main-image {
+                    clip-path: polygon(4% 0%, 96% 0%, 100% 8%, 100% 96%, 92% 100%, 4% 100%, 0% 92%, 0% 8%);
+                  }
+                }
+              `}</style>
+            </div>
+
+            <div
+              className="absolute bottom-[-20px] right-[-20px] z-10 h-[140px] w-[180px] md:bottom-[-30px] md:right-[-30px] md:h-[190px] md:w-[254px]"
+              style={{
+                clipPath:
+                  "polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%)",
+                backgroundColor: "#ffffff",
+                padding: "2px",
+              }}
+            >
+              <div
+                className="flex h-full w-full flex-col items-center justify-center gap-2 bg-blue-primary"
                 style={{
                   clipPath:
                     "polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%)",
                 }}
-              />
-            </div>
-
-            <div
-              className={`absolute bottom-[-20px] right-[-20px] z-10 h-[140px] w-[180px] bg-blue-primary md:bottom-[-30px] md:right-[-30px] md:h-[190px] md:w-[254px]`}
-              style={{
-                clipPath:
-                  "polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%)",
-              }}
-            >
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+              >
                 <span
-                  className={`text-white text-[54px] font-semibold leading-none md:text-[64px]`}
+                  className="text-[42px] md:text-[54px] font-semibold leading-none text-white-10 md:text-[64px]"
                 >
                   103M
                 </span>
-                <span className={`text-white -mt-2 text-lg md:text-2xl`}>
+                <span className="text-white-10 -mt-2 text-lg md:text-2xl">
                   NILAI PROYEK
                 </span>
               </div>
@@ -118,17 +141,17 @@ export default function AspalProductPage() {
 
         <div className="order-2 flex w-full flex-col items-start justify-center px-6 md:w-1/2 md:px-16">
           <span
-            className={`mb-2 text-left text-3xl text-black md:mb-4 md:text-5xl`}
+            className="mb-2 text-left text-3xl text-black md:mb-4 md:text-5xl"
           >
             (2022-2024)
           </span>
           <span
-            className={`mb-2 text-left text-3xl text-black md:mb-4 md:text-5xl`}
+            className="mb-2 text-left text-3xl text-black md:mb-4 md:text-5xl"
           >
             Jalan Lingkar Tuban
           </span>
           <p
-            className={`text-left text-sm text-gray-base md:pe-48 md:text-base`}
+            className="text-left text-sm text-gray-base md:pe-48 md:text-base"
           >
             Pembangunan Jalan Lingkar Tuban yang berlokasi di Desa Prunggahan
             Kulon, Tuban, sepanjang 7,98 km. Ruang lingkup WMS berada pada
@@ -147,10 +170,10 @@ export default function AspalProductPage() {
                 style={{ filter: "brightness(0)" }}
               />
               <div className="ms-2 flex flex-col">
-                <span className={`text-[8px] text-black md:text-[10px]`}>
+                <span className="text-[8px] text-black md:text-[10px]">
                   TOTAL PANJANG JALAN
                 </span>
-                <span className={`text-xl text-black md:text-2xl`}>
+                <span className="text-xl text-black md:text-2xl">
                   7.98 KM
                 </span>
               </div>
@@ -183,6 +206,7 @@ export default function AspalProductPage() {
           text="DISKUSI PROYEK BERSAMA"
           className="bg-blue-primary text-lg font-normal md:text-2xl"
           bgColor="#0C1F5A"
+          href="/contact"
           clipPath={{
             outer:
               "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",

@@ -15,6 +15,7 @@ import CardProduct from "~/components/CardProduct";
 import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 export default function ProductsPage() {
   return (
@@ -30,16 +31,14 @@ export default function ProductsPage() {
             subheadline="Mulai dari pengadaan material berkualitas seperti aspal dan beton hingga pelaksanaan proyek konstruksi secara profesional, kami siap menjadi mitra terpercaya Anda."
             ctaText="KONSULTASI SEKARANG"
             ctaHref="/contact"
+            breadcrumbItems={[
+              { label: "Produk & Layanan", href: "/products" }
+            ]}
           />
         </div>
         <div
-          className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 text-gray-base md:py-16"
+          className="custom-clip-path flex w-screen max-w-full flex-col items-center bg-white-10 py-8 text-gray-base md:py-16"
           style={{
-            clipPath: `polygon(${
-              // window.innerWidth < 768
-              // ? "6% 0%, 94% 0%, 100% 12%, 100% 100%, 94% 100%, 6% 100%, 0% 100%, 0% 12%"
-              "4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%"
-            })`,
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
             width: "100vw",
@@ -51,7 +50,7 @@ export default function ProductsPage() {
             Kustomisasi Produk Sesuai Kebutuhanmu
           </span>
           <p className="px-4 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px]">
-            Pilih dan kustomisasi produk sesuai dengan kebutuhan proyek anda,
+            Pilih dan kustomisasi produk sesuai dengan kebutuhan proyek anda,{' '}
             <br className="hidden md:block" />
             tim ahli siap membantu anda menemukan solusi yang tepat
           </p>
@@ -77,6 +76,7 @@ export default function ProductsPage() {
             position: relative;
             height: calc(700px * 0.95); /* 95% dari tinggi asli untuk mobile */
             overflow: hidden;
+            margin-top: 0; /* Menghapus margin negatif untuk breadcrumbs */
           }
 
           .hero-container :global(section) {
@@ -85,12 +85,39 @@ export default function ProductsPage() {
             left: 0;
             width: 100%;
           }
+          
+          .custom-clip-path {
+            clip-path: polygon(
+              6% 0%,
+              94% 0%,
+              100% 12%,
+              100% 100%,
+              94% 100%,
+              6% 100%,
+              0% 100%,
+              0% 12%
+            );
+          }
 
           @media (min-width: 640px) {
             .hero-container {
               height: calc(
                 964px * 0.95
               ); /* 95% dari tinggi asli untuk desktop */
+              margin-top: 0; /* Menghapus margin negatif untuk breadcrumbs pada layar lebih besar */
+            }
+            
+            .custom-clip-path {
+              clip-path: polygon(
+                4% 0%,
+                96% 0%,
+                100% 24%,
+                100% 100%,
+                96% 100%,
+                4% 100%,
+                0% 100%,
+                0% 24%
+              );
             }
           }
         `}</style>
@@ -127,12 +154,10 @@ export default function ProductsPage() {
           buttonHref="/products/precast-concrete"
         />
       </section>
-      <section className="bg-blue-primary">
+      <section className="bg-blue-primary mt-[-2px]">
         <div
-          className="flex w-screen max-w-full flex-col items-center py-8 md:py-16"
+          className="services-clip-path flex w-screen max-w-full flex-col items-center py-8 md:py-16"
           style={{
-            clipPath:
-              "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
             width: "100vw",
@@ -262,6 +287,34 @@ export default function ProductsPage() {
                 94% 100%,
                 6% 100%,
                 0% 94%,
+                0% 6%
+              );
+            }
+          }
+          
+          .services-clip-path {
+            clip-path: polygon(
+              6% 0%,
+              94% 0%,
+              100% 4%,
+              100% 100%,
+              96% 100%,
+              4% 100%,
+              0% 100%,
+              0% 4%
+            );
+          }
+          
+          @media (min-width: 768px) {
+            .services-clip-path {
+              clip-path: polygon(
+                4% 0%,
+                96% 0%,
+                100% 6%,
+                100% 100%,
+                96% 100%,
+                4% 100%,
+                0% 100%,
                 0% 6%
               );
             }

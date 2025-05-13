@@ -173,13 +173,26 @@ export default function AboutPage() {
       </section>
 
       <div
-        className="py-24"
+        className="relative bg-blue-primary py-24"
         style={{
-          clipPath: "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
-          background: "linear-gradient(135deg, #0a2570 0%, #162f87 100%)",
+          clipPath:
+            window.innerWidth <= 768
+              ? "polygon(0 3%, 8% 0, 92% 0, 100% 3%, 100% 100%, 0 100%)"
+              : "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
         }}
       >
-        <div className="container mx-auto px-4 md:px-8">
+        {/* Logo W di bagian kanan */}
+        <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-1/3 translate-x-[80%] scale-[4.5] md:block">
+          <Image
+            src="/images/img-w-2.png"
+            alt="WMS Logo"
+            fill
+            className="object-contain object-right"
+            priority
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8">
           <div className="mb-12 text-center">
             <span className="font-noto text-4xl md:text-5xl">
               Alur Proses produksi
@@ -309,7 +322,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid items-start gap-12 lg:grid-cols-3">
             <div className="text-white pt-12 lg:col-span-1">
-              <p className="mb-5 text-base font-normal leading-relaxed text-gray-300">
+              <p className="mb-5 text-base font-normal leading-relaxed text-gray-300 opacity-50">
                 Berdiri di bawah naungan
                 <br />
                 PT Restu Mulya Cipta Mandiri,
@@ -488,8 +501,7 @@ export default function AboutPage() {
       </div>
 
       <ClippedSection
-        title="Tunggu Apa lagi?
-Jadilah bagian dari kisah sukses kami!"
+        title="Tunggu Apa lagi?<br>Jadilah bagian dari kisah sukses kami!"
         description=""
         buttonText="HUBUNGI WMS"
         topBgColor="bg-white-10"

@@ -17,18 +17,30 @@ import ProductHero from "~/components/Product/ProductHero";
 import ClippedSection from "~/components/ClippedSection";
 
 export default function AspalProductPage() {
+  const handleWhatsAppClick = (productName: string) => {
+    const phoneNumber = "6282337900700"; // Nomor WhatsApp PT WMS
+    const message = `Halo, saya tertarik dengan produk ${productName}. Boleh minta informasi lebih lanjut?`;
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
       <ProductHero
         title="Aspal (Hot-Mix)"
-        description="Campuran material agregat dengan aspal dalam keadaan panas. Campuran ini kemudian dipadatkan menjadi lapisan jalan yang kuat dan tahan lama."
+        description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktur jalan."
         imageSrc="/images/img-aspal.png"
         buttonText="TANYA LEBIH LANJUT"
         onButtonClick={() => {
           window.location.href = "/contact";
         }}
+        breadcrumbItems={[
+          { label: "Produk & Layanan", href: "/products" },
+          { label: "Aspal", href: "/products/aspal" }
+        ]}
       />
 
       <div className="px-4 pt-12 md:px-8 md:pt-24">
@@ -49,6 +61,7 @@ export default function AspalProductPage() {
             borderColor="#CCCCCC"
             borderWidth="0.5px"
             backgroundColor="white"
+            buttonText="PILIH LASTON INI"
             height="560px"
             whatsappOnClick={true}
           />
@@ -60,6 +73,7 @@ export default function AspalProductPage() {
             borderColor="#CCCCCC"
             borderWidth="0.5px"
             backgroundColor="white"
+            buttonText="PILIH LASTON INI"
             height="560px"
             whatsappOnClick={true}
           />
@@ -71,29 +85,30 @@ export default function AspalProductPage() {
             borderColor="#CCCCCC"
             borderWidth="0.5px"
             backgroundColor="white"
+            buttonText="PILIH LASTON INI"
             height="560px"
             whatsappOnClick={true}
           />
         </div>
       </div>
-      <div
-        className="mt-8 flex w-screen max-w-full flex-col items-center bg-black py-16 md:mt-12 md:py-32"
-        style={{
-          clipPath:
-            "polygon(4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%)",
-          marginLeft: "calc(-50vw + 50%)",
-          marginRight: "calc(-50vw + 50%)",
-          width: "100vw",
-        }}
-      >
-        <span className="block px-4 text-center font-noto text-4xl text-white-10  lg:text-4xl">
-          Laston Lapis Antara
-        </span>
-        <p className="flex justify-start px-4 pt-4 text-center text-2xl text-gray-500 md:px-16 md:pt-8 md:text-base lg:px-96 lg:text-2xl leading-loose">
-          Lapisan ini terbuat dari campuran aspal dan agregat, dan memiliki
-          peran penting dalam memberikan daya dukung tambahan, mencegah
-          deformasi, serta melindungi lapisan di bawahnya
-        </p>
+      <div className="relative">
+        <div
+          className="mt-8 flex w-screen max-w-full flex-col items-center bg-black py-16 md:mt-12 md:py-32 clip-black-section"
+          style={{
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
+            width: "100vw",
+          }}
+        >
+          <span className="block px-4 text-center font-noto text-4xl text-white-10 lg:text-4xl">
+            Laston Lapis Antara
+          </span>
+          <p className="flex justify-start px-4 pt-4 text-center text-2xl leading-loose text-gray-500 md:px-16 md:pt-8 md:text-base lg:px-96 lg:text-2xl">
+            Lapisan ini terbuat dari campuran aspal dan agregat, dan memiliki
+            peran penting dalam memberikan daya dukung tambahan, mencegah
+            deformasi, serta melindungi lapisan di bawahnya
+          </p>
+        </div>
       </div>
       <div>
         <div className="flex w-full flex-col bg-black md:flex-row">
@@ -111,6 +126,9 @@ export default function AspalProductPage() {
                 height="40px"
                 textSize="2xl"
                 className="text-sm md:text-lg"
+                onClick={() =>
+                  handleWhatsAppClick("Laston Lapis Antara (AC-BC)")
+                }
                 clipPath={{
                   outer:
                     "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -154,6 +172,11 @@ export default function AspalProductPage() {
                 height="40px"
                 textSize="2xl"
                 className="text-sm md:text-lg"
+                onClick={() =>
+                  handleWhatsAppClick(
+                    "Laston Lapis Antara Modifikasi (AC-BC Mod)",
+                  )
+                }
                 clipPath={{
                   outer:
                     "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -165,31 +188,6 @@ export default function AspalProductPage() {
             </div>
           </div>
         </div>
-        <style jsx>{`
-          .clip-bottom-corners {
-            clip-path: polygon(
-              0% 0%,
-              100% 0%,
-              100% 85%,
-              90% 100%,
-              10% 100%,
-              0% 85%
-            );
-          }
-
-          @media (max-width: 768px) {
-            .clip-bottom-corners {
-              clip-path: polygon(
-                0% 0%,
-                100% 0%,
-                100% 94%,
-                85% 100%,
-                15% 100%,
-                0% 94%
-              );
-            }
-          }
-        `}</style>
       </div>
       <div className="px-4 pt-12 md:px-8 md:pt-24">
         <span className="block text-center font-noto text-3xl text-black md:text-4xl lg:text-[64px]">
@@ -226,9 +224,10 @@ export default function AspalProductPage() {
         </div>
       </div>
       <ClippedSection
-        title="Proyek Impian Anda,<br>Realisasikan Bersama Kami"
-        description="Dengan pengalaman bertahun-tahun, kami telah berhasil menyelesaikan berbagai proyek dengan hasil<br>yang memuaskan. Percayakan proyek Anda pada kami dan rasakan perbedaannya."
-        buttonText="MULAI SEKARANG"
+        title="Jalan Mulus, Proyek Lancar
+Pilih Aspal Juara, Pasti Tahan Lama"
+        description="Bahan baku berkualitas tinggi dan proses produksi yang ketat menghasilkan aspal dengan kinerja optimal, melampaui standar industri"
+        buttonText="COBA SEKARANG"
         topBgColor="bg-white-10"
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-blue-primary"
@@ -259,6 +258,30 @@ export default function AspalProductPage() {
         />
       </div>
       <Footer />
+
+      <style jsx global>{`
+        .clip-black-section {
+          clip-path: polygon(4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%);
+          position: relative;
+          z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+          .clip-black-section {
+            clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 100%, 90% 100%, 10% 100%, 0% 100%, 0% 10%);
+          }
+        }
+        
+        .clip-bottom-corners {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 95% 100%, 5% 100%, 0% 85%);
+        }
+
+        @media (max-width: 768px) {
+          .clip-bottom-corners {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 95% 100%, 5% 100%, 0% 92%);
+          }
+        }
+      `}</style>
     </div>
   );
 }

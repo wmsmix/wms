@@ -7,6 +7,7 @@ import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import NewsGrid from "~/components/NewsGrid";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 interface ProjectData {
   title: string;
@@ -67,9 +68,9 @@ const projectsData: Record<string, ProjectData> = {
       "Pengaturan lalu lintas selama konstruksi untuk meminimalkan gangguan",
     ],
     images: [
-      "/images/img-jejak.png",
-      "/images/img-about.png",
-      "/images/img-projects.png",
+      "/images/img-detail-jlt-1.png",
+      "/images/img-detail-jlt-2.png",
+      "/images/img-detail-jlt-3.png",
     ],
   },
   "jalan-tol-pandaan": {
@@ -110,9 +111,9 @@ const projectsData: Record<string, ProjectData> = {
       "Cuaca ekstrem yang sering menghambat progres konstruksi",
     ],
     images: [
-      "/images/img-about.png",
-      "/images/img-projects.png",
-      "/images/img-jejak.png",
+      "/images/img-detail-jlt-1.png",
+      "/images/img-detail-jlt-2.png",
+      "/images/img-detail-jlt-3.png",
     ],
   },
 };
@@ -238,6 +239,14 @@ export default function ProjectDetailPage() {
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
+      {/* Breadcrumbs */}
+      <div className="relative pt-20">
+        <Breadcrumbs items={[
+          { label: "Proyek", href: "/projects" },
+          { label: currentProject.title }
+        ]} />
+      </div>
+
       <section className="project-hero relative min-h-[320px] w-full overflow-hidden md:min-h-[400px]">
         <div className="absolute inset-0 z-0">
           <Image
@@ -333,7 +342,7 @@ export default function ProjectDetailPage() {
             </div>
             <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden md:mt-12">
               <Image
-                src={projectImage || DEFAULT_IMAGE}
+                src={currentProject.images[1] ?? DEFAULT_IMAGE}
                 alt={currentProject.title}
                 fill
                 className="object-cover"
@@ -346,7 +355,7 @@ export default function ProjectDetailPage() {
             </div>
             <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden md:mt-12">
               <Image
-                src={projectImage || DEFAULT_IMAGE}
+                src={currentProject.images[2] ?? DEFAULT_IMAGE}
                 alt={currentProject.title}
                 fill
                 className="object-cover"
