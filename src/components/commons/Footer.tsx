@@ -228,17 +228,17 @@ const Footer = () => {
         <div className="flex gap-5">
           {[
             {
-              href: "https://www.facebook.com/wmsmixindonesia",
+              href: "https://www.facebook.com/profile.php?id=61571593506561",
               icon: "/svgs/icon-facebook.svg",
               alt: "Facebook",
             },
             {
-              href: "https://www.instagram.com/wmsmix.indonesia",
+              href: "https://www.instagram.com/wms.mix",
               icon: "/svgs/icon-instagram.svg",
               alt: "Instagram",
             },
             {
-              href: "https://www.linkedin.com/company/pt-wms",
+              href: "https://www.linkedin.com/company/pt-wahana-makmur-sentosa",
               icon: "/svgs/icon-linkedin.svg",
               alt: "LinkedIn",
             },
