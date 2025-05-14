@@ -43,7 +43,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         });
 
   return (
-    <div className="breadcrumbs-container w-fit px-4 pt-6 pb-2 md:px-8 md:pt-8 md:pb-2 z-50 absolute top-20 left-0">
+    <div className="breadcrumbs-container w-fit px-4 pt-4 pb-2 md:px-8 md:pt-8 md:pb-2 z-40 absolute top-16 md:top-20 left-0">
       <div className={`breadcrumbs flex items-center font-titillium ${textColor} text-xs md:text-sm`}>
         <Link href="/" className={`${hoverColor} transition-colors duration-200 font-normal`}>
           Beranda

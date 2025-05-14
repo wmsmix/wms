@@ -612,6 +612,41 @@ const Navbar: React.FC = () => {
         .custom-contact-button-inner span {
           padding: 0 16px;
         }
+        
+        @media (max-width: 768px) {
+          .custom-contact-button {
+            height: 46px;
+            min-width: 140px;
+            clip-path: polygon(
+              3% 0%,
+              97% 0%,
+              100% 16%,
+              100% 84%,
+              97% 100%,
+              3% 100%,
+              0% 84%,
+              0% 16%
+            );
+          }
+          
+          .custom-contact-button-inner {
+            height: calc(46px - 2px);
+            clip-path: polygon(
+              3% 0%,
+              97% 0%,
+              100% 16%,
+              100% 84%,
+              97% 100%,
+              3% 100%,
+              0% 84%,
+              0% 16%
+            );
+          }
+          
+          .custom-contact-button-inner span {
+            padding: 0 20px;
+          }
+        }
       `}</style>
     </header>
   );
