@@ -197,11 +197,11 @@ export default function InsightDetailPage() {
         <Breadcrumbs items={[
           { label: "Insights", href: "/insights" },
           { label: news.title.length > 20 ? news.title.substring(0, 20) + "..." : news.title }
-        ]} textColor="text-black" hoverColor="hover:text-gray-700" />
+        ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" textColor="text-black" hoverColor="hover:text-gray-700" />
       </div>
 
       {/* Article Content */}
-      <div className="bg-white px-6 pt-48 text-black md:px-12 lg:px-48">
+      <div className="bg-white px-6 pt-24 text-black md:px-12 lg:px-48">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <div className="md:col-span-2">
             {/* Hero Image */}

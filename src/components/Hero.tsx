@@ -22,6 +22,8 @@ interface HeroProps {
     href?: string;
   }>;
   showBreadcrumbs?: boolean;
+  breadcrumbsTopPosition?: string;
+  breadcrumbsLeftPosition?: string;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -34,6 +36,8 @@ const Hero: React.FC<HeroProps> = ({
   className = "",
   breadcrumbItems = [],
   showBreadcrumbs = true,
+  breadcrumbsTopPosition,
+  breadcrumbsLeftPosition,
 }) => {
   return (
     <section
@@ -68,7 +72,11 @@ const Hero: React.FC<HeroProps> = ({
         <div className="absolute inset-0 opacity-30"></div>
       </div>
 
-      {showBreadcrumbs && <Breadcrumbs items={breadcrumbItems} />}
+      {showBreadcrumbs && <Breadcrumbs 
+        items={breadcrumbItems} 
+        topPosition={breadcrumbsTopPosition}
+        leftPosition={breadcrumbsLeftPosition}
+      />}
 
       {/* <div className="absolute left-1/2 top-1/2 z-10 flex h-[700px] w-[1200px] -translate-x-[16%] -translate-y-[54%] transform items-center justify-center md:hidden">
         <div className="clip-octagon-outer-mobile relative h-full w-full overflow-hidden bg-gray-300 opacity-20">

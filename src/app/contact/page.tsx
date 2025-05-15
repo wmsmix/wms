@@ -96,10 +96,10 @@ Detail Proyek: ${formData.message}
       <Navbar />
       <div className="relative pt-20">
         <Breadcrumbs items={[
-          { label: "Kontak", href: "/contact" }
-        ]} textColor="text-black" hoverColor="hover:text-gray-700" />
+          { label: "Kontak", href: "/contact"}
+        ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" textColor="text-black" hoverColor="hover:text-gray-700" />
       </div>
-      <span className="mt-36 block leading-tight text-center font-noto text-4xl text-black md:text-[64px]">
+      <span className="mt-24 block leading-tight text-center font-noto text-4xl text-black md:text-[64px]">
         Siap Bangun <br />
         Infratstruktur Berkualitas?
       </span>

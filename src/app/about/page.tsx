@@ -112,6 +112,8 @@ export default function AboutPage() {
             headline="20 Tahun membangun, Mengintegrasikan keahlian, kepercayaan, dan inovasi"
             subheadline="Bertahun-tahun berkarya, mengukir Jejak Kualitas dalam Setiap Proyek. Dari proyek kecil hingga berskala besar, kami telah membuktikan komitmen kami terhadap kualitas dan kepuasan pelanggan."
             ctaText="BANGUN DENGAN WMS"
+            breadcrumbsLeftPosition="left-2 md:left-12"
+            breadcrumbsTopPosition="top-12 md:top-12"
           />
         </div>
         <div className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16 md:pt-32">

@@ -38,63 +38,76 @@ const ProductHero: React.FC<ProductHeroProps> = ({
   };
 
   return (
-    <section className="product-hero relative min-h-[500px] w-full overflow-hidden md:min-h-[600px]">
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          className="object-cover"
-          priority
+    <div className="relative">
+      {/* Breadcrumbs - posisi absolute di atas */}
+      <div className="absolute top-0 left-0 right-0 z-[100] w-full">
+        <Breadcrumbs 
+          items={breadcrumbItems} 
+          textColor="text-white"
+          hoverColor="hover:text-white/80"
+          topPosition="top-24 md:top-20" 
+          leftPosition="left-2 md:left-12" 
         />
-        <div className="absolute inset-0 bg-gradient-to-b " />
       </div>
 
-      <Breadcrumbs items={breadcrumbItems} />
-
-      <div className="relative z-10 pt-56 flex h-full flex-col items-center justify-center px-4 text-center">
-        <h1 className="text-white mb-4 font-noto text-3xl md:mb-6 md:text-3xl lg:text-4xl sm:text-xl">
-          {italicizeEnglishWords(title)}
-        </h1>
-        <p className="text-white-base opacity-75 mb-8 max-w-3xl text-base md:mb-10 md:text-xl">
-          {italicizeEnglishWords(description)}
-        </p>
-        {buttonText && (
-          <Button
-            text={buttonText}
-            height="48px"
-            textSize="2xl"
-            onClick={onButtonClick}
-            clipPath={{
-              outer:
-                "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
-              inner:
-                "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
-            }}
-            margin="1px"
+      <section className="product-hero relative min-h-[500px] w-full overflow-hidden md:min-h-[600px]">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            className="object-cover"
+            priority
           />
-        )}
-      </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent"></div>
+        </div>
 
-      <style jsx>{`
-        .product-hero {
-          clip-path: polygon(0 0, 100% 0, 100% 76%, 92% 100%, 8% 100%, 0 76%);
-        }
+        {/* Content */}
+        <div className="relative z-10 pt-56 flex h-full flex-col items-center justify-center px-4 text-center">
+          <h1 className="text-white mb-4 font-noto text-3xl md:mb-6 md:text-3xl lg:text-4xl sm:text-xl">
+            {italicizeEnglishWords(title)}
+          </h1>
+          <p className="text-white-base opacity-75 mb-8 max-w-3xl text-base md:mb-10 md:text-xl">
+            {italicizeEnglishWords(description)}
+          </p>
+          {buttonText && (
+            <Button
+              text={buttonText}
+              height="48px"
+              textSize="2xl"
+              onClick={onButtonClick}
+              clipPath={{
+                outer:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                inner:
+                  "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+              }}
+              margin="1px"
+            />
+          )}
+        </div>
 
-        @media (max-width: 768px) {
+        <style jsx>{`
           .product-hero {
-            clip-path: polygon(
-              0 0,
-              100% 0,
-              100% 90%,
-              90% 100%,
-              10% 100%,
-              0 90%
-            );
+            clip-path: polygon(0 0, 100% 0, 100% 76%, 92% 100%, 8% 100%, 0 76%);
           }
-        }
-      `}</style>
-    </section>
+
+          @media (max-width: 768px) {
+            .product-hero {
+              clip-path: polygon(
+                0 0,
+                100% 0,
+                100% 90%,
+                90% 100%,
+                10% 100%,
+                0 90%
+              );
+            }
+          }
+        `}</style>
+      </section>
+    </div>
   );
 };
 

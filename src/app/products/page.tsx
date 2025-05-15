@@ -32,8 +32,10 @@ export default function ProductsPage() {
             ctaText="KONSULTASI SEKARANG"
             ctaHref="/contact"
             breadcrumbItems={[
-              { label: "Produk & Layanan", href: "/products" }
+              { label: "Produk & Layanan", href: "/products" } 
             ]}
+            breadcrumbsTopPosition="top-12 md:top-12"
+            breadcrumbsLeftPosition="left-2 md:left-12"
           />
         </div>
         <div

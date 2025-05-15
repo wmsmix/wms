@@ -38,7 +38,7 @@ export default function AspalProductPage() {
         <div className="absolute top-0 left-0 z-50 w-full pt-20">
           <Breadcrumbs items={[
             { label: "Proyek", href: "/projects" }
-          ]} />
+          ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" />
         </div>
 
         {/* Content */}

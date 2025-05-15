@@ -9,12 +9,16 @@ interface BreadcrumbsProps {
   }>;
   textColor?: string;
   hoverColor?: string;
+  topPosition?: string;
+  leftPosition?: string;
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ 
   items = [],
   textColor = "text-white-10", 
-  hoverColor = "hover:text-gray-200"
+  hoverColor = "hover:text-gray-200",
+  topPosition = "top-8 md:top-4",
+  leftPosition = "left-4 md:left-24"
 }) => {
   const pathname = usePathname();
   
@@ -43,7 +47,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         });
 
   return (
-    <div className="breadcrumbs-container w-fit px-4 pt-4 pb-2 md:px-8 md:pt-8 md:pb-2 z-40 absolute top-16 md:top-20 left-0">
+    <div className={`breadcrumbs-container w-fit px-4 py-2 md:px-0 md:pt-6 md:pb-2 ${topPosition} ${leftPosition} absolute z-40`}>
       <div className={`breadcrumbs flex items-center font-titillium ${textColor} text-xs md:text-sm`}>
         <Link href="/" className={`${hoverColor} transition-colors duration-200 font-normal`}>
           Beranda

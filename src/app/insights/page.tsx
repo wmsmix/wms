@@ -55,8 +55,8 @@ export default function InsightsPage() {
 
         <div className="absolute top-0 left-0 z-50 w-full pt-20">
           <Breadcrumbs items={[
-            { label: "Insights", href: "/insights" }
-          ]} />
+            { label: "Insights", href: "/insights" , }
+          ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" />
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 z-10 flex w-full flex-col justify-end space-y-2 px-6 pb-16 md:flex-row md:items-end md:justify-between md:space-y-0 md:px-12 md:pb-16 lg:px-48">

@@ -241,10 +241,14 @@ export default function ProjectDetailPage() {
 
       {/* Breadcrumbs */}
       <div className="relative pt-20">
-        <Breadcrumbs items={[
-          { label: "Proyek", href: "/projects" },
-          { label: currentProject.title }
-        ]} />
+        <Breadcrumbs
+          items={[
+            { label: "Proyek", href: "/projects" },
+            { label: currentProject.title },
+          ]}
+          topPosition="top-24 md:top-20"
+          leftPosition="left-2 md:left-12"
+        />
       </div>
 
       <section className="project-hero relative min-h-[320px] w-full overflow-hidden md:min-h-[400px]">
@@ -266,15 +270,6 @@ export default function ProjectDetailPage() {
             <span className="hidden max-w-xs text-start text-sm text-white-10 md:block md:text-lg lg:text-xl">
               {currentProject.title}
             </span>
-          </div>
-
-          <div className="text-start text-sm text-white-10 opacity-75 md:text-base">
-            {/* Mobile breadcrumb */}
-            <span className="md:hidden">
-              HOME / PROJECTS / {currentProject.title}
-            </span>
-            {/* Desktop breadcrumb */}
-            <span className="hidden md:inline">HOME / PROJECTS</span>
           </div>
         </div>
 

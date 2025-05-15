@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transform transition-transform duration-300 ease-in-out ${
+      className={`fixed left-0 right-0 top-0 z-[9999] transform transition-transform duration-300 ease-in-out ${
         hide ? "-translate-y-full" : "translate-y-0"
       }`}
     >
@@ -250,7 +250,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile menu dropdown */}
         <div
-          className={`fixed inset-0 bottom-0 left-0 right-0 top-0 z-[100] min-h-screen bg-blue-primary transition-all duration-300 ${
+          className={`fixed inset-0 bottom-0 left-0 right-0 top-0 z-[10000] min-h-screen bg-blue-primary transition-all duration-300 ${
             isOpen
               ? "visible opacity-100"
               : "pointer-events-none invisible opacity-0"
@@ -291,24 +291,30 @@ const Navbar: React.FC = () => {
               >
                 <div className="space-y-6 px-4">
                   <div
-                    onClick={() => handleMobileNavigation("products")}
                     className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                   >
-                    <span className="text-lg">PRODUK & LAYANAN</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                    <Link href="/products" onClick={() => setIsOpen(false)} className="text-lg">
+                      PRODUK & LAYANAN
+                    </Link>
+                    <div 
+                      onClick={() => handleMobileNavigation("products")}
+                      className="ml-2 p-2"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
                   </div>
 
                   <Link
@@ -380,26 +386,34 @@ const Navbar: React.FC = () => {
                     </Link>
 
                     <div
-                      onClick={() => handleMobileNavigation("precast")}
                       className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                     >
-                      <Link href="/products/precast-concrete">
-                        <span className="text-lg">Precast Concrete</span>
-                      </Link>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                      <Link 
+                        href="/products/precast-concrete" 
+                        onClick={() => setIsOpen(false)}
+                        className="text-lg"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                        Precast Concrete
+                      </Link>
+                      <div 
+                        onClick={() => handleMobileNavigation("precast")}
+                        className="ml-2 p-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
                     </div>
                     <Link
                       href="/products#support-letter"
