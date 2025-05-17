@@ -1,4 +1,5 @@
 import { supabase } from '../supabase';
+import { PostgrestError } from '@supabase/supabase-js';
 
 /**
  * Generic service for Supabase database operations
@@ -14,7 +15,7 @@ export const supabaseService = {
     table: string, 
     options: {
       columns?: string;
-      filters?: Record<string, any>;
+      filters?: Record<string, unknown>;
       limit?: number;
       orderBy?: { column: string; ascending?: boolean };
     } = {}
@@ -42,7 +43,7 @@ export const supabaseService = {
       });
     }
     
-    return await query as { data: T[] | null; error: any };
+    return await query as { data: T[] | null; error: PostgrestError | null };
   },
   
   /**
@@ -51,11 +52,11 @@ export const supabaseService = {
    * @param data The data to insert
    * @returns Promise with data and error
    */
-  async insert<T>(table: string, data: Record<string, any> | Record<string, any>[]) {
+  async insert<T>(table: string, data: Record<string, unknown> | Record<string, unknown>[]) {
     return await supabase
       .from(table)
       .insert(data)
-      .select() as { data: T[] | null; error: any };
+      .select() as { data: T[] | null; error: PostgrestError | null };
   },
   
   /**
@@ -67,14 +68,14 @@ export const supabaseService = {
    */
   async update<T>(
     table: string, 
-    data: Record<string, any>,
-    match: { column: string; value: any }
+    data: Record<string, unknown>,
+    match: { column: string; value: unknown }
   ) {
     return await supabase
       .from(table)
       .update(data)
       .eq(match.column, match.value)
-      .select() as { data: T[] | null; error: any };
+      .select() as { data: T[] | null; error: PostgrestError | null };
   },
   
   /**
@@ -85,12 +86,12 @@ export const supabaseService = {
    */
   async delete<T>(
     table: string,
-    match: { column: string; value: any }
+    match: { column: string; value: unknown }
   ) {
     return await supabase
       .from(table)
       .delete()
       .eq(match.column, match.value)
-      .select() as { data: T[] | null; error: any };
+      .select() as { data: T[] | null; error: PostgrestError | null };
   }
 }; 

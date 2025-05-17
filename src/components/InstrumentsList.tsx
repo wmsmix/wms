@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSupabase } from '~/hooks/useSupabase';
-import { TableRow } from '~/types/supabase';
+import type { TableRow } from '~/types/supabase';
 
 type Instrument = TableRow<'instruments'>;
 
@@ -35,7 +35,7 @@ export default function InstrumentsList() {
       }
     }
 
-    fetchInstruments();
+    void fetchInstruments();
   }, [supabase]);
 
   return (
@@ -81,7 +81,7 @@ export default function InstrumentsList() {
               <div className="mt-2 text-sm text-red-700">
                 <p>{error}</p>
                 <p className="mt-2">
-                  Please check your Supabase connection and make sure the 'instruments' table exists.
+                  Please check your Supabase connection and make sure the &apos;instruments&apos; table exists.
                 </p>
               </div>
             </div>

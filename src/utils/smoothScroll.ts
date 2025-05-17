@@ -77,9 +77,11 @@ export const destroyLenis = (): void => {
   }
 };
 
-export default {
+const smoothScrollExports = {
   initSmoothScroll,
   scrollTo,
   getLenis,
   destroyLenis,
-}; 
+};
+
+export default smoothScrollExports; 

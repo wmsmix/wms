@@ -10,7 +10,7 @@ export default function SupabaseTest() {
     async function checkConnection() {
       try {
         // Use a simple health check query
-        const { data, error } = await supabase.rpc('version');
+        const { error } = await supabase.rpc('version');
         
         if (error) {
           console.error('Supabase connection error:', error);
@@ -27,7 +27,7 @@ export default function SupabaseTest() {
       }
     }
 
-    checkConnection();
+    void checkConnection();
   }, [supabase]);
 
   return (
