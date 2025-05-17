@@ -224,83 +224,7 @@ export default function AspalProductPage() {
         </div>
       </div>
       
-      <div
-        className="relative w-full bg-orange-secondary px-4 py-8 md:py-10 overflow-hidden"
-        style={{
-          clipPath: "polygon(0 0, 100% 0, 100% 75%, 95% 100%, 4% 100%, 0 75%)",
-        }}
-      >
-        <div className="marquee-container py-4 flex items-center h-full">
-          <div className="marquee-content">
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terjamin
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terpercaya
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terjamin
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terpercaya
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terjamin
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terpercaya
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terjamin
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Terpercaya
-            </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
-            </span>
-          </div>
-        </div>
-        <style jsx>{`
-          .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            min-height: 80px;
-          }
-          
-          .marquee-content {
-            display: inline-block;
-            animation: marquee 40s linear infinite;
-            padding-right: 50px;
-          }
-          
-          .marquee-item {
-            display: inline-block;
-            line-height: 1;
-          }
-          
-          @keyframes marquee {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-75%);
-            }
-          }
-        `}</style>
-      </div>
+    
       
       <ClippedSection
         title="Jalan Mulus, Proyek Lancar
@@ -357,6 +281,50 @@ Pilih Aspal Juara, Pasti Tahan Lama"
         @media (max-width: 768px) {
           .clip-bottom-corners {
             clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 95% 100%, 5% 100%, 0% 92%);
+          }
+        }
+        
+        .marquee-container {
+          width: 90%;
+          overflow: hidden;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          min-height: 80px;
+          margin: 0 auto;
+          mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 2%,
+            black 98%,
+            transparent 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 2%,
+            black 98%,
+            transparent 100%
+          );
+        }
+        
+        .marquee-content {
+          display: inline-block;
+          animation: marquee 40s linear infinite;
+          padding-right: 50px;
+        }
+        
+        .marquee-item {
+          display: inline-block;
+          line-height: 1;
+        }
+        
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-75%);
           }
         }
       `}</style>
