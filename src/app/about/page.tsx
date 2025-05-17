@@ -377,9 +377,9 @@ export default function AboutPage() {
       </div>
 
       <div
-        className="relative mt-[-40px] w-full bg-orange-secondary px-4 py-8 md:py-10 overflow-hidden"
+        className="relative mt-[-50px] w-full bg-orange-secondary px-4 pt-12 pb-2 overflow-hidden"
         style={{
-          clipPath: "polygon(0 0, 100% 0, 100% 75%, 95% 100%, 4% 100%, 0 75%)",
+          clipPath: "polygon(0 0, 100% 0, 100% 55%, 97% 100%, 3% 100%, 0 55%)",
         }}
       >
         <div className="marquee-container py-4 flex items-center h-full">
@@ -391,7 +391,7 @@ export default function AboutPage() {
               Terpercaya
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
+              Tersertifikasi
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
               Terjamin
@@ -400,7 +400,7 @@ export default function AboutPage() {
               Terpercaya
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
+              Tersertifikasi
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
               Terjamin
@@ -409,7 +409,7 @@ export default function AboutPage() {
               Terpercaya
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
+              Tersertifikasi
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
               Terjamin
@@ -418,23 +418,56 @@ export default function AboutPage() {
               Terpercaya
             </span>
             <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
-              Tersertifikat
+              Tersertifikasi
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikasi
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikasi
             </span>
           </div>
         </div>
         <style jsx>{`
           .marquee-container {
-            width: 100%;
+            width: 94%;
             overflow: hidden;
             white-space: nowrap;
             display: flex;
             align-items: center;
             min-height: 80px;
+            margin: 0 auto;
+            mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 2%,
+              black 98%,
+              transparent 100%
+            );
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 2%,
+              black 98%,
+              transparent 100%
+            );
           }
           
           .marquee-content {
             display: inline-block;
-            animation: marquee 40s linear infinite;
+            animation: marquee 45s linear infinite;
             padding-right: 50px;
           }
           
