@@ -156,7 +156,86 @@ export default function ProductsPage() {
           buttonHref="/products/precast-concrete"
         />
       </section>
+      
+      <div
+        className="relative w-full bg-orange-secondary px-4 py-8 md:py-10 overflow-hidden"
+        style={{
+          clipPath: "polygon(0 0, 100% 0, 100% 75%, 95% 100%, 4% 100%, 0 75%)",
+        }}
+      >
+        <div className="marquee-container py-4 flex items-center h-full">
+          <div className="marquee-content">
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+          </div>
+        </div>
+        <style jsx>{`
+          .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            min-height: 80px;
+          }
+          
+          .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+            padding-right: 50px;
+          }
+          
+          .marquee-item {
+            display: inline-block;
+            line-height: 1;
+          }
+          
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-75%);
+            }
+          }
+        `}</style>
+      </div>
       <section className="bg-blue-primary mt-[-2px]">
+
         <div
           className="services-clip-path flex w-screen max-w-full flex-col items-center py-8 md:py-16"
           style={{

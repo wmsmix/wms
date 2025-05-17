@@ -46,6 +46,8 @@ export default function HomePage() {
     <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
       <Navbar />
 
+      
+
       <main className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden pt-8">
         <div className="hero-container w-full overflow-hidden">
           <Hero
