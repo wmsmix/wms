@@ -7,6 +7,7 @@ import Link from "next/link";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 export default function InsightsPage() {
   const router = useRouter();
@@ -52,35 +53,34 @@ export default function InsightsPage() {
           />
         </div>
 
+        <div className="absolute top-0 left-0 z-50 w-full pt-20">
+          <Breadcrumbs items={[
+            { label: "Insights", href: "/insights" , }
+          ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" />
+        </div>
+
         <div className="absolute bottom-0 left-0 right-0 z-10 flex w-full flex-col justify-end space-y-2 px-6 pb-16 md:flex-row md:items-end md:justify-between md:space-y-0 md:px-12 md:pb-16 lg:px-48">
           <div className="flex items-end gap-6">
             <span className="text-start font-noto text-4xl text-white-10 lg:text-6xl">
               Insights
             </span>
           </div>
-
-          <div className="text-start text-sm text-white-10 opacity-75 md:text-base">
-            {/* Mobile breadcrumb */}
-            <span className="md:hidden">HOME / INSIGHTS</span>
-            {/* Desktop breadcrumb */}
-            <span className="hidden md:inline">HOME / INSIGHTS</span>
-          </div>
         </div>
 
         <style jsx>{`
           .project-hero {
-            clip-path: polygon(0 0, 100% 0, 100% 76%, 94% 100%, 6% 100%, 0 76%);
+            clip-path: polygon(0 0, 100% 0, 100% 76%, 90% 100%, 8% 100%, 0 78%);
           }
 
           @media (max-width: 768px) {
             .project-hero {
               clip-path: polygon(
-                0 0,
+               0 0,
                 100% 0,
-                100% 94%,
+                100% 84%,
                 90% 100%,
                 10% 100%,
-                0 94%
+                0 84%
               );
             }
           }
@@ -94,7 +94,7 @@ export default function InsightsPage() {
               <div className="relative">
                 <div className="relative h-[400px] w-full">
                   <Image
-                    src="/images/img-projects.png"
+                    src="/images/img-detail-jlt-1.png"
                     alt="Jalan Lingkar Selatan Tuban"
                     fill
                     className="object-cover"
@@ -242,7 +242,7 @@ export default function InsightsPage() {
               {
                 title: "Ring Road Tuban Jadi Opsi Pengendara Kena Macet",
                 date: "16",
-                month: "JUNI",
+                month: "JUN",
                 imageSrc: "/images/img-kabar-proyek-2.png",
                 description:
                   "KBRN, Tuban: Setelah diresmikan, Ring Road/Jalur Lingkar Selatan Tuban yang berjalan...",

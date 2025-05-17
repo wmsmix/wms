@@ -15,6 +15,7 @@ import CardProduct from "~/components/CardProduct";
 import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 export default function ProductsPage() {
   return (
@@ -30,16 +31,16 @@ export default function ProductsPage() {
             subheadline="Mulai dari pengadaan material berkualitas seperti aspal dan beton hingga pelaksanaan proyek konstruksi secara profesional, kami siap menjadi mitra terpercaya Anda."
             ctaText="KONSULTASI SEKARANG"
             ctaHref="/contact"
+            breadcrumbItems={[
+              { label: "Produk & Layanan", href: "/products" } 
+            ]}
+            breadcrumbsTopPosition="top-12 md:top-12"
+            breadcrumbsLeftPosition="left-2 md:left-12"
           />
         </div>
         <div
-          className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16 text-gray-base"
+          className="custom-clip-path flex w-screen max-w-full flex-col items-center bg-white-10 py-8 text-gray-base md:py-16"
           style={{
-            clipPath: `polygon(${
-              // window.innerWidth < 768
-                // ? "6% 0%, 94% 0%, 100% 12%, 100% 100%, 94% 100%, 6% 100%, 0% 100%, 0% 12%"
-                 "4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%"
-            })`,
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
             width: "100vw",
@@ -51,7 +52,7 @@ export default function ProductsPage() {
             Kustomisasi Produk Sesuai Kebutuhanmu
           </span>
           <p className="px-4 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px]">
-            Pilih dan kustomisasi produk sesuai dengan kebutuhan proyek anda,
+            Pilih dan kustomisasi produk sesuai dengan kebutuhan proyek anda,{' '}
             <br className="hidden md:block" />
             tim ahli siap membantu anda menemukan solusi yang tepat
           </p>
@@ -77,6 +78,7 @@ export default function ProductsPage() {
             position: relative;
             height: calc(700px * 0.95); /* 95% dari tinggi asli untuk mobile */
             overflow: hidden;
+            margin-top: 0; /* Menghapus margin negatif untuk breadcrumbs */
           }
 
           .hero-container :global(section) {
@@ -85,12 +87,39 @@ export default function ProductsPage() {
             left: 0;
             width: 100%;
           }
+          
+          .custom-clip-path {
+            clip-path: polygon(
+              6% 0%,
+              94% 0%,
+              100% 12%,
+              100% 100%,
+              94% 100%,
+              6% 100%,
+              0% 100%,
+              0% 12%
+            );
+          }
 
           @media (min-width: 640px) {
             .hero-container {
               height: calc(
                 964px * 0.95
               ); /* 95% dari tinggi asli untuk desktop */
+              margin-top: 0; /* Menghapus margin negatif untuk breadcrumbs pada layar lebih besar */
+            }
+            
+            .custom-clip-path {
+              clip-path: polygon(
+                4% 0%,
+                96% 0%,
+                100% 24%,
+                100% 100%,
+                96% 100%,
+                4% 100%,
+                0% 100%,
+                0% 24%
+              );
             }
           }
         `}</style>
@@ -205,20 +234,18 @@ export default function ProductsPage() {
           }
         `}</style>
       </div>
-      
-      <section className="bg-blue-primary">
+      <section className="bg-blue-primary mt-[-2px]">
+
         <div
-          className="flex w-screen max-w-full flex-col items-center py-8 md:py-16"
+          className="services-clip-path flex w-screen max-w-full flex-col items-center py-8 md:py-16"
           style={{
-            clipPath:
-              "polygon(4% 0%, 96% 0%, 100% 6%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 6%)",
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
             width: "100vw",
           }}
         >
           <span className="text-white-base block px-4 text-center font-noto text-3xl md:text-4xl lg:text-5xl">
-            Layanan Satu Atap
+            Servis Satu Atap
           </span>
           <p className="text-white-base px-4 pt-4 text-center text-sm md:pt-8 md:text-base lg:text-[20px]">
             Dari Konsep hingga Realisasi,
@@ -256,6 +283,125 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
+      <section id="support-letter" className="bg-blue-primary py-16">
+        <div className="container mx-auto max-w-7xl px-4 md:px-8 lg:px-4">
+          <div className="mb-8 text-center md:mb-12">
+            <h2 className="font-noto text-3xl text-white-10 md:text-4xl lg:text-[40px]">
+              Proyek Makin Lancar
+            </h2>
+            <h3 className="mt-2 font-noto text-3xl text-white-10 md:text-4xl lg:text-[40px]">
+              dengan <span className="italic">Support Letter</span>
+            </h3>
+          </div>
+
+          <div className="mt-24 flex flex-col gap-6 md:flex-row md:gap-[124px]">
+            <div className="w-full md:w-1/2">
+              <div className="relative aspect-[4/3] w-full overflow-hidden">
+                <div className="support-letter-image h-full w-full">
+                  <Image
+                    src="/images/img-support-letter.png"
+                    alt="Support Letter"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full text-white-10 md:w-1/2">
+              <h3 className="font-titilium mb-4 text-3xl font-semibold md:text-5xl">
+                Surat Dukungan Resmi
+                <br />
+                untuk Pengadaan Anda
+              </h3>
+              {/* <h4 className="font-titilium text-3xl md:text-4xl mb-6">
+                untuk Pengadaan Anda
+              </h4> */}
+
+              <p className="mt-4 text-base leading-relaxed md:text-base">
+                Surat dukungan resmi ini akan membantu Anda memenuhi persyaratan
+                tender, memberikan keyakinan kepada panitia pengadaan, dan
+                memastikan kelancaran pasokan material konstruksi dari
+                perusahaan kami untuk proyek Anda
+              </p>
+
+              <div className="mt-8">
+                <Button
+                  text="HUBUNGI KAMI"
+                  height="48px"
+                  textSize="xl"
+                  className="bg-orange-500 text-base md:text-lg"
+                  href="/contact"
+                  clipPath={{
+                    outer:
+                      "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+                    inner:
+                      "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .support-letter-image {
+            clip-path: polygon(
+              4% 0%,
+              96% 0%,
+              100% 6%,
+              100% 94%,
+              96% 100%,
+              4% 100%,
+              0% 94%,
+              0% 6%
+            );
+          }
+
+          @media (max-width: 768px) {
+            .support-letter-image {
+              clip-path: polygon(
+                6% 0%,
+                94% 0%,
+                100% 6%,
+                100% 94%,
+                94% 100%,
+                6% 100%,
+                0% 94%,
+                0% 6%
+              );
+            }
+          }
+          
+          .services-clip-path {
+            clip-path: polygon(
+              6% 0%,
+              94% 0%,
+              100% 4%,
+              100% 100%,
+              96% 100%,
+              4% 100%,
+              0% 100%,
+              0% 4%
+            );
+          }
+          
+          @media (min-width: 768px) {
+            .services-clip-path {
+              clip-path: polygon(
+                4% 0%,
+                96% 0%,
+                100% 6%,
+                100% 100%,
+                96% 100%,
+                4% 100%,
+                0% 100%,
+                0% 6%
+              );
+            }
+          }
+        `}</style>
+      </section>
       <ClippedSection
         title="Proyek Impian Anda,<br>Realisasikan Bersama Kami"
         description="Dengan pengalaman bertahun-tahun, kami telah berhasil menyelesaikan berbagai proyek dengan hasil<br>yang memuaskan. Percayakan proyek Anda pada kami dan rasakan perbedaannya."
@@ -280,9 +426,15 @@ export default function ProductsPage() {
         <Button
           text="LIHAT SEMUA"
           height="48px"
-          textSize="2xl"
-          className="text-sm md:text-lg"
+          textSize="xl"
+          className="bg-orange-500 text-base md:text-lg"
           href="/insights"
+          clipPath={{
+            outer:
+              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+          }}
         />
       </div>
       <Footer />

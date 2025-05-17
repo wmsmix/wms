@@ -34,6 +34,11 @@ const certifications = [
     subtitle: "Kementerian PUPR",
     image: "/images/img-kemenpupr.png",
   },
+  {
+    title: "Standar Nasional Indonesia",
+    subtitle: "PT. Global Inspeksi Sertifikasi",
+    image: "/images/img-sni.png",
+  },
 ];
 
 export default function HomePage() {
@@ -52,13 +57,14 @@ export default function HomePage() {
             subheadline="PT Wahana Makmur Sentosa (WMS) adalah pabrik aspal dan beton di Jawa Timur yang telah bersertifikasi SLO dan diakui Kementerian PUPR. Dengan teknologi modern, WMS siap menyajikan produk dengan kualitas tertinggi."
             ctaText="Lihat Produk"
             ctaHref="/products"
+            showBreadcrumbs={false}
           />
         </div>
 
         <span className="mx-auto block max-w-[90vw] py-24 text-center font-noto text-[40px] text-white-10 sm:max-w-4xl sm:text-[64px]">
           Berpengalaman, Terpercaya, dan Ahli di Bidangnya
         </span>
-        <div className="mx-auto mt-8 grid w-full max-w-[90vw] grid-cols-1 gap-8 px-4 sm:max-w-5xl sm:grid-cols-2 md:grid-cols-3">
+        <div className="mx-auto mt-8 grid w-full max-w-[90vw] grid-cols-1 gap-8 px-4 sm:max-w-5xl sm:grid-cols-2 md:grid-cols-4">
           {certifications.map((cert, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white-10">
@@ -86,7 +92,7 @@ export default function HomePage() {
               "polygon(0% 0%, 100% 0%, 100% 4%, 100% 100%, 92% 100%, 8% 100%, 0% 100%, 0% 4%)",
           }}
         >
-          <span className="block text-center font-noto text-4xl text-black md:text-[64px]">
+          <span className="block text-center font-noto text-4xl mt-[-2px] text-black md:text-[64px]">
             Produk Kami
           </span>
           <div className="mt-16 flex w-full flex-wrap justify-center gap-8 px-6 sm:px-0">
@@ -138,67 +144,20 @@ export default function HomePage() {
                 (PUPR), Kementerian Perindustrian dan Lembaga Lainnya.
               </p>
               <div className="mt-[24px] flex justify-start">
-                <Link href={"/about"}>
-                  <div className="custom-cta-button">
-                    <div className="custom-cta-button-inner">
-                      <span className="text-white whitespace-normal text-center font-titillium text-2xl font-light uppercase tracking-wide">
-                        PELAJARI SELENGKAPNYA
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-                <style jsx>{`
-                  .custom-cta-button {
-                    position: relative;
-                    height: 52px;
-                    min-width: 200px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    clip-path: polygon(
-                      2% 0%,
-                      98% 0%,
-                      100% 18%,
-                      100% 82%,
-                      98% 100%,
-                      2% 100%,
-                      0% 82%,
-                      0% 16%
-                    );
-                    background-color: #ffffff;
-                    transition: opacity 0.3s;
-                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                  }
-
-                  .custom-cta-button:hover {
-                    opacity: 0.8;
-                  }
-
-                  .custom-cta-button-inner {
-                    position: relative;
-                    height: calc(52px - 2px);
-                    width: calc(100% - 2px);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    clip-path: polygon(
-                      2% 0%,
-                      98% 0%,
-                      100% 18%,
-                      100% 82%,
-                      98% 100%,
-                      2% 100%,
-                      0% 82%,
-                      0% 18%
-                    );
-                    background-color: #ff7028;
-                    margin: 1px;
-                  }
-
-                  .custom-cta-button-inner span {
-                    padding: 0 16px;
-                  }
-                `}</style>
+              <Button
+                  text="PELAJARI SELENGKAPNYA"
+                  height="42px"
+                  textSize="lg"
+                  onClick={() => {
+                    window.location.href = "/about";
+                  }}
+                  clipPath={{
+                    outer:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                  inner:
+                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                }}
+              />
               </div>
             </div>
             <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
@@ -251,7 +210,7 @@ export default function HomePage() {
               />
             </div>
           </div>
-          <section className="text-white clip-bottom-corners relative w-full overflow-hidden bg-blue-primary py-24">
+          <section className="text-white clip-bottom-corners relative w-full overflow-hidden bg-blue-primary py-24 mt-[-2px]">
             <span className="block px-12 text-center font-noto text-3xl text-white-10 sm:text-4xl md:text-5xl lg:text-[64px]">
               Jejak Keberhasilan Kami
             </span>
@@ -313,15 +272,15 @@ export default function HomePage() {
           <div className="flex justify-center pb-6 md:pb-12">
             <Button
               text="LIHAT SEMUA"
-              height="56px"
+              height="48px"
               textSize="xl"
-              className="text-sm md:text-lg"
+              className="bg-orange-500 text-base md:text-lg"
               href="/insights"
               clipPath={{
                 outer:
-                  "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                  "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
                 inner:
-                  "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+                  "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
               }}
             />
           </div>

@@ -6,7 +6,6 @@ import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import Hero from "~/components/Hero";
 import NewsGrid from "~/components/NewsGrid";
-import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
 import FeatureCard from "~/components/FeatureCard";
@@ -72,7 +71,7 @@ export default function AboutPage() {
       const containerRect = container.getBoundingClientRect();
       const containerTop = containerRect.top;
       const containerHeight = container.offsetHeight;
-      const viewportHeight = window.innerHeight;
+      const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
 
       if (containerTop < viewportHeight && containerTop + containerHeight > 0) {
         const stepsTotal = processSteps.length;
@@ -95,8 +94,10 @@ export default function AboutPage() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, [activeStep, processSteps.length]);
 
   return (
@@ -111,6 +112,8 @@ export default function AboutPage() {
             headline="20 Tahun membangun, Mengintegrasikan keahlian, kepercayaan, dan inovasi"
             subheadline="Bertahun-tahun berkarya, mengukir Jejak Kualitas dalam Setiap Proyek. Dari proyek kecil hingga berskala besar, kami telah membuktikan komitmen kami terhadap kualitas dan kepuasan pelanggan."
             ctaText="BANGUN DENGAN WMS"
+            breadcrumbsLeftPosition="left-2 md:left-12"
+            breadcrumbsTopPosition="top-12 md:top-12"
           />
         </div>
         <div className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16 md:pt-32">
@@ -173,112 +176,138 @@ export default function AboutPage() {
       </section>
 
       <div
-        className="py-24"
+        className="relative bg-blue-primary py-24"
         style={{
-          clipPath: "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
-          background: "linear-gradient(135deg, #0a2570 0%, #162f87 100%)",
+          clipPath: typeof window !== 'undefined' && window.innerWidth <= 768
+              ? "polygon(0 3%, 8% 0, 92% 0, 100% 3%, 100% 100%, 0 100%)"
+              : "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
         }}
       >
-        <div className="container mx-auto px-4 md:px-8">
+        {/* Logo W di bagian kanan */}
+        <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-1/3 translate-x-[80%] scale-[4.5] md:block">
+          <Image
+            src="/images/img-w-2.png"
+            alt="WMS Logo"
+            fill
+            className="object-contain object-right"
+            priority
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8">
           <div className="mb-12 text-center">
-            <span className="font-noto text-4xl md:text-5xl">Alur Proses Produksi</span>
+            <span className="font-noto text-4xl md:text-5xl">
+              Alur Proses produksi
+            </span>
           </div>
-          
-          <div className="flex flex-col md:flex-row gap-8">
+
+          <div className="flex flex-col gap-8 md:flex-row">
             {/* Process Steps Column */}
             <div className="w-full md:w-1/2">
               <div className="relative">
                 {/* Position the line exactly in the middle - only between the first and last dots */}
-                <div 
-                  style={{ 
+                <div
+                  style={{
                     position: "absolute",
-                    left: "76px", 
-                    top: "27px", 
+                    left: "76px",
+                    top: "27px",
                     height: "calc(100% - 54px)",
-                    width: "1px", 
-                    backgroundColor: "#ffffff", 
+                    width: "1px",
+                    backgroundColor: "#ffffff",
                     opacity: 0.6,
-                    zIndex: 5 
+                    zIndex: 5,
                   }}
                 ></div>
-                
+
                 {processSteps.map((step, index) => (
-                  <div 
+                  <div
                     key={step.number}
-                    className={`flex relative mb-8 cursor-pointer transition-all duration-300`}
+                    className={`relative mb-8 flex cursor-pointer transition-all duration-300`}
                     onMouseEnter={() => setActiveStep(step.number)}
                   >
                     <div className="flex items-center">
                       {/* Numbered button */}
                       <div className="relative mr-14">
-                        <div 
-                          className={`relative flex items-center justify-center w-[42px] h-[42px]`}
-                          style={{ 
+                        <div
+                          className={`relative flex h-[42px] w-[42px] items-center justify-center`}
+                          style={{
                             zIndex: 10,
-                            opacity: activeStep === step.number ? 1 : 0.6
+                            opacity: activeStep === step.number ? 1 : 0.6,
                           }}
                         >
                           {/* Outer octagon border - using inline style for reliable color */}
-                          <div 
+                          <div
                             className="absolute inset-0"
-                            style={{ 
+                            style={{
                               backgroundColor: "#ffffff",
-                              clipPath: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)" 
+                              clipPath:
+                                "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
                             }}
                           ></div>
-                          
+
                           {/* Inner octagon */}
-                          <div 
+                          <div
                             className={`absolute inset-[1px] flex items-center justify-center`}
-                            style={{ 
-                              backgroundColor: step.number === 1 ? '#F36A2B' : '#A75A42',
-                              clipPath: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)"
+                            style={{
+                              backgroundColor:
+                                step.number === 1 ? "#F36A2B" : "#A75A42",
+                              clipPath:
+                                "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
                             }}
                           >
-                            <span className="font-titillium text-2xl font-bold" style={{ color: "#ffffff" }}>{step.number}</span>
+                            <span
+                              className="font-titillium text-2xl font-bold"
+                              style={{ color: "#ffffff" }}
+                            >
+                              {step.number}
+                            </span>
                           </div>
                         </div>
-                        
+
                         {/* Set white dot to exactly match the line position - always full opacity */}
-                        <div 
-                          className="absolute top-1/2 -translate-y-1/2 transform rounded-full" 
-                          style={{ 
-                            backgroundColor: "#ffffff", 
-                            width: "6px", 
+                        <div
+                          className="absolute top-1/2 -translate-y-1/2 transform rounded-full"
+                          style={{
+                            backgroundColor: "#ffffff",
+                            width: "6px",
                             height: "6px",
                             zIndex: 20,
                             border: "1px solid rgba(10, 37, 112, 0.3)",
-                            right: "-37px"
+                            right: "-37px",
                           }}
                         ></div>
                       </div>
                     </div>
-                    
+
                     {/* Content with controlled opacity */}
-                    <div 
-                      className="flex-1 pt-1.5 pl-5"
+                    <div
+                      className="flex-1 pl-5 pt-1.5"
                       style={{ opacity: activeStep === step.number ? 1 : 0.6 }}
                     >
-                      <h3 className="mb-1 text-lg font-semibold font-titillium text-white-10">{step.title}</h3>
-                      <p className="text-sm font-titillium text-gray-300">{step.description}</p>
+                      <h3 className="mb-1 font-titillium text-lg font-semibold text-white-10">
+                        {step.title}
+                      </h3>
+                      <p className="font-titillium text-sm text-gray-300">
+                        {step.description}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            
+
             {/* Image Column */}
-            <div className="w-full md:w-1/2 flex items-center justify-center">
-              <div className="relative w-full h-[480px] bg-gray-800 rounded overflow-hidden">
+            <div className="flex w-full items-center justify-center md:w-1/2">
+              <div className="relative h-[480px] w-full overflow-hidden rounded bg-gray-800">
                 {processSteps.map((step) => (
-                  <div 
+                  <div
                     key={step.number}
                     className={`absolute inset-0 transition-opacity duration-500 ${
-                      activeStep === step.number ? 'opacity-100' : 'opacity-0'
+                      activeStep === step.number ? "opacity-100" : "opacity-0"
                     }`}
                   >
-                    <Image 
-                      src={step.image || "/images/img-alur-produksi-1.png"} 
+                    <Image
+                      src={step.image || "/images/img-alur-produksi-1.png"}
                       alt={step.title}
                       fill
                       className="object-cover"
@@ -295,7 +324,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid items-start gap-12 lg:grid-cols-3">
             <div className="text-white pt-12 lg:col-span-1">
-              <p className="mb-5 text-base font-normal leading-relaxed text-gray-300">
+              <p className="mb-5 text-base font-normal leading-relaxed text-gray-300 opacity-50">
                 Berdiri di bawah naungan
                 <br />
                 PT Restu Mulya Cipta Mandiri,
@@ -432,13 +461,16 @@ export default function AboutPage() {
           </h2>
 
           <div>
-            <CertificateGallery title="Sertifikat Tingkat Komponen Dalam Negeri" />
+            <CertificateGallery
+              title="Sertifikat Tingkat Komponen Dalam Negeri"
+              isDefault={true}
+            />
           </div>
         </div>
       </div>
 
       <div className="py-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2">
           <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
             Surat Keterangan Kelaikan Operasi
           </h2>
@@ -450,16 +482,18 @@ export default function AboutPage() {
                 {
                   id: 1,
                   title: "Surat Keterangan Kelaikan Operasi 1",
-                  image: "/images/img-certificate-SKO.png",
-                  fullImage: "/images/img-certificate-SKO.png",
+                  image: "/images/img-laik-1.jpg",
+                  fullImage: "/images/img-laik-1.jpg",
                 },
                 {
                   id: 2,
                   title: "Surat Keterangan Kelaikan Operasi 2",
-                  image: "/images/img-certificate-SKO.png",
-                  fullImage: "/images/img-certificate-SKO.png",
+                  image: "/images/img-laik-2.jpg",
+                  fullImage: "/images/img-laik-2.jpg",
                 },
               ]}
+              large={true}
+              landscape={true}
             />
           </div>
         </div>
@@ -478,20 +512,48 @@ export default function AboutPage() {
                 {
                   id: 1,
                   title: "Sertifikat ISO 9001",
-                  image: "/images/img-certificate-ISO.png",
-                  fullImage: "/images/img-certificate-ISO.png",
+                  image: "/images/img-iso-1.jpg",
+                  fullImage: "/images/img-iso-1.jpg",
                 },
                 {
                   id: 2,
                   title: "Sertifikat ISO 14001",
-                  image: "/images/img-certificate-ISO.png",
-                  fullImage: "/images/img-certificate-ISO.png",
+                  image: "/images/img-iso-2.jpg",
+                  fullImage: "/images/img-iso-2.jpg",
                 },
                 {
                   id: 3,
                   title: "Sertifikat ISO 45001",
-                  image: "/images/img-certificate-ISO.png",
-                  fullImage: "/images/img-certificate-ISO.png",
+                  image: "/images/img-iso-3.jpg",
+                  fullImage: "/images/img-iso-3.jpg",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
+            Sertifikat SNI
+          </h2>
+
+          <div>
+            <CertificateGallery
+              title="Sertifikat SNI"
+              certificates={[
+                {
+                  id: 1,
+                  title: "Sertifikat SNI",
+                  image: "/images/img-sni-1.jpg",
+                  fullImage: "/images/img-sni-1.jpg",
+                },
+                {
+                  id: 2,
+                  title: "Sertifikat SNI",
+                  image: "/images/img-sni-2.jpg",
+                  fullImage: "/images/img-sni-2.jpg",
                 },
               ]}
             />
@@ -500,8 +562,7 @@ export default function AboutPage() {
       </div>
 
       <ClippedSection
-        title="Tunggu Apa lagi?
-Jadilah bagian dari kisah sukses kami!"
+        title="Tunggu Apa lagi?<br>Jadilah bagian dari kisah sukses kami!"
         description=""
         buttonText="HUBUNGI WMS"
         topBgColor="bg-white-10"

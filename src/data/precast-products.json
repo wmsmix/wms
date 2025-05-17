@@ -643,7 +643,7 @@
       {
         "icon": "/svgs/icon-fungsi.svg",
         "title": "Fungsi",
-        "description": "Menutupi U-ditch agar meningkatkan keamanan, mencegah penyumbatan saluran air"
+        "description": "Menutup U-ditch untuk efisiensi dan cegah sumbatan."
       },
       {
         "icon": "/svgs/icon-lokasi.svg",
@@ -653,14 +653,14 @@
       {
         "icon": "/svgs/icon-dayatahan.svg",
         "title": "Perawatan Mudah",
-        "description": "Bisa dibongkar, memudahkan pembersihan saluran drainase"
+        "description": "Bisa dibukatutup, memudahkan pembersihan saluran drainase"
       }
     ],
     "variants": {
       "title": "Tipe-Tipe U-Ditch Cover",
       "types": [
         {
-          "image": "/images/img-u-ditch-cover-01.png",
+          "image": "/images/img-u-ditch-cover-05.png",
           "label": "Tipe A"
         },
         {

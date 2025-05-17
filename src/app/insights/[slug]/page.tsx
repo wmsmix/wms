@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -8,6 +8,7 @@ import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import NewsGrid from "~/components/NewsGrid";
 import Button from "~/components/commons/Button";
+import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
 // Data berita untuk simulasi database
 const newsData = [
@@ -19,7 +20,7 @@ const newsData = [
     month: "FEB",
     author: "Muhammad Azlan Syah",
     publishDate: "Kamis, 30 Mei 2024 | 10:00 WIB",
-    image: "/images/img-projects.png",
+    image: "/images/img-detail-jlt-1.png",
     content: [
       "Setelah dilaporkan tuntas, Jalan Lingkar Selatan (JLS) Tuban mulai diaktifkan secara terbatas. Kendaraan berat bisa melintas ke jalan baru tersebut karena sudah dibuka sistem dua lajur. Keputusan tersebut, berdasarkan hasil rapat forum lalu lintas angkutan jalan (LLAJ) Tuban. Demi keamanan, sejumlah rambu arus lalu lintas mulai dipasang di sejumlah titik. Selain rambu pengarah jalan, terlihat juga papan peringatan titik rawan pengendara lawan arus.",
       "Pembukaan Dua Jalur Untuk Mengurangi Kerawanan Kecelakaan",
@@ -77,6 +78,85 @@ const newsData = [
 export default function InsightDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
+  const [currentUrl, setCurrentUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    // Set currentUrl dan imageUrl setelah komponen dimount di browser
+    if (news) {
+      setCurrentUrl(window.location.href);
+      setImageUrl(`${window.location.origin}${news.image ?? ""}`);
+    }
+  }, []);
+
+  // Fungsi untuk menangani berbagi ke media sosial
+  const handleShare = (platform: string) => {
+    if (!news) return;
+
+    const shareData = {
+      title: news.title,
+      text: `${news.title}`,
+      url: currentUrl,
+    };
+
+    // Cek jika Web Share API tersedia
+    if (navigator.share && platform === "native") {
+      navigator
+        .share(shareData)
+        .then(() => console.log("Shared successfully"))
+        .catch((err) => console.error("Error sharing:", err));
+      return;
+    }
+
+    let shareUrl = "";
+
+    switch (platform) {
+      case "whatsapp":
+        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareData.title} - ${shareData.url}`)}`;
+        break;
+      case "facebook":
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`;
+        break;
+      case "instagram":
+        // Instagram tidak memiliki API berbagi langsung yang resmi
+        // Gunakan deep link untuk mengarahkan ke DM Instagram
+        shareUrl = `https://instagram.com/direct/inbox`;
+        alert("Buka Instagram dan paste link untuk dibagikan");
+        navigator.clipboard
+          .writeText(`${shareData.title} - ${shareData.url}`)
+          .catch((err) => console.error("Gagal menyalin teks:", err));
+        break;
+      case "tiktok":
+        // TikTok tidak memiliki API berbagi langsung
+        // Gunakan deep link ke halaman pesan TikTok
+        shareUrl = `https://www.tiktok.com/messages`;
+        alert("Buka TikTok dan paste link untuk dibagikan");
+        navigator.clipboard
+          .writeText(`${shareData.title} - ${shareData.url}`)
+          .catch((err) => console.error("Gagal menyalin teks:", err));
+        break;
+      case "twitter":
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareData.url)}&text=${encodeURIComponent(shareData.title)}&hashtags=${news.tags.join(",")}`;
+        break;
+      case "copy":
+        navigator.clipboard
+          .writeText(shareData.url)
+          .then(() => {
+            alert("Link berhasil disalin!");
+          })
+          .catch((err) => {
+            console.error("Gagal menyalin teks: ", err);
+            alert("Gagal menyalin link.");
+          });
+        return;
+      default:
+        return;
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, "_blank", "noopener,noreferrer");
+    }
+  };
 
   // Cari berita berdasarkan slug
   const news = newsData.find((item) => item.slug === slug);
@@ -112,42 +192,16 @@ export default function InsightDetailPage() {
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
-      {/* Breadcrumb */}
-      <div className="bg-white px-6 pt-48 text-black md:px-12 lg:px-48">
-        <div className="flex items-center text-sm">
-          <Link
-            href="/"
-            className="text-base text-black/40 hover:text-blue-primary"
-          >
-            HOME
-          </Link>
-          <span className="mx-2">/</span>
-          <Link
-            href="/insights"
-            className="text-base text-black/40 hover:text-blue-primary"
-          >
-            INSIGHTS
-          </Link>
-          <span className="mx-2">/</span>
-          <span className="max-w-[250px] truncate text-base text-black">
-            {news.title}
-          </span>
-        </div>
+      {/* Breadcrumbs */}
+      <div className="relative pt-20">
+        <Breadcrumbs items={[
+          { label: "Insights", href: "/insights" },
+          { label: news.title.length > 20 ? news.title.substring(0, 20) + "..." : news.title }
+        ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" textColor="text-black" hoverColor="hover:text-gray-700" />
       </div>
 
-      {/* Hero Image
-      <div className="relative h-[300px] w-full md:h-[500px]">
-        <Image
-          src={news.image}
-          alt={news.title}
-          fill
-          priority
-          className="object-cover"
-        />
-      </div> */}
-
       {/* Article Content */}
-      <div className="bg-white px-6 py-12 text-black md:px-12 lg:px-48">
+      <div className="bg-white px-6 pt-24 text-black md:px-12 lg:px-48">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <div className="md:col-span-2">
             {/* Hero Image */}
@@ -191,7 +245,11 @@ export default function InsightDetailPage() {
                 <span className="text-sm text-gray-600">Share:</span>
                 <div className="flex space-x-3">
                   {/* WhatsApp */}
-                  <button className="hover:text-green-600 text-white-10">
+                  <button
+                    onClick={() => handleShare("whatsapp")}
+                    className="hover:text-green-600 text-gray-700"
+                    aria-label="Share to WhatsApp"
+                  >
                     <div className="relative h-5 w-5">
                       <Image
                         src="/svgs/icon-whatsapp.svg"
@@ -204,7 +262,11 @@ export default function InsightDetailPage() {
                   </button>
 
                   {/* Facebook */}
-                  <button className="text-white-10 hover:text-blue-600">
+                  <button
+                    onClick={() => handleShare("facebook")}
+                    className="text-gray-700 hover:text-blue-600"
+                    aria-label="Share to Facebook"
+                  >
                     <div className="relative h-5 w-5">
                       <Image
                         src="/svgs/icon-facebook.svg"
@@ -212,12 +274,20 @@ export default function InsightDetailPage() {
                         width={20}
                         height={20}
                         className="object-contain"
+                        style={{
+                          filter:
+                            "brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(40%) contrast(100%)",
+                        }}
                       />
                     </div>
                   </button>
 
-                  {/* Instagram */}
-                  <button className="text-white-10 hover:text-pink-600">
+                  {/* Instagram - Share to Instagram Direct Message */}
+                  <button
+                    onClick={() => handleShare("instagram")}
+                    className="text-gray-700 hover:text-pink-600"
+                    aria-label="Share to Instagram"
+                  >
                     <div className="relative h-5 w-5">
                       <Image
                         src="/svgs/icon-instagram.svg"
@@ -225,12 +295,20 @@ export default function InsightDetailPage() {
                         width={20}
                         height={20}
                         className="object-contain"
+                        style={{
+                          filter:
+                            "brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(40%) contrast(100%)",
+                        }}
                       />
                     </div>
                   </button>
 
-                  {/* TikTok */}
-                  <button className="text-white-10 hover:text-black">
+                  {/* TikTok - Share to TikTok Direct Message */}
+                  <button
+                    onClick={() => handleShare("tiktok")}
+                    className="text-gray-700 hover:text-black"
+                    aria-label="Share to TikTok"
+                  >
                     <div className="relative h-5 w-5">
                       <Image
                         src="/svgs/icon-tiktok.svg"
@@ -238,12 +316,20 @@ export default function InsightDetailPage() {
                         width={20}
                         height={20}
                         className="object-contain"
+                        style={{
+                          filter:
+                            "brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(40%) contrast(100%)",
+                        }}
                       />
                     </div>
                   </button>
 
                   {/* X (Twitter) */}
-                  <button className="text-white-10 hover:text-gray-900">
+                  <button
+                    onClick={() => handleShare("twitter")}
+                    className="text-gray-700 hover:text-gray-900"
+                    aria-label="Share to X (Twitter)"
+                  >
                     <div className="relative h-5 w-5">
                       <Image
                         src="/svgs/icon-x.svg"
@@ -256,7 +342,11 @@ export default function InsightDetailPage() {
                   </button>
 
                   {/* Copy Link */}
-                  <button className="text-white-10 hover:text-blue-500">
+                  <button
+                    onClick={() => handleShare("copy")}
+                    className="text-gray-700 hover:text-blue-500"
+                    aria-label="Copy Link"
+                  >
                     <div className="relative h-5 w-5">
                       <Image
                         src="/svgs/icon-copylink.svg"
@@ -279,8 +369,11 @@ export default function InsightDetailPage() {
                   paragraph.includes("Pengoperasian Masih Terbatas") ? (
                     <h2 className="mb-4 mt-8 text-2xl">{paragraph}</h2>
                   ) : paragraph.includes("Untuk meminimalisir") ? (
-                    <blockquote className="my-6 border-l-4 border-blue-primary bg-gray-50 py-2 pl-4 italic">
-                      {paragraph}
+                    <blockquote className="relative my-6 border-l-4 border-blue-primary py-4 pl-8">
+                      <span className="absolute left-2 top-0 font-serif text-5xl text-blue-primary">
+                        &ldquo;
+                      </span>
+                      <p className="text-lg">{paragraph}</p>
                     </blockquote>
                   ) : (
                     <p className="mb-6 leading-relaxed">{paragraph}</p>
@@ -343,9 +436,9 @@ export default function InsightDetailPage() {
         </div>
       </div>
 
-      <div className="flex w-full flex-col items-center bg-white-10 ">
+      <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-          Lihat Insight Lain
+          Lihat Insight Proyek
         </span>
 
         <NewsGrid
@@ -357,9 +450,16 @@ export default function InsightDetailPage() {
       <div className="flex justify-center pb-6 md:pb-12">
         <Button
           text="LIHAT SEMUA"
-          height="56px"
-          textSize="base"
-          className="text-sm md:text-lg"
+          height="48px"
+          textSize="xl"
+          className="bg-orange-500 text-base md:text-lg"
+          href="/insights"
+          clipPath={{
+            outer:
+              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+          }}
         />
       </div>
 

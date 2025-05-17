@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Button from "./commons/Button";
 import Link from "next/link";
 
 interface ProjectShowcaseProps {
@@ -19,6 +18,7 @@ interface ProjectShowcaseProps {
   showProjectLength?: boolean;
   italicWords?: string[];
   projectSlug?: string;
+  buttonText?: string;
 }
 
 const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
@@ -35,6 +35,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   bgLabelColor = "bg-white-20",
   descriptionColor = "text-white-10",
   showProjectLength = true,
+  buttonText = "PELAJARI SELENGKAPNYA",
   italicWords,
   projectSlug,
 }) => {
@@ -43,15 +44,15 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
       if (!italicWords?.length) {
         return description;
       }
-      
+
       let result = description;
       italicWords.forEach((word) => {
         result = result.replace(word, `<span class="italic">${word}</span>`);
       });
-      
+
       return <span dangerouslySetInnerHTML={{ __html: result }} />;
     }
-    
+
     return description;
   };
 
@@ -95,42 +96,41 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
 
       <div className="order-2 flex w-full flex-col items-start justify-center px-6 md:w-1/2 md:px-16">
         <span
-          className={`mb-2 text-left text-3xl ${textColor} md:mb-4 md:text-5xl`}
+          className={`mb-2 text-left font-semibold text-3xl ${textColor} md:mb-4 md:text-5xl`}
         >
           {period}
         </span>
         <span
-          className={`mb-2 text-left text-3xl ${textColor} md:mb-4 md:text-5xl`}
+          className={`mb-2 text-left font-semibold text-3xl ${textColor} md:mb-4 md:text-5xl`}
         >
           {title}
         </span>
-        <p className={`text-base font-normal leading-7 ${descriptionColor} md:text-base lg:text-base`}>
+        <p
+          className={`text-base font-normal leading-7 ${descriptionColor} md:text-base lg:text-base`}
+        >
           {renderDescriptionFixed()}
         </p>
 
         <div className="mt-6 flex flex-col gap-8 md:mt-8">
           <div className="flex flex-col gap-8 md:flex-row md:items-center">
-            <div className="order-2 md:order-1 w-full md:w-auto">
-              <Link href={`/projects/${projectSlug ?? "jalan-lingkar-tuban"}`} className="block w-full md:w-auto">
-                <Button
-                  text="LIHAT LEBIH LENGKAP"
-                  className="text-lg font-normal w-full md:w-auto md:text-2xl"
-                  clipPath={{
-                    outer:
-                      "polygon(2% 0%, 98% 0%, 100% 16%, 100% 84%, 98% 100%, 2% 100%, 0% 84%, 0% 16%)",
-                    inner:
-                      "polygon(2% 0%, 98% 0%, 100% 16%, 100% 84%, 98% 100%, 2% 100%, 0% 84%, 0% 16%)",
-                  }}
-                  margin="1px"
-                />
-              </Link>
+            <div 
+              className="custom-button cursor-pointer"
+              onClick={() => {
+                window.location.href = `/projects/${projectSlug ?? "jalan-lingkar-tuban"}`;
+              }}
+            >
+              <div className="custom-button-inner">
+                <span className="text-white-10 whitespace-normal text-center font-titillium text-lg font-light uppercase tracking-wide">
+                  {buttonText}
+                </span>
+              </div>
             </div>
 
             {showProjectLength && (
-              <div className="order-1 md:order-2 flex items-center">
+              <div className="order-1 flex items-center md:order-2">
                 <Image
                   className="relative z-10 h-[40px] w-[40px] md:h-[50px] md:w-[50px]"
-                  width={50}
+                  width={60}
                   height={50}
                   alt=""
                   src={"/svgs/icon-road.svg"}
@@ -148,6 +148,117 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .custom-button {
+          position: relative;
+          height: 42px;
+          min-width: 220px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          clip-path: polygon(
+            3% 0%,
+            97% 0%,
+            100% 16%,
+            100% 84%,
+            97% 100%,
+            3% 100%,
+            0% 84%,
+            0% 16%
+          );
+          background-color: #ffffff;
+          transition: opacity 0.3s;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-button:hover {
+          opacity: 0.8;
+        }
+
+        .custom-button-inner {
+          position: relative;
+          height: calc(42px - 2px);
+          width: calc(100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          clip-path: polygon(
+            3% 0%,
+            97% 0%,
+            100% 16%,
+            100% 84%,
+            97% 100%,
+            3% 100%,
+            0% 84%,
+            0% 16%
+          );
+          background-color: #FF7028;
+          margin: 1.5px;
+        }
+
+        .custom-button-inner span {
+          padding: 0 16px;
+        }
+
+        @media (max-width: 768px) {
+          .custom-button {
+            clip-path: polygon(
+              5% 0%,
+              95% 0%,
+              100% 10%,
+              100% 90%,
+              95% 100%,
+              5% 100%,
+              0% 90%,
+              0% 10%
+            );
+          }
+          
+          .custom-button-inner {
+            clip-path: polygon(
+              5% 0%,
+              95% 0%,
+              100% 10%,
+              100% 90%,
+              95% 100%,
+              5% 100%,
+              0% 90%,
+              0% 10%
+            );
+          }
+        }
+          @media (max-width: 768px) {
+          .custom-button {
+            clip-path: polygon(
+              3% 0%,
+              97% 0%,
+              100% 10%,
+              100% 90%,
+              97% 100%,
+              3% 100%,
+              0% 90%,
+              0% 10%
+            );
+            height: 38px;
+            min-width: 200px;
+          }
+          
+          .custom-button-inner {
+            clip-path: polygon(
+              3% 0%,
+              97% 0%,
+              100% 10%,
+              100% 90%,
+              97% 100%,
+              3% 100%,
+              0% 90%,
+              0% 10%
+            );
+            height: calc(38px - 2px);
+          }
+        }
+      `}</style>
     </div>
   );
 };

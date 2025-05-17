@@ -55,13 +55,13 @@ const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transform transition-transform duration-300 ease-in-out ${
+      className={`fixed left-0 right-0 top-0 z-[9999] transform transition-transform duration-300 ease-in-out ${
         hide ? "-translate-y-full" : "translate-y-0"
       }`}
     >
       <nav className="flex h-20 w-full items-center bg-blue-primary px-4 md:px-10 lg:px-20">
         <div className="mx-auto hidden w-full max-w-[1272px] items-center justify-between md:flex">
-          <Link href="/">
+          <Link href="/#" onClick={() => window.scrollTo(0, 0)}>
             <Image
               src="/svgs/wms-logo.svg"
               alt="Logo"
@@ -117,23 +117,25 @@ const Navbar: React.FC = () => {
                   onMouseEnter={() => setShowPrecastSubmenu(true)}
                   onMouseLeave={() => setShowPrecastSubmenu(false)}
                 >
-                  <div className="text-white-base hover:bg-blue-secondary flex cursor-pointer items-center justify-between px-6 py-3 transition-colors">
-                    <span>Precast Concrete</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="ml-3 h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
+                  <Link href="/products/precast-concrete">
+                    <div className="text-white-base hover:bg-blue-secondary flex cursor-pointer items-center justify-between px-6 py-3 transition-colors">
+                      <span>Precast Concrete</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="ml-3 h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </Link>
 
                   {/* Dropdown level 2 */}
                   <div
@@ -175,6 +177,13 @@ const Navbar: React.FC = () => {
                     </Link>
                   </div>
                 </div>
+
+                <Link
+                  href="/products#support-letter"
+                  className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                >
+                  Support Letter
+                </Link>
               </div>
             </div>
 
@@ -197,22 +206,19 @@ const Navbar: React.FC = () => {
               INSIGHTS
             </Link>
             <Link href="/contact">
-              <Button
-                text="KONTAK KAMI"
-                height="40px"
-                clipPath={{
-                  outer:
-                    "polygon(6% 0%, 94% 0%, 100% 16%, 100% 84%, 94% 100%, 6% 100%, 0% 84%, 0% 16%)",
-                  inner:
-                    "polygon(6% 0%, 94% 0%, 100% 16%, 100% 84%, 94% 100%, 6% 100%, 0% 84%, 0% 16%)",
-                }}
-              />
+              <div className="custom-contact-button">
+                <div className="custom-contact-button-inner">
+                  <span className="text-white whitespace-normal text-center font-titillium text-sm font-light uppercase tracking-wide">
+                    KONTAK KAMI
+                  </span>
+                </div>
+              </div>
             </Link>
           </div>
         </div>
 
         <div className="flex w-full items-center justify-between md:hidden">
-          <Link href="/">
+          <Link href="/#" onClick={() => window.scrollTo(0, 0)}>
             <Image
               src="/svgs/wms-logo.svg"
               alt="Logo"
@@ -244,7 +250,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile menu dropdown */}
         <div
-          className={`fixed inset-0 bottom-0 left-0 right-0 top-0 z-[100] min-h-screen bg-blue-primary transition-all duration-300 ${
+          className={`fixed inset-0 bottom-0 left-0 right-0 top-0 z-[10000] min-h-screen bg-blue-primary transition-all duration-300 ${
             isOpen
               ? "visible opacity-100"
               : "pointer-events-none invisible opacity-0"
@@ -254,7 +260,7 @@ const Navbar: React.FC = () => {
           <div className="flex min-h-screen flex-col overflow-hidden">
             {/* Header dengan Logo dan Close button */}
             <div className="mb-8 flex items-center justify-between px-4 py-6">
-              <Link href="/">
+              <Link href="/#" onClick={() => {window.scrollTo(0, 0); setIsOpen(false);}}>
                 <Image
                   src="/svgs/wms-logo.svg"
                   alt="Logo"
@@ -285,41 +291,47 @@ const Navbar: React.FC = () => {
               >
                 <div className="space-y-6 px-4">
                   <div
-                    onClick={() => handleMobileNavigation("products")}
-                    className="text-white border-white/10 flex cursor-pointer items-center justify-between border-b pb-6"
+                    className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                   >
-                    <span className="text-lg">PRODUK & LAYANAN</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                    <Link href="/products" onClick={() => setIsOpen(false)} className="text-lg">
+                      PRODUK & LAYANAN
+                    </Link>
+                    <div 
+                      onClick={() => handleMobileNavigation("products")}
+                      className="ml-2 p-2"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
                   </div>
 
                   <Link
                     href="/about"
-                    className="text-white border-white/10 block border-b pb-6 text-lg"
+                    className="text-white border-white/5 block border-b pb-6 text-lg"
                   >
                     <span>TENTANG KAMI</span>
                   </Link>
                   <Link
                     href="/projects"
-                    className="text-white border-white/10 block border-b pb-6 text-lg"
+                    className="text-white border-white/5 block border-b pb-6 text-lg"
                   >
                     <span>PROYEK KAMI</span>
                   </Link>
                   <Link
                     href="/insights"
-                    className="text-white border-white/10 block border-b pb-6 text-lg"
+                    className="text-white border-white/5 block border-b pb-6 text-lg"
                   >
                     <span>INSIGHT</span>
                   </Link>
@@ -331,9 +343,9 @@ const Navbar: React.FC = () => {
                 className={`absolute inset-0 transition-transform duration-300 ease-in-out ${
                   mobileMenuLevel === "products"
                     ? "translate-x-0"
-                    : mobileMenuLevel === "precast" 
-                        ? "-translate-x-full" 
-                        : "translate-x-full"
+                    : mobileMenuLevel === "precast"
+                      ? "-translate-x-full"
+                      : "translate-x-full"
                 }`}
               >
                 <div className="px-4">
@@ -362,37 +374,53 @@ const Navbar: React.FC = () => {
                   <div className="mt-8 space-y-6">
                     <Link
                       href="/products/aspal"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">Aspal</span>
                     </Link>
                     <Link
                       href="/products/beton"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">Beton</span>
                     </Link>
 
                     <div
-                      onClick={() => handleMobileNavigation("precast")}
-                      className="text-white border-white/10 flex cursor-pointer items-center justify-between border-b pb-6"
+                      className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                     >
-                      <span className="text-lg">Precast Concrete</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                      <Link 
+                        href="/products/precast-concrete" 
+                        onClick={() => setIsOpen(false)}
+                        className="text-lg"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                        Precast Concrete
+                      </Link>
+                      <div 
+                        onClick={() => handleMobileNavigation("precast")}
+                        className="ml-2 p-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
                     </div>
+                    <Link
+                      href="/products#support-letter"
+                      className="text-white border-white/5 block border-b pb-6"
+                    >
+                      <span className="text-lg">Support Letter</span>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -431,31 +459,31 @@ const Navbar: React.FC = () => {
                   <div className="mt-8 space-y-6">
                     <Link
                       href="/products/precast-concrete/box-culvert"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">Box Culvert</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/double-u-box"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">Double U-Box</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/u-ditch"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">U-Ditch</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/u-ditch-cover"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">U-Ditch Cover</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/kansteen"
-                      className="text-white border-white/10 block border-b pb-6"
+                      className="text-white border-white/5 block border-b pb-6"
                     >
                       <span className="text-lg">Kansteen</span>
                     </Link>
@@ -469,17 +497,13 @@ const Navbar: React.FC = () => {
               {/* Kontak Kami button */}
               <div className="mb-8 px-4">
                 <Link href="/contact">
-                  <Button
-                    text="KONTAK KAMI"
-                    className="w-full text-2xl"
-                    clipPath={{
-                      outer: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
-                      inner: "polygon(2% 0%, 98% 0%, 100% 18%, 100% 82%, 98% 100%, 2% 100%, 0% 82%, 0% 18%)",
-                    }}
-                    margin="1px"
-                    width="100%"
-                    padding="px-8 py-4"
-                  />
+                  <div className="custom-contact-button">
+                    <div className="custom-contact-button-inner">
+                      <span className="text-white whitespace-normal text-center font-titillium text-sm font-light uppercase tracking-wide">
+                        KONTAK KAMI
+                      </span>
+                    </div>
+                  </div>
                 </Link>
               </div>
 
@@ -530,9 +554,9 @@ const Navbar: React.FC = () => {
 
                 {/* Copyright dengan padding bottom */}
                 <div className="px-4 pb-8">
-                  <div className="text-white flex items-center justify-center space-x-2 text-center text-sm">
-                    <span>Copyright 2025 © WMS</span>
-                    <span className="text-white/50">|</span>
+                  <div className="text-white flex items-center justify-center space-x-6 text-center text-sm">
+                    <span>© Copyright 2025 WMS</span>
+                    <span className="text-white">|</span>
                     <span>
                       Web Experience by{" "}
                       <Link
@@ -550,6 +574,94 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </nav>
+
+      <style jsx>{`
+        .custom-contact-button {
+          position: relative;
+          height: 40px;
+          min-width: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          clip-path: polygon(
+            6% 0%,
+            94% 0%,
+            100% 16%,
+            100% 84%,
+            94% 100%,
+            6% 100%,
+            0% 84%,
+            0% 16%
+          );
+          background-color: #ffffff;
+          transition: opacity 0.3s;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-contact-button:hover {
+          opacity: 0.8;
+        }
+
+        .custom-contact-button-inner {
+          position: relative;
+          height: calc(40px - 2px);
+          width: calc(100% - 2px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          clip-path: polygon(
+            6% 0%,
+            94% 0%,
+            100% 16%,
+            100% 84%,
+            94% 100%,
+            6% 100%,
+            0% 84%,
+            0% 16%
+          );
+          background-color: #ff7028;
+          margin: 1px;
+        }
+
+        .custom-contact-button-inner span {
+          padding: 0 16px;
+        }
+        
+        @media (max-width: 768px) {
+          .custom-contact-button {
+            height: 46px;
+            min-width: 140px;
+            clip-path: polygon(
+              3% 0%,
+              97% 0%,
+              100% 16%,
+              100% 84%,
+              97% 100%,
+              3% 100%,
+              0% 84%,
+              0% 16%
+            );
+          }
+          
+          .custom-contact-button-inner {
+            height: calc(46px - 2px);
+            clip-path: polygon(
+              3% 0%,
+              97% 0%,
+              100% 16%,
+              100% 84%,
+              97% 100%,
+              3% 100%,
+              0% 84%,
+              0% 16%
+            );
+          }
+          
+          .custom-contact-button-inner span {
+            padding: 0 20px;
+          }
+        }
+      `}</style>
     </header>
   );
 };

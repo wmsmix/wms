@@ -25,34 +25,102 @@ export default function AspalProductPage() {
 
       <ProductHero
         title="Beton (Ready-Mix)"
-        description="Campuran material agregat (batu-batuan) dengan aspal dalam keadaan panas. Campuran ini kemudian dipadatkan menjadi lapisan jalan yang kuat dan tahan lama."
+        description="Tersedia beton dengan kekuatan tekan Fc' mulai dari 10 MPa hingga 30 MPa. Dimana setiap tipe dirancang untuk kebutuhan konstruksi spesifik, mulai dari pekerjaan ringan hingga proyek infrastruktur besar."
         imageSrc="/images/img-hero-beton.png"
         buttonText="TANYA LEBIH LANJUT"
         onButtonClick={() => {
           window.location.href = "/contact";
         }}
+        breadcrumbItems={[
+          { label: "Produk & Layanan", href: "/products" },
+          { label: "Beton", href: "/products/beton" }
+        ]}
       />
 
-      <div className="px-4 pt-12 md:px-8 md:pt-24">
+      <div className="px-2 pt-12 md:px-4 md:pt-24">
         <section className="text-white clip-bottom-corners relative w-full overflow-hidden pb-48">
-          <span className="block px-12 text-center font-noto text-xl text-black sm:text-4xl md:text-5xl lg:text-[48px]">
+          <span className="block px-2 text-center font-noto text-3xl text-black sm:text-4xl md:text-5xl lg:text-[48px]">
             Beton Non-Struktural
           </span>
 
-          <ProjectShowcase
-            period="Beton Fc' 10"
-            title="= K 150, 10 MPa"
-            description="Beton ini ideal untuk aplikasi non-struktural. Sering digunakan sebagai lantai kerja pada pembangunan jalan dan fondasi, serta sebagai lapisan perata yang hanya menanggung beban ringan."
-            imageSrc="/images/img-jejak.png"
-            descriptionColor="text-black"
-            projectValue="10 MPa"
-            textColor="text-black"
-            valueColor="text-white-10"
-            labelColor="text-blue-primary"
-            bgLabelColor="bg-blue-primary"
-            projectLabel="Kekuatan Tekan Fc'"
-            showProjectLength={false}
-          />
+          <div className="flex w-full flex-col px-2 py-8 md:flex-row md:px-4 md:py-16">
+            <div className="relative order-1 mb-8 h-[215px] w-full px-6 md:mb-0 md:h-[500px] md:w-1/2 md:px-0 md:ps-24">
+              <div className="relative h-full w-full">
+                <div className="relative h-full w-full overflow-hidden">
+                  <Image
+                    src="/images/img-beton-non-struktural.png"
+                    alt="Beton Fc' 10"
+                    fill
+                    className="object-cover"
+                    style={{
+                      clipPath:
+                        "polygon(4% 0%, 96% 0%, 100% 6%, 100% 94%, 96% 100%, 4% 100%, 0% 94%, 0% 6%)",
+                    }}
+                  />
+                </div>
+
+                <div
+                  className="absolute bottom-[-20px] right-[-20px] z-10 h-[140px] w-[180px] md:bottom-[-30px] md:right-[-30px] md:h-[190px] md:w-[254px]"
+                  style={{
+                    clipPath:
+                      "polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%)",
+                    backgroundColor: "#ffffff",
+                    padding: "2px",
+                  }}
+                >
+                  <div
+                    className="flex h-full w-full flex-col items-center justify-center gap-2 bg-blue-primary"
+                    style={{
+                      clipPath:
+                        "polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%)",
+                    }}
+                  >
+                    <span
+                      className="text-[42px] md:text-[54px] font-semibold leading-none text-white-10 md:text-[64px]"
+                    >
+                      10 MPa
+                    </span>
+                    <span className="-mt-2 text-sm md:text-lg text-white-10 md:text-2xl">
+                      Kekuatan Tekan Fc&apos;
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="order-2 flex w-full flex-col items-start justify-center px-6 md:w-1/2 md:px-16">
+              <span
+                className="mb-2 text-left font-semibold text-3xl text-black md:mb-4 md:text-5xl"
+              >
+                Beton Fc&apos; 10
+              </span>
+              <span
+                className="mb-2 text-left font-semibold text-3xl text-black md:mb-4 md:text-5xl"
+              >
+                = K 150, 10 MPa
+              </span>
+              <p
+                className="text-base font-normal leading-7 text-black md:text-base lg:text-base"
+              >
+                Beton ini ideal untuk aplikasi non-struktural. Sering digunakan sebagai lantai kerja pada pembangunan jalan dan fondasi, serta sebagai lapisan perata yang hanya menanggung beban ringan.
+              </p>
+
+              <div className="mt-6 flex flex-col gap-8 md:mt-8">
+                <div className="flex flex-col gap-8 md:flex-row md:items-center">
+                  <div 
+                    className="custom-cta-button cursor-pointer"
+                    onClick={() => handleWhatsAppClick("Beton Fc&apos; 10 = K 150, 10 MPa")}
+                  >
+                    <div className="custom-cta-button-inner">
+                      <span className="text-white-10 whitespace-normal text-center font-titillium text-sm xs:text-lg sm:text-2xl font-light uppercase tracking-wide">
+                        PILIH BETON INI
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <style jsx>{`
             .clip-bottom-corners {
@@ -78,14 +146,81 @@ export default function AspalProductPage() {
                 );
               }
             }
+            
+            .custom-cta-button {
+              position: relative;
+              height: 52px;
+              min-width: 160px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              clip-path: polygon(
+                4% 0%,
+                96% 0%,
+                100% 16%,
+                100% 84%,
+                96% 100%,
+                4% 100%,
+                0% 84%,
+                0% 16%
+              );
+              background-color: #ffffff;
+              transition: opacity 0.3s;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            @media (min-width: 375px) {
+              .custom-cta-button {
+                min-width: 180px;
+              }
+            }
+
+            @media (min-width: 640px) {
+              .custom-cta-button {
+                min-width: 200px;
+              }
+            }
+
+            .custom-cta-button:hover {
+              opacity: 0.8;
+            }
+
+            .custom-cta-button-inner {
+              position: relative;
+              height: calc(52px - 2px);
+              width: calc(100% - 2px);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              clip-path: polygon(
+                4% 0%,
+                96% 0%,
+                100% 16%,
+                100% 84%,
+                96% 100%,
+                4% 100%,
+                0% 84%,
+                0% 16%
+              );
+              background-color: #FF7028;
+              margin: 1px;
+            }
+
+            .custom-cta-button-inner span {
+              padding: 0 12px;
+            }
+
+            @media (min-width: 640px) {
+              .custom-cta-button-inner span {
+                padding: 0 24px;
+              }
+            }
           `}</style>
         </section>
       </div>
       <div
-        className="flex w-screen max-w-full flex-col items-center bg-black py-24"
+        className="beton-jalan flex w-screen max-w-full flex-col items-center bg-black py-24"
         style={{
-          clipPath:
-            "polygon(8% 0%, 92% 0%, 100% 36%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 36%)",
           marginLeft: "calc(-50vw + 50%)",
           marginRight: "calc(-50vw + 50%)",
           width: "100vw",
@@ -94,6 +229,17 @@ export default function AspalProductPage() {
         <span className="block px-4 text-center font-noto text-3xl text-white-10 md:text-4xl lg:text-5xl">
           Beton Jalan
         </span>
+        <style jsx>{`
+          .beton-jalan {
+            clip-path: polygon(4% 0%, 96% 0%, 100% 48%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 48%);
+          }
+          
+          @media (max-width: 768px) {
+            .beton-jalan {
+              clip-path: polygon(10% 0%, 90% 0%, 100% 30%, 100% 100%, 90% 100%, 10% 100%, 0% 100%, 0% 30%);
+            }
+          }
+        `}</style>
       </div>
       <div>
         <div className="flex w-full flex-col bg-black md:flex-row">
@@ -120,7 +266,7 @@ export default function AspalProductPage() {
                 height="40px"
                 textSize="xl"
                 className="text-sm md:text-lg"
-                onClick={() => handleWhatsAppClick("Beton Fc' 15 = K 200, 15 MPa")}
+                onClick={() => handleWhatsAppClick("Beton Fc&apos; 15 = K 200, 15 MPa")}
                 clipPath={{
                   outer:
                     "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -148,7 +294,7 @@ export default function AspalProductPage() {
                 height="40px"
                 textSize="xl"
                 className="text-sm md:text-lg"
-                onClick={() => handleWhatsAppClick("Beton Fc' 20 = K 250, 20 MPa")}
+                onClick={() => handleWhatsAppClick("Beton Fc&apos; 20 = K 250, 20 MPa")}
                 clipPath={{
                   outer:
                     "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -171,12 +317,7 @@ export default function AspalProductPage() {
         <style jsx>{`
           .clip-bottom-corners {
             clip-path: polygon(
-              0% 0%,
-              100% 0%,
-              100% 85%,
-              90% 100%,
-              10% 100%,
-              0% 85%
+             0% 0%, 100% 0%, 100% 76%, 96% 100%, 96% 100%, 0% 100%, 4% 100%, 0% 76%
             );
           }
 
@@ -221,7 +362,7 @@ export default function AspalProductPage() {
               height="40px"
               textSize="xl"
               className="text-sm md:text-lg"
-              onClick={() => handleWhatsAppClick("Beton Fc' 25 = K 300, 25 MPa")}
+              onClick={() => handleWhatsAppClick("Beton Fc&apos; 25 = K 300, 25 MPa")}
               clipPath={{
                 outer:
                   "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -250,7 +391,7 @@ export default function AspalProductPage() {
               height="40px"
               textSize="xl"
               className="text-sm md:text-lg"
-              onClick={() => handleWhatsAppClick("Beton Fc' 30 = K 350, 30 MPa")}
+              onClick={() => handleWhatsAppClick("Beton Fc&apos; 30 = K 350, 30 MPa")}
               clipPath={{
                 outer:
                   "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -354,6 +495,8 @@ export default function AspalProductPage() {
         topBgColor="bg-white-10"
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-blue-primary"
+        buttonHref="#"
+        onButtonClick={() => handleWhatsAppClick("Beton (Ready-Mix)")}
       />
       <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">

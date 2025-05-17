@@ -27,11 +27,11 @@ const PrecastFeatures: React.FC<PrecastFeaturesProps> = ({
       }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 lg:gap-12 justify-items-center">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex items-start w-full max-w-[360px] sm:max-w-[400px] md:max-w-[360px]"
+              className="flex items-start w-full max-w-[360px]"
             >
               <div
                 className={`${iconBgColor} flex-shrink-0 flex items-center justify-center h-[90px] w-[90px] md:h-[100px] md:w-[100px] rounded-2xl shadow-md`}

@@ -16,13 +16,13 @@ const ProductTypeVariants: React.FC<ProductTypeVariantsProps> = ({
   variants,
 }) => {
   return (
-    <div className=" w-full py-16">
+    <div className="w-full py-16">
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-center text-2xl md:text-6xl font-noto text-black mb-8">
           {title}
         </h2>
 
-        <div className="flex flex-wrap justify-center gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
           {variants.map((variant, index) => (
             <div key={index} className="flex flex-col items-center">
               <div className="relative w-72 h-64 mb-4">

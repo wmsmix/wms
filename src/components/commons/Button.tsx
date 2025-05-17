@@ -86,9 +86,9 @@ const Button: React.FC<ButtonProps> = ({
           style={{
             backgroundColor: bgColor,
             clipPath: clipPath.inner,
-            height: `calc(${height} - 1px)`,
+            height: `calc(${height} - 2px)`,
             minWidth: minWidth ? `calc(${minWidth} - 2px)` : "auto",
-            maxWidth: maxWidth ? `calc(${maxWidth} - 2px)` : "none",
+            maxWidth: maxWidth ? `calc(${maxWidth} - 4px)` : "none",
             margin: margin,
           }}
         >

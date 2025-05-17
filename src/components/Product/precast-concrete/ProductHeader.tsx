@@ -13,9 +13,9 @@ interface ProductHeaderProps {
 
 const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features }) => {
   return (
-    <div className="bg-white-10 py-24 text-black w-full">
+    <div className="bg-white-10 pb-24 text-black w-full">
       <div className="container mx-auto px-4 mt-24">
-        <h1 className="text-center text-3xl md:text-6xl font-noto text-white mb-8">
+        <h1 className="text-center text-3xl md:text-6xl font-noto text-white ">
           {title}
         </h1>
 
