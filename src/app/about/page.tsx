@@ -181,7 +181,7 @@ export default function AboutPage() {
       >
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-12 text-center">
-            <span className="font-noto text-4xl md:text-5xl">Alur Proses produksi</span>
+            <span className="font-noto text-4xl md:text-5xl">Alur Proses Produksi</span>
           </div>
           
           <div className="flex flex-col md:flex-row gap-8">
@@ -348,22 +348,81 @@ export default function AboutPage() {
       </div>
 
       <div
-        className="relative mt-[-40px] w-full bg-orange-secondary px-4 py-12 md:py-16"
+        className="relative mt-[-40px] w-full bg-orange-secondary px-4 py-8 md:py-10 overflow-hidden"
         style={{
           clipPath: "polygon(0 0, 100% 0, 100% 75%, 95% 100%, 4% 100%, 0 75%)",
         }}
       >
-        <div className="container mx-auto mb-[-40] flex items-center justify-center gap-6 md:flex-row md:justify-between md:gap-0 md:px-24">
-          <span className="px-4 text-center font-noto text-4xl text-white-10 md:text-left md:text-6xl">
-            Terjamin
-          </span>
-          <span className="px-4 text-center font-noto text-4xl text-white-10 md:text-left md:text-6xl">
-            Terpercaya
-          </span>
-          <span className="px-4 text-center font-noto text-4xl text-white-10 md:text-left md:text-6xl">
-            Tersertifikat
-          </span>
+        <div className="marquee-container py-4 flex items-center h-full">
+          <div className="marquee-content">
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terjamin
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Terpercaya
+            </span>
+            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+              Tersertifikat
+            </span>
+          </div>
         </div>
+        <style jsx>{`
+          .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            min-height: 80px;
+          }
+          
+          .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+            padding-right: 50px;
+          }
+          
+          .marquee-item {
+            display: inline-block;
+            line-height: 1;
+          }
+          
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-75%);
+            }
+          }
+        `}</style>
       </div>
 
       <div className="bg-white-10 py-16">
