@@ -337,7 +337,6 @@ Pilih Aspal Juara, Pasti Tahan Lama"
         />
       </div>
       <Footer />
-
       <style jsx global>{`
         .clip-black-section {
           clip-path: polygon(4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%);
