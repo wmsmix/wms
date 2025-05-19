@@ -23,10 +23,16 @@ async function getSessionUser() {
   }
 }
 
+type RouteParams = {
+  params: {
+    slug: string;
+  }
+}
+
 // GET a single precast concrete product by slug
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  context: RouteParams
 ) {
   try {
     const sessionUser = await getSessionUser();
@@ -37,7 +43,7 @@ export async function GET(
       );
     }
 
-    const { slug } = params;
+    const { slug } = context.params;
 
     // Create Supabase client
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
