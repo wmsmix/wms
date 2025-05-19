@@ -17,6 +17,7 @@ import CertificateGallery from "~/components/CertificateGallery";
 export default function AboutPage() {
   const [activeStep, setActiveStep] = useState<number>(1);
   const processContainerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const processSteps = [
     {
@@ -99,6 +100,34 @@ export default function AboutPage() {
       return () => window.removeEventListener("scroll", handleScroll);
     }
   }, [activeStep, processSteps.length]);
+
+  useEffect(() => {
+    // Use matchMedia for more reliable responsive behavior
+    const mediaQuery = window.matchMedia('(max-width: 640px)');
+
+    // Handler function
+    const handleMediaQueryChange = (event: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobile(event.matches);
+    };
+
+    // Initial check
+    handleMediaQueryChange(mediaQuery);
+
+    // Modern browsers
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleMediaQueryChange);
+      return () => {
+        mediaQuery.removeEventListener('change', handleMediaQueryChange);
+      };
+    }
+    // Older browsers (Safari)
+    else {
+      mediaQuery.addListener(handleMediaQueryChange);
+      return () => {
+        mediaQuery.removeListener(handleMediaQueryChange);
+      };
+    }
+  }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
@@ -379,7 +408,9 @@ export default function AboutPage() {
       <div
         className="relative mt-[-50px] w-full bg-orange-secondary px-4 pt-12 pb-2 overflow-hidden"
         style={{
-          clipPath: "polygon(0 0, 100% 0, 100% 55%, 97% 100%, 3% 100%, 0 55%)",
+          clipPath: isMobile
+            ? "polygon(0 0, 100% 0, 100% 65%, 88% 100%, 12% 100%, 0 65%)"
+            : "polygon(0 0, 100% 0, 100% 55%, 97% 100%, 3% 100%, 0 55%)",
         }}
       >
         <div className="marquee-container py-4 flex items-center h-full">
@@ -464,24 +495,59 @@ export default function AboutPage() {
               transparent 100%
             );
           }
-          
+
           .marquee-content {
             display: inline-block;
             animation: marquee 45s linear infinite;
             padding-right: 50px;
           }
-          
+
           .marquee-item {
             display: inline-block;
             line-height: 1;
           }
-          
+
           @keyframes marquee {
             0% {
               transform: translateX(0);
             }
             100% {
               transform: translateX(-75%);
+            }
+          }
+
+          /* Mobile styles */
+          @media (max-width: 640px) {
+            .marquee-container {
+             width: 80%;
+              overflow: hidden;
+              white-space: nowrap;
+              display: flex;
+              align-items: center;
+              min-height: 80px;
+              margin: 0 auto;
+              mask-image: linear-gradient(
+                to right,
+                transparent 0%,
+                black 2%,
+                black 98%,
+                transparent 100%
+              );
+              -webkit-mask-image: linear-gradient(
+                to right,
+                transparent 0%,
+                black 2%,
+                black 98%,
+                transparent 100%
+              );
+            }
+            .marquee-content {
+              animation-duration: 60s !important; /* Slow down animation for mobile */
+            }
+            .marquee-item {
+
+              padding-left: 12px !important;
+              padding-right: 12px !important;
             }
           }
         `}</style>
