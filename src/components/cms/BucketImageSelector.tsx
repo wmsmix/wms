@@ -131,8 +131,8 @@ const BucketImageSelector: React.FC<BucketImageSelectorProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-medium">Select Image from Bucket</h2>
+        <div className="flex items-center justify-between p-4 border-b bg-white">
+          <h2 className="text-lg font-medium">Select from Uploaded Images</h2>
           <button
             className="p-2 rounded-md hover:bg-gray-100"
             onClick={onClose}
@@ -143,7 +143,7 @@ const BucketImageSelector: React.FC<BucketImageSelectorProps> = ({
           </button>
         </div>
 
-        <div className="p-4 border-b">
+        <div className="p-4 border-b bg-white">
           <div className="flex gap-2 mb-4">
             <button
               onClick={navigateUp}
@@ -185,7 +185,7 @@ const BucketImageSelector: React.FC<BucketImageSelectorProps> = ({
         </div>
 
         {folders.length > 0 && !currentFolder && (
-          <div className="p-4 border-b">
+          <div className="p-4 border-b bg-white">
             <h3 className="text-sm font-medium mb-2">Folders</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
               {folders.map(folder => (
@@ -204,7 +204,7 @@ const BucketImageSelector: React.FC<BucketImageSelectorProps> = ({
           </div>
         )}
 
-        <div className="overflow-y-auto p-4" style={{ maxHeight: 'calc(90vh - 200px)' }}>
+        <div className="overflow-y-auto p-4 bg-white" style={{ maxHeight: 'calc(90vh - 200px)' }}>
           {loading ? (
             <div className="flex justify-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
