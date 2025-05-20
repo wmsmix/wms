@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
+import BucketImageSelector from './BucketImageSelector';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
@@ -28,6 +29,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
   const [imageUrl, setImageUrl] = useState<string>(currentImageUrl);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [showImageSelector, setShowImageSelector] = useState(false);
 
   // Set image URL when component receives new props
   useEffect(() => {
@@ -99,36 +101,62 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     }
   };
 
+  const handleSelectImage = (path: string) => {
+    // Set the raw storage path for the form value
+    setImageUrl(path);
+    onImageUploaded(path);
+
+    // Generate and set the public URL for preview
+    const publicUrl = getPublicUrl(path);
+    setFilePreview(publicUrl);
+  };
+
   return (
     <div className="mb-4">
       <label htmlFor={`file-upload-${label}`} className="mb-2 block text-sm font-medium text-gray-700">
         {label}
       </label>
 
-      <div className="mb-3">
-        <input
-          type="file"
-          id={`file-upload-${label}`}
-          accept="image/*"
-          onChange={uploadFile}
-          disabled={uploading}
-          className="block w-full text-sm text-gray-500
-            file:mr-4 file:py-2 file:px-4
-            file:rounded-md file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-50 file:text-blue-700
-            hover:file:bg-blue-100"
-        />
-        {uploading && (
-          <div className="mt-2 flex items-center">
-            <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
-            <span className="text-sm text-gray-500">Uploading...</span>
-          </div>
-        )}
-        {uploadError && (
-          <div className="mt-2 text-sm text-red-500">{uploadError}</div>
-        )}
+      <div className="mb-3 flex flex-wrap gap-2">
+        <div className="relative">
+          <input
+            type="file"
+            id={`file-upload-${label}`}
+            accept="image/*"
+            onChange={uploadFile}
+            disabled={uploading}
+            className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-md file:border-0
+              file:text-sm file:font-semibold
+              file:bg-blue-50 file:text-blue-700
+              hover:file:bg-blue-100"
+          />
+          {uploading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70">
+              <div className="flex items-center">
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
+                <span className="text-sm text-gray-500">Uploading...</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setShowImageSelector(true)}
+          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+          </svg>
+          Select from Bucket
+        </button>
       </div>
+
+      {uploadError && (
+        <div className="mt-2 text-sm text-red-500">{uploadError}</div>
+      )}
 
       {filePreview && (
         <div className="mt-3 overflow-hidden rounded-md border border-gray-200">
@@ -173,6 +201,15 @@ const FileUploader: React.FC<FileUploaderProps> = ({
           placeholder="Enter image URL or path"
         />
       </div>
+
+      {showImageSelector && (
+        <BucketImageSelector
+          bucketName={bucketName}
+          folderPath={folderPath}
+          onImageSelected={handleSelectImage}
+          onClose={() => setShowImageSelector(false)}
+        />
+      )}
     </div>
   );
 };
