@@ -1,39 +1,61 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import type { HomepageContent } from '~/types/cms';
 import HeroSectionEditor from '~/components/cms/HeroSectionEditor';
 import CertificationsEditor from '~/components/cms/CertificationsEditor';
 import ProductsEditor from '~/components/cms/ProductsEditor';
 import FeaturesEditor from '~/components/cms/FeaturesEditor';
 import ShowcaseEditor from '~/components/cms/ShowcaseEditor';
-import { HomepageContent } from '~/types/cms';
 import { getHomepageContent, saveHomepageContent } from '~/data/homepage';
+import { getHomepageContentFromSupabase, saveHomepageContentToSupabase } from '~/data/homepage-supabase';
 
 export default function HomepageEditor() {
   const [content, setContent] = useState<HomepageContent | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle');
   const [tagline, setTagline] = useState('');
+  const [useSupabase, setUseSupabase] = useState(true);
 
   // Load content on page load
   useEffect(() => {
-    try {
-      const homepageContent = getHomepageContent();
-      setContent(homepageContent);
-      setTagline(homepageContent.tagline);
-      setIsLoading(false);
-    } catch (e) {
-      console.error('Error loading homepage content:', e);
-      setIsLoading(false);
-    }
-  }, []);
+    const loadContent = async () => {
+      try {
+        let homepageContent: HomepageContent;
 
-  const handleSave = () => {
+        if (useSupabase) {
+          homepageContent = await getHomepageContentFromSupabase();
+        } else {
+          homepageContent = getHomepageContent();
+        }
+
+        setContent(homepageContent);
+        setTagline(homepageContent.tagline);
+        setIsLoading(false);
+      } catch (e) {
+        console.error('Error loading homepage content:', e);
+        setIsLoading(false);
+      }
+    };
+
+    // Use void operator to handle the promise
+    void loadContent();
+  }, [useSupabase]);
+
+  const handleSave = async () => {
     if (!content) return;
 
     setSaveStatus('saving');
     try {
-      const success = saveHomepageContent({ ...content, tagline });
+      const updatedContent = { ...content, tagline };
+      let success = false;
+
+      if (useSupabase) {
+        success = await saveHomepageContentToSupabase(updatedContent);
+      } else {
+        success = saveHomepageContent(updatedContent);
+      }
+
       if (success) {
         setSaveStatus('success');
         setTimeout(() => setSaveStatus('idle'), 3000);
@@ -44,6 +66,11 @@ export default function HomepageEditor() {
       console.error('Error saving homepage content:', e);
       setSaveStatus('error');
     }
+  };
+
+  const toggleStorageMode = () => {
+    setIsLoading(true);
+    setUseSupabase(!useSupabase);
   };
 
   if (isLoading || !content) {
@@ -59,27 +86,49 @@ export default function HomepageEditor() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-gray-800">Edit Homepage</h1>
-        <button
-          onClick={handleSave}
-          disabled={saveStatus === 'saving'}
-          className={`rounded-md px-4 py-2 text-white transition ${
-            saveStatus === 'saving'
-              ? 'bg-gray-400 cursor-not-allowed'
+        <div className="flex items-center gap-4">
+          <div className="flex items-center">
+            <label htmlFor="storage-toggle" className="mr-2 text-sm text-gray-600">
+              {useSupabase ? 'Using Supabase' : 'Using LocalStorage'}
+            </label>
+            <div className="relative inline-block w-10 select-none transition duration-200 ease-in">
+              <input
+                type="checkbox"
+                name="storage-toggle"
+                id="storage-toggle"
+                checked={useSupabase}
+                onChange={toggleStorageMode}
+                className="toggle-checkbox absolute h-6 w-6 cursor-pointer appearance-none rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out checked:translate-x-full checked:border-blue-500 checked:bg-blue-500"
+              />
+              <label
+                htmlFor="storage-toggle"
+                className="toggle-label block h-6 cursor-pointer overflow-hidden rounded-full bg-gray-300 checked:bg-blue-500"
+              ></label>
+            </div>
+          </div>
+
+          <button
+            onClick={handleSave}
+            disabled={saveStatus === 'saving'}
+            className={`rounded-md px-4 py-2 text-white transition ${
+              saveStatus === 'saving'
+                ? 'bg-gray-400 cursor-not-allowed'
+                : saveStatus === 'success'
+                ? 'bg-green-500 hover:bg-green-600'
+                : saveStatus === 'error'
+                ? 'bg-red-500 hover:bg-red-600'
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
+          >
+            {saveStatus === 'saving'
+              ? 'Saving...'
               : saveStatus === 'success'
-              ? 'bg-green-500 hover:bg-green-600'
+              ? 'Saved!'
               : saveStatus === 'error'
-              ? 'bg-red-500 hover:bg-red-600'
-              : 'bg-blue-500 hover:bg-blue-600'
-          }`}
-        >
-          {saveStatus === 'saving'
-            ? 'Saving...'
-            : saveStatus === 'success'
-            ? 'Saved!'
-            : saveStatus === 'error'
-            ? 'Error Saving'
-            : 'Save Changes'}
-        </button>
+              ? 'Error Saving'
+              : 'Save Changes'}
+          </button>
+        </div>
       </div>
 
       <div className="space-y-8">
@@ -150,6 +199,15 @@ export default function HomepageEditor() {
           </button>
         </div>
       </div>
+
+      <style jsx>{`
+        .toggle-checkbox:checked + .toggle-label {
+          background-color: #3b82f6;
+        }
+        .toggle-checkbox:focus + .toggle-label {
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+      `}</style>
     </div>
   );
 }

@@ -14,23 +14,34 @@ import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton"
 import { useEffect, useState } from "react";
 import type { HomepageContent } from "~/types/cms";
 import { getHomepageContent } from "~/data/homepage";
+import { getHomepageContentFromSupabase } from "~/data/homepage-supabase";
 
 export default function HomePage() {
   const [content, setContent] = useState<HomepageContent | null>(null);
-  const [isClientLoaded, setIsClientLoaded] = useState(false);
 
   useEffect(() => {
-    try {
-      const homepageContent = getHomepageContent();
-      setContent(homepageContent);
-      setIsClientLoaded(true);
-    } catch (e) {
-      console.error('Error loading homepage content:', e);
-      setIsClientLoaded(true);
+    async function loadContent() {
+      try {
+        // Try to get content from Supabase first
+        const homepageContent = await getHomepageContentFromSupabase();
+        setContent(homepageContent);
+      } catch (e) {
+        console.error('Error loading homepage content from Supabase:', e);
+        // Fallback to localStorage if Supabase fails
+        try {
+          const localContent = getHomepageContent();
+          setContent(localContent);
+        } catch (localError) {
+          console.error('Error loading homepage content from localStorage:', localError);
+        }
+      }
     }
+
+    // Use void operator to handle the promise
+    void loadContent();
   }, []);
 
-  // Fall back to original content if loading fails
+  // Fall back to loading state if content not loaded
   if (!content) {
     return (
       <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
