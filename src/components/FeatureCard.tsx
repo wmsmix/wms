@@ -6,10 +6,10 @@ interface FeatureCardProps {
   description: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ 
-  icon, 
-  title, 
-  description 
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  icon,
+  title,
+  description
 }) => {
   const desktopClipPath = {
     background: "polygon(6% 0%, 94% 0%, 100% 12%, 100% 88%, 94% 100%, 6% 100%, 0% 88%, 0% 12%)",
@@ -23,18 +23,18 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
   return (
     <div className="relative p-[0.5px] md:p-[1px] h-full">
-      <div 
+      <div
         className="absolute inset-0 bg-gray-200 hidden md:block"
         style={{ clipPath: desktopClipPath.background }}
       />
-      <div 
+      <div
         className="absolute inset-0 bg-gray-200 md:hidden"
         style={{ clipPath: mobileClipPath.background }}
       />
-      
-      <div 
+
+      <div
         className="relative bg-white-10 p-4 md:p-8 hidden md:flex flex-col h-full"
-        style={{ 
+        style={{
           clipPath: desktopClipPath.foreground,
         }}
       >
@@ -52,9 +52,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         </div>
       </div>
 
-      <div 
+      <div
         className="relative bg-white-10 p-5 pb-12 md:hidden"
-        style={{ 
+        style={{
           clipPath: mobileClipPath.foreground,
         }}
       >
@@ -72,4 +72,4 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   );
 };
 
-export default FeatureCard; 
+export default FeatureCard;

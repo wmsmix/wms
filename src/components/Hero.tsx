@@ -56,7 +56,7 @@ const Hero: React.FC<HeroProps> = ({
             }}
           />
         </div>
-        
+
         {/* Image untuk Desktop */}
         <div className="hidden md:block">
           <Image
@@ -72,8 +72,8 @@ const Hero: React.FC<HeroProps> = ({
         <div className="absolute inset-0 opacity-30"></div>
       </div>
 
-      {showBreadcrumbs && <Breadcrumbs 
-        items={breadcrumbItems} 
+      {showBreadcrumbs && <Breadcrumbs
+        items={breadcrumbItems}
         topPosition={breadcrumbsTopPosition}
         leftPosition={breadcrumbsLeftPosition}
       />}

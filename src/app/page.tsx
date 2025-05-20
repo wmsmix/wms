@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import Button from "~/components/commons/Button";
 import Footer from "~/components/commons/Footer";
@@ -10,62 +9,64 @@ import Labels from "~/components/Label";
 import CardProduct from "~/components/CardProduct";
 import ProjectShowcase from "~/components/ProjectShowcase";
 import ContactForm from "~/components/ContactForm";
-import ProjectsGrid from "~/components/ProjectsGrid";
 import NewsGrid from "~/components/NewsGrid";
 import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton";
-
-const certifications = [
-  {
-    title: "Sertifikat ISO",
-    subtitle: (
-      <span>
-        Mandala <i>Certification</i>
-      </span>
-    ),
-    image: "/images/img-mandala.png",
-  },
-  {
-    title: "Sertifikat Tingkat\nKomponen Dalam negeri",
-    subtitle: "Kementerian Perindustrian",
-    image: "/images/img-kemendustri.png",
-  },
-  {
-    title: "Surat Keterangan\nKelaikan Operasi",
-    subtitle: "Kementerian PUPR",
-    image: "/images/img-kemenpupr.png",
-  },
-  {
-    title: "Standar Nasional Indonesia",
-    subtitle: "PT. Global Inspeksi Sertifikasi",
-    image: "/images/img-sni.png",
-  },
-];
+import { useEffect, useState } from "react";
+import type { HomepageContent } from "~/types/cms";
+import { getHomepageContent } from "~/data/homepage";
 
 export default function HomePage() {
+  const [content, setContent] = useState<HomepageContent | null>(null);
+  const [isClientLoaded, setIsClientLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const homepageContent = getHomepageContent();
+      setContent(homepageContent);
+      setIsClientLoaded(true);
+    } catch (e) {
+      console.error('Error loading homepage content:', e);
+      setIsClientLoaded(true);
+    }
+  }, []);
+
+  // Fall back to original content if loading fails
+  if (!content) {
+    return (
+      <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
+        <Navbar />
+        <div className="flex min-h-screen w-full flex-col items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Loading...</h1>
+            <p className="mt-4">Please wait while we prepare the website.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-black font-titillium text-white-10">
       <Navbar />
 
-      
-
       <main className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden pt-8">
         <div className="hero-container w-full overflow-hidden">
           <Hero
-            backgroundImage="/images/home-background.png"
-            mobileBackgroundImage="/images/home-background-mobile.png"
-            headline="Aspal & Beton Terbaik, Dirancang oleh Ahli Konstruksi"
-            subheadline="PT Wahana Makmur Sentosa (WMS) adalah pabrik aspal dan beton di Jawa Timur yang telah bersertifikasi SLO dan diakui Kementerian PUPR. Dengan teknologi modern, WMS siap menyajikan produk dengan kualitas tertinggi."
-            ctaText="Lihat Produk"
-            ctaHref="/products"
+            backgroundImage={content.hero.backgroundImage}
+            mobileBackgroundImage={content.hero.mobileBackgroundImage}
+            headline={content.hero.headline}
+            subheadline={content.hero.subheadline}
+            ctaText={content.hero.ctaText}
+            ctaHref={content.hero.ctaHref}
             showBreadcrumbs={false}
           />
         </div>
 
         <span className="mx-auto block max-w-[90vw] py-24 text-center font-noto text-[40px] text-white-10 sm:max-w-4xl sm:text-[64px]">
-          Berpengalaman, Terpercaya, dan Ahli di Bidangnya
+          {content.tagline}
         </span>
         <div className="mx-auto mt-8 grid w-full max-w-[90vw] grid-cols-1 gap-8 px-4 sm:max-w-5xl sm:grid-cols-2 md:grid-cols-4">
-          {certifications.map((cert, index) => (
+          {content.certifications.map((cert, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white-10">
                 <Image
@@ -96,134 +97,97 @@ export default function HomePage() {
             Produk Kami
           </span>
           <div className="mt-16 flex w-full flex-wrap justify-center gap-8 px-6 sm:px-0">
-            <CardProduct
-              imageSrc="/images/img-product-aspal.png"
-              title="ASPAL"
-              italicText="(HOT-MIX)"
-              description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktrur"
-              borderColor="#CCCCCC"
-              borderWidth="0.5px"
-              backgroundColor="white"
-              height="500px"
-              whatsappOnClick={true}
-              href="/products/aspal"
-            />
-            <CardProduct
-              imageSrc="/images/img-product-beton.png"
-              title="BETON"
-              italicText="(READY-MIX)"
-              description="Memiliki tipe dengan kekuatan tekan 10 MPa hingga 30 MPa, dimana tiap tipe dirancang untuk kebutuhan konstruksi ringan hingga proyek infrastruktur berat. "
-              borderColor="#CCCCCC"
-              borderWidth="0.5px"
-              backgroundColor="white"
-              height="500px"
-              whatsappOnClick={true}
-              href="/products/beton"
-            />
-            <CardProduct
-              imageSrc="/images/img-product-precast.png"
-              title=""
-              italicText="PRECAST CONCRETE"
-              description="Produk beton pracetak dengan berbagai bentuk dan ukuran. Dirancang untuk saluran air, pembatas jalan, taman, trotoar, dll."
-              borderColor="#CCCCCC"
-              borderWidth="0.5px"
-              backgroundColor="white"
-              height="500px"
-              whatsappOnClick={true}
-              href="/products/precast-concrete"
-            />
-          </div>
-          <div className="mt-24 flex w-full flex-col md:flex-row">
-            <div className="order-2 flex w-full flex-col justify-center px-6 py-8 md:order-1 md:w-1/2 md:px-16">
-              <h2 className="mb-4 text-3xl font-semibold text-black md:text-4xl lg:text-5xl">
-                Sertifikasi Lengkap dan Berpengalaman
-              </h2>
-              <p className="text-base text-gray-500 md:text-lg lg:text-[20px]">
-                Seluruh produk dan layanan memenuhi standar tertinggi melalui
-                sertifikasi oleh Kementerian Pekerjaan Umum dan Perumahan Rakyat
-                (PUPR), Kementerian Perindustrian dan Lembaga Lainnya.
-              </p>
-              <div className="mt-[24px] flex justify-start">
-              <Button
-                  text="PELAJARI SELENGKAPNYA"
-                  height="42px"
-                  textSize="lg"
-                  onClick={() => {
-                    window.location.href = "/about";
-                  }}
-                  clipPath={{
-                    outer:
-                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
-                  inner:
-                    "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
-                }}
+            {content.products.map((product, index) => (
+              <CardProduct
+                key={index}
+                imageSrc={product.imageSrc}
+                title={product.title}
+                italicText={product.italicText}
+                description={product.description}
+                borderColor="#CCCCCC"
+                borderWidth="0.5px"
+                backgroundColor="white"
+                height="500px"
+                whatsappOnClick={true}
+                href={product.href}
               />
+            ))}
+          </div>
+
+          {content.features.map((feature, index) => {
+            // Determine if the layout should be inverted (image on the left)
+            const isInverted = feature.isInverted;
+            const bgColor = feature.bgColor ?? "bg-white-10";
+            const textColor = feature.textColor ?? "text-black";
+
+            return (
+              <div key={index} className={`mt-24 flex w-full flex-col md:flex-row ${bgColor}`}>
+                {isInverted && (
+                  <div className="relative order-1 h-[300px] w-full md:h-[500px] md:w-1/2">
+                    <Image
+                      src={feature.imageSrc}
+                      alt={feature.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+
+                <div className={`order-2 flex w-full flex-col justify-center px-6 py-8 ${isInverted ? '' : 'md:order-1'} md:w-1/2 md:px-16`}>
+                  <h2 className={`mb-4 text-3xl font-semibold ${textColor} md:text-4xl lg:text-5xl`}>
+                    {feature.title}
+                  </h2>
+                  <p className={`text-base ${textColor === 'text-white-10' ? '' : 'text-gray-500'} md:text-lg lg:text-[20px]`}>
+                    {feature.description}
+                  </p>
+                  {feature.buttonText && feature.buttonHref && (
+                    <div className="mt-[24px] flex justify-start">
+                      <Button
+                        text={feature.buttonText}
+                        height="42px"
+                        textSize="lg"
+                        onClick={() => {
+                          window.location.href = feature.buttonHref ?? '';
+                        }}
+                        clipPath={{
+                          outer:
+                            "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                          inner:
+                            "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {!isInverted && (
+                  <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
+                    <Image
+                      src={feature.imageSrc}
+                      alt={feature.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </div>
-            </div>
-            <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
-              <Image
-                src="/images/img-sertifikasi.png"
-                alt="Sertifikasi"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-          <div className="flex w-full flex-col md:flex-row">
-            <div className="relative order-1 h-[300px] w-full md:h-[500px] md:w-1/2">
-              <Image
-                src="/images/img-harga-bersaing.png"
-                alt="Harga Bersaing"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="order-2 flex w-full flex-col justify-center px-6 py-8 md:w-1/2 md:px-16">
-              <h2 className="mb-4 text-3xl font-semibold text-black md:text-4xl lg:text-5xl">
-                Harga Bersaing, Mutu Terjamin
-              </h2>
-              <p className="text-base text-gray-500 md:text-lg lg:text-[20px]">
-                Produk aspal dan beton kami telah teruji kualitasnya dan mampu
-                memberikan hasil akhir yang kokoh dan tahan lama. Investasikan
-                pada produk berkualitas untuk proyek Anda.
-              </p>
-            </div>
-          </div>
-          <div className="flex w-full flex-col bg-blue-primary md:flex-row">
-            <div className="bg-blue order-2 flex w-full flex-col justify-center px-6 py-8 md:order-1 md:w-1/2 md:px-16">
-              <h2 className="mb-4 text-3xl font-semibold text-white-10 md:text-4xl lg:text-5xl">
-                Peralatan dan Pelayanan Lengkap, Order Kapanpun
-              </h2>
-              <p className="text-base text-white-10 md:text-lg lg:text-[20px]">
-                Dari berbagai macam pilihan produk aspal dan beton, penyediaan
-                jasa gelar aspal, pengecoran beton, hingga penyediaan support
-                letter. WMS siap melayani dari awal hingga akhir proses proyek
-                Anda.
-              </p>
-            </div>
-            <div className="relative order-1 h-[300px] w-full md:order-2 md:h-[500px] md:w-1/2">
-              <Image
-                src="/images/img-peralatan.png"
-                alt="Peralatan"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
+            );
+          })}
+
           <section className="text-white clip-bottom-corners relative w-full overflow-hidden bg-blue-primary py-24 mt-[-2px]">
             <span className="block px-12 text-center font-noto text-3xl text-white-10 sm:text-4xl md:text-5xl lg:text-[64px]">
               Jejak Keberhasilan Kami
             </span>
 
             <ProjectShowcase
-              period="(2022-2024)"
-              title="Jalan Lingkar Tuban"
-              description="Pembangunan Jalan Lingkar Tuban yang berlokasi di Desa Prunggahan Kulon, Tuban, sepanjang 7,98 km. Ruang lingkup WMS berada pada penyediaan dan aplikasi material konstruksi Hot-mix, Ready-mix, dan Precast."
+              period={content.showcase.period}
+              title={content.showcase.title}
+              description={content.showcase.description}
               italicWords={["Hot-mix", "Ready-mix", "Precast"]}
-              imageSrc="/images/img-jejak.png"
-              projectValue="103M"
-              projectLength="7.98 KM"
-              projectSlug="jalan-lingkar-tuban"
+              imageSrc={content.showcase.imageSrc}
+              projectValue={content.showcase.projectValue}
+              projectLength={content.showcase.projectLength}
+              projectSlug={content.showcase.projectSlug}
             />
 
             <style jsx>{`
@@ -250,49 +214,57 @@ export default function HomePage() {
                   );
                 }
               }
+
+              @media (min-width: 769px) {
+                .clip-bottom-corners {
+                  clip-path: polygon(
+                    0% 0%,
+                    100% 0%,
+                    100% 85%,
+                    90% 100%,
+                    10% 100%,
+                    0% 85%
+                  );
+                }
+              }
             `}</style>
           </section>
-          <div className="flex w-full flex-col items-center bg-white-10 py-24">
-            <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-              Siap Bangun <br /> Infrastruktur Berkualitas ?
-            </span>
-            <ContactForm />
-          </div>
-          <div className="flex w-full flex-col items-center bg-white-10">
-            <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-              Lihat Insight Proyek
-            </span>
-
-            <NewsGrid
-              bgColor="bg-blue-primary"
-              textColor="text-black"
-              textBadgeColor="text-white-10"
-            />
-          </div>
-          <div className="flex justify-center pb-6 md:pb-12">
-            <Button
-              text="LIHAT SEMUA"
-              height="48px"
-              textSize="xl"
-              className="bg-orange-500 text-base md:text-lg"
-              href="/insights"
-              clipPath={{
-                outer:
-                  "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
-                inner:
-                  "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
-              }}
-            />
-          </div>
         </div>
-      </main>
-      <Footer />
 
-      {/* Floating WhatsApp Button dengan desain yang sama seperti di Hero */}
-      <FloatingWhatsAppButton
-        message="Halo, saya tertarik dengan produk WMS"
-        position="bottom-right"
-      />
+        <div className="flex w-full flex-col items-center bg-white-10">
+          <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
+            Lihat Insight Proyek
+          </span>
+
+          <NewsGrid
+            bgColor="bg-blue-primary"
+            textColor="text-black"
+            textBadgeColor="text-white-10"
+          />
+        </div>
+        <div className="flex justify-center pb-6 md:pb-12">
+          <Button
+            text="LIHAT SEMUA"
+            height="48px"
+            textSize="xl"
+            className="text-sm md:text-lg"
+            clipPath={{
+              outer:
+                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+              inner:
+                "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
+            }}
+            margin="1px"
+          />
+        </div>
+
+        <div className="bg-white-10 w-full">
+          <ContactForm />
+        </div>
+
+        <Footer />
+      </main>
+      <FloatingWhatsAppButton />
     </div>
   );
 }
