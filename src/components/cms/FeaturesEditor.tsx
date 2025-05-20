@@ -1,5 +1,6 @@
 import React from 'react';
 import { FeatureSection } from '~/types/cms';
+import FileUploader from './FileUploader';
 
 interface FeaturesEditorProps {
   data: FeatureSection[];
@@ -14,6 +15,10 @@ const FeaturesEditor: React.FC<FeaturesEditorProps> = ({ data, onChange }) => {
       [field]: value,
     } as FeatureSection;
     onChange(updatedFeatures);
+  };
+
+  const handleImageUpload = (index: number, url: string) => {
+    handleFeatureChange(index, 'imageSrc', url);
   };
 
   return (
@@ -62,21 +67,12 @@ const FeaturesEditor: React.FC<FeaturesEditorProps> = ({ data, onChange }) => {
               />
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor={`feature-image-${index}`}
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                Image URL
-              </label>
-              <input
-                type="text"
-                id={`feature-image-${index}`}
-                value={feature.imageSrc}
-                onChange={(e) => handleFeatureChange(index, 'imageSrc', e.target.value)}
-                className="block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              />
-            </div>
+            <FileUploader
+              currentImageUrl={feature.imageSrc}
+              onImageUploaded={(url) => handleImageUpload(index, url)}
+              label={`Feature Image ${index + 1}`}
+              folderPath="features"
+            />
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="mb-4">

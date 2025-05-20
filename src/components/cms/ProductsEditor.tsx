@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product } from '~/types/cms';
+import FileUploader from './FileUploader';
 
 interface ProductsEditorProps {
   data: Product[];
@@ -14,6 +15,10 @@ const ProductsEditor: React.FC<ProductsEditorProps> = ({ data, onChange }) => {
       [field]: value,
     } as Product;
     onChange(updatedProducts);
+  };
+
+  const handleImageUpload = (index: number, url: string) => {
+    handleProductChange(index, 'imageSrc', url);
   };
 
   return (
@@ -78,21 +83,12 @@ const ProductsEditor: React.FC<ProductsEditorProps> = ({ data, onChange }) => {
               />
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor={`product-image-${index}`}
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                Image URL
-              </label>
-              <input
-                type="text"
-                id={`product-image-${index}`}
-                value={product.imageSrc}
-                onChange={(e) => handleProductChange(index, 'imageSrc', e.target.value)}
-                className="block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              />
-            </div>
+            <FileUploader
+              currentImageUrl={product.imageSrc}
+              onImageUploaded={(url) => handleImageUpload(index, url)}
+              label={`Product Image ${index + 1}`}
+              folderPath="products"
+            />
 
             <div className="mb-4">
               <label

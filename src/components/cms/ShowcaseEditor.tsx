@@ -1,5 +1,6 @@
 import React from 'react';
 import { ProjectShowcase } from '~/types/cms';
+import FileUploader from './FileUploader';
 
 interface ShowcaseEditorProps {
   data: ProjectShowcase;
@@ -12,6 +13,13 @@ const ShowcaseEditor: React.FC<ShowcaseEditorProps> = ({ data, onChange }) => {
     onChange({
       ...data,
       [name]: value,
+    });
+  };
+
+  const handleImageChange = (url: string) => {
+    onChange({
+      ...data,
+      imageSrc: url,
     });
   };
 
@@ -62,19 +70,12 @@ const ShowcaseEditor: React.FC<ShowcaseEditorProps> = ({ data, onChange }) => {
         />
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="imageSrc" className="mb-2 block text-sm font-medium text-gray-700">
-          Project Image URL
-        </label>
-        <input
-          type="text"
-          id="imageSrc"
-          name="imageSrc"
-          value={data.imageSrc}
-          onChange={handleChange}
-          className="block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-        />
-      </div>
+      <FileUploader
+        currentImageUrl={data.imageSrc}
+        onImageUploaded={handleImageChange}
+        label="Project Image"
+        folderPath="projects"
+      />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="mb-4">

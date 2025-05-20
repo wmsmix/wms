@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
-import { HeroSection } from '~/types/cms';
+import type { HeroSection } from '~/types/cms';
+import FileUploader from './FileUploader';
 
 interface HeroSectionEditorProps {
   data: HeroSection;
@@ -12,6 +15,13 @@ const HeroSectionEditor: React.FC<HeroSectionEditorProps> = ({ data, onChange })
     onChange({
       ...data,
       [name]: value,
+    });
+  };
+
+  const handleImageChange = (field: keyof HeroSection, url: string) => {
+    onChange({
+      ...data,
+      [field]: url,
     });
   };
 
@@ -47,33 +57,19 @@ const HeroSectionEditor: React.FC<HeroSectionEditorProps> = ({ data, onChange })
         />
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="backgroundImage" className="mb-2 block text-sm font-medium text-gray-700">
-          Background Image URL (Desktop)
-        </label>
-        <input
-          type="text"
-          id="backgroundImage"
-          name="backgroundImage"
-          value={data.backgroundImage}
-          onChange={handleChange}
-          className="block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-        />
-      </div>
+      <FileUploader
+        currentImageUrl={data.backgroundImage}
+        onImageUploaded={(url) => handleImageChange('backgroundImage', url)}
+        label="Background Image (Desktop)"
+        folderPath="hero"
+      />
 
-      <div className="mb-4">
-        <label htmlFor="mobileBackgroundImage" className="mb-2 block text-sm font-medium text-gray-700">
-          Background Image URL (Mobile)
-        </label>
-        <input
-          type="text"
-          id="mobileBackgroundImage"
-          name="mobileBackgroundImage"
-          value={data.mobileBackgroundImage}
-          onChange={handleChange}
-          className="block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-        />
-      </div>
+      <FileUploader
+        currentImageUrl={data.mobileBackgroundImage}
+        onImageUploaded={(url) => handleImageChange('mobileBackgroundImage', url)}
+        label="Background Image (Mobile)"
+        folderPath="hero"
+      />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="mb-4">

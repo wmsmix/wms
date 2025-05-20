@@ -1,5 +1,6 @@
 import React from 'react';
 import { Certification } from '~/types/cms';
+import FileUploader from './FileUploader';
 
 interface CertificationsEditorProps {
   data: Certification[];
@@ -14,6 +15,10 @@ const CertificationsEditor: React.FC<CertificationsEditorProps> = ({ data, onCha
       [field]: value,
     } as Certification;
     onChange(updatedCertifications);
+  };
+
+  const handleImageChange = (index: number, url: string) => {
+    handleCertificationChange(index, 'image', url);
   };
 
   return (
@@ -62,21 +67,12 @@ const CertificationsEditor: React.FC<CertificationsEditorProps> = ({ data, onCha
               />
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor={`cert-image-${index}`}
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                Image URL
-              </label>
-              <input
-                type="text"
-                id={`cert-image-${index}`}
-                value={certification.image}
-                onChange={(e) => handleCertificationChange(index, 'image', e.target.value)}
-                className="block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              />
-            </div>
+            <FileUploader
+              currentImageUrl={certification.image}
+              onImageUploaded={(url) => handleImageChange(index, url)}
+              label={`Certificate Image ${index + 1}`}
+              folderPath="certificates"
+            />
           </div>
         ))}
       </div>
