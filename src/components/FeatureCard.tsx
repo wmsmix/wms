@@ -1,4 +1,6 @@
 import React from "react";
+import { getImageUrl } from "~/utils/supabase";
+import Image from "next/image";
 
 interface FeatureCardProps {
   icon: string;
@@ -21,6 +23,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     foreground: "polygon(6% 0%, 94% 0%, 100% 10%, 100% 90%, 94% 100%, 6% 100%, 0% 90%, 0% 10%)"
   };
 
+  // Convert icon path to public URL if it's a Supabase storage path
+  const iconUrl = getImageUrl(icon);
+
   return (
     <div className="relative p-[0.5px] md:p-[1px] h-full">
       <div
@@ -40,7 +45,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       >
         <div className="flex gap-8 items-start p-6 h-full">
           <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12">
-            <img src={icon} alt={title} className="w-full h-full" />
+            <img src={iconUrl} alt={title} className="w-full h-full" />
           </div>
           <div className="text-start flex flex-col h-full">
             <h3 className="text-lg md:text-xl font-semibold text-black mb-2">{title}</h3>
@@ -60,7 +65,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       >
         <div className="flex flex-col items-center">
           <div className="flex-shrink-0 w-14 h-14 mb-4">
-            <img src={icon} alt={title} className="w-full h-full" />
+            <img src={iconUrl} alt={title} className="w-full h-full" />
           </div>
           <div className="text-start">
             <h3 className="text-lg font-semibold text-black mb-2">{title}</h3>

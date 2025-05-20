@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Breadcrumbs from "./commons/Breadcrumbs";
+import SupabaseImage from "./SupabaseImage";
 
 interface HeroProps {
   backgroundImage: string;
@@ -46,7 +47,7 @@ const Hero: React.FC<HeroProps> = ({
       <div className="absolute inset-0 h-full w-full">
         {/* Image untuk Mobile */}
         <div className="block md:hidden">
-          <Image
+          <SupabaseImage
             src={mobileBackgroundImage}
             alt="Hero Background Mobile"
             fill
@@ -59,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({
 
         {/* Image untuk Desktop */}
         <div className="hidden md:block">
-          <Image
+          <SupabaseImage
             src={backgroundImage}
             alt="Hero Background Desktop"
             fill

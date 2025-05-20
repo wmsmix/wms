@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { getImageUrl } from "~/utils/supabase";
 
 interface ProjectCardProps {
   title: string;
@@ -12,11 +13,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   period,
   imageSrc,
 }) => {
+  // Convert image path to public URL if it's a Supabase storage path
+  const imageUrl = getImageUrl(imageSrc);
+
   return (
     <div className="relative h-[300px] w-full max-w-[380px] overflow-hidden rounded-lg shadow-lg">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <Image src={imageSrc} alt={title} fill className="object-cover" />
+        <Image src={imageUrl} alt={title} fill className="object-cover" />
       </div>
 
       <div

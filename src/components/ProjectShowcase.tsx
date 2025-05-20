@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageUrl } from "~/utils/supabase";
 
 interface ProjectShowcaseProps {
   period?: string;
@@ -19,41 +20,52 @@ interface ProjectShowcaseProps {
   italicWords?: string[];
   projectSlug?: string;
   buttonText?: string;
+  [key: string]: unknown; // Add index signature
 }
 
-const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
-  period = "Period Not Specified",
-  title = "Title Not Specified",
-  description = "Description Not Specified",
-  imageSrc = "/images/default-image.png",
-  projectValue = "0",
-  projectLength = "0 KM",
-  textColor = "text-white-10",
-  valueColor = "text-blue-primary",
-  labelColor = "text-white-10",
-  projectLabel = "NILAI PROYEK",
-  bgLabelColor = "bg-white-20",
-  descriptionColor = "text-white-10",
-  showProjectLength = true,
-  buttonText = "PELAJARI SELENGKAPNYA",
-  italicWords,
-  projectSlug,
-}) => {
-  const renderDescriptionFixed = () => {
-    if (typeof description === "string") {
-      if (!italicWords?.length) {
-        return description;
-      }
+const ProjectShowcase: React.FC<ProjectShowcaseProps> = (originalProps) => {
+  // Convert image paths to public URLs if they're from Supabase
+  const imageSrc = originalProps.imageSrc ?
+    getImageUrl(originalProps.imageSrc) :
+    "/images/img-proyek.png";
 
-      let result = description;
-      italicWords.forEach((word) => {
-        result = result.replace(word, `<span class="italic">${word}</span>`);
-      });
+  const props = { ...originalProps, imageSrc };
 
-      return <span dangerouslySetInnerHTML={{ __html: result }} />;
-    }
+  const {
+    period = "(2022-2023)",
+    title = "Pembangunan Trestle Dan Dermaga",
+    description = "Proyek pembangunan trestle dan dermaga di Kabupaten Tegal bertujuan untuk meningkatkan infrastruktur pelabuhan dan memfasilitasi aktivitas bongkar muat barang, mendukung pertumbuhan ekonomi lokal dan regional.",
+    projectValue = "103M",
+    projectLength = "7.98 KM",
+    textColor = "text-black",
+    valueColor = "text-white-10",
+    labelColor = "text-white-10",
+    projectLabel = "Nilai Proyek",
+    bgLabelColor = "bg-blue-primary",
+    descriptionColor = "text-gray-700",
+    showProjectLength = false,
+    italicWords = [],
+    projectSlug = "#",
+    buttonText = "Lihat Detail",
+  } = props;
 
-    return description;
+  const italicizeEnglishWords = (text: string) => {
+    if (!text) return "";
+    if (typeof text !== "string") return text;
+
+    // Jika tidak ada kata yang harus di-italic, kembalikan text asli
+    if (!italicWords?.length) return text;
+
+    // Cari semua kata dalam italicWords dan buat menjadi italic
+    let result = text;
+    italicWords.forEach((word) => {
+      const regex = new RegExp(`(${word})`, "gi");
+      result = result.replace(regex, "<i>$1</i>");
+    });
+
+    return (
+      <span dangerouslySetInnerHTML={{ __html: result }} className={textColor} />
+    );
   };
 
   return (
@@ -94,171 +106,51 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         </div>
       </div>
 
-      <div className="order-2 flex w-full flex-col items-start justify-center px-6 md:w-1/2 md:px-16">
+      <div className="md:order-1 flex w-full flex-col gap-4 md:w-1/2 md:gap-8 md:px-0 md:pe-24">
         <span
-          className={`mb-2 text-left font-semibold text-3xl ${textColor} md:mb-4 md:text-5xl`}
+          className={`self-start rounded-md bg-blue-light px-4 py-1 text-lg font-light text-blue-primary md:text-xl`}
         >
           {period}
         </span>
-        <span
-          className={`mb-2 text-left font-semibold text-3xl ${textColor} md:mb-4 md:text-5xl`}
-        >
-          {title}
-        </span>
-        <p
-          className={`text-base font-normal leading-7 ${descriptionColor} md:text-base lg:text-base`}
-        >
-          {renderDescriptionFixed()}
-        </p>
 
-        <div className="mt-6 flex flex-col gap-8 md:mt-8">
-          <div className="flex flex-col gap-8 md:flex-row md:items-center">
-            <div 
-              className="custom-button cursor-pointer"
-              onClick={() => {
-                window.location.href = `/projects/${projectSlug ?? "jalan-lingkar-tuban"}`;
-              }}
+        <h2
+          className={`text-2xl font-bold leading-tight ${textColor} md:text-3xl lg:text-4xl`}
+        >
+          {italicizeEnglishWords(title)}
+        </h2>
+        <div className={`text-sm ${descriptionColor} md:text-base`}>
+          {typeof description === "string"
+            ? italicizeEnglishWords(description)
+            : description}
+        </div>
+
+        {showProjectLength && (
+          <div className="mt-4 flex items-center gap-3">
+            <span className={`text-lg font-medium ${textColor}`}>
+              Panjang Proyek:
+            </span>
+            <span
+              className={`rounded-md bg-blue-light px-6 py-1 text-lg font-bold text-blue-primary`}
             >
-              <div className="custom-button-inner">
-                <span className="text-white-10 whitespace-normal text-center font-titillium text-lg font-light uppercase tracking-wide">
-                  {buttonText}
-                </span>
-              </div>
-            </div>
+              {projectLength}
+            </span>
+          </div>
+        )}
 
-            {showProjectLength && (
-              <div className="order-1 flex items-center md:order-2">
-                <Image
-                  className="relative z-10 h-[40px] w-[40px] md:h-[50px] md:w-[50px]"
-                  width={60}
-                  height={50}
-                  alt=""
-                  src={"/svgs/icon-road.svg"}
-                />
-                <div className="ms-2 flex flex-col">
-                  <span className={`text-[8px] ${labelColor} md:text-[10px]`}>
-                    TOTAL PANJANG JALAN
-                  </span>
-                  <span className={`text-xl ${textColor} md:text-2xl`}>
-                    {projectLength}
+        {projectSlug && (
+          <div className="mt-4">
+            <Link href={`/projects/${projectSlug}`}>
+              <div className="custom-button">
+                <div className="custom-button-inner">
+                  <span className="text-white text-sm xs:text-lg sm:text-xl font-light tracking-wide">
+                    {buttonText}
                   </span>
                 </div>
               </div>
-            )}
+            </Link>
           </div>
-        </div>
+        )}
       </div>
-
-      <style jsx>{`
-        .custom-button {
-          position: relative;
-          height: 42px;
-          min-width: 220px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          clip-path: polygon(
-            3% 0%,
-            97% 0%,
-            100% 16%,
-            100% 84%,
-            97% 100%,
-            3% 100%,
-            0% 84%,
-            0% 16%
-          );
-          background-color: #ffffff;
-          transition: opacity 0.3s;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .custom-button:hover {
-          opacity: 0.8;
-        }
-
-        .custom-button-inner {
-          position: relative;
-          height: calc(42px - 2px);
-          width: calc(100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          clip-path: polygon(
-            3% 0%,
-            97% 0%,
-            100% 16%,
-            100% 84%,
-            97% 100%,
-            3% 100%,
-            0% 84%,
-            0% 16%
-          );
-          background-color: #FF7028;
-          margin: 1.5px;
-        }
-
-        .custom-button-inner span {
-          padding: 0 16px;
-        }
-
-        @media (max-width: 768px) {
-          .custom-button {
-            clip-path: polygon(
-              5% 0%,
-              95% 0%,
-              100% 10%,
-              100% 90%,
-              95% 100%,
-              5% 100%,
-              0% 90%,
-              0% 10%
-            );
-          }
-          
-          .custom-button-inner {
-            clip-path: polygon(
-              5% 0%,
-              95% 0%,
-              100% 10%,
-              100% 90%,
-              95% 100%,
-              5% 100%,
-              0% 90%,
-              0% 10%
-            );
-          }
-        }
-          @media (max-width: 768px) {
-          .custom-button {
-            clip-path: polygon(
-              3% 0%,
-              97% 0%,
-              100% 10%,
-              100% 90%,
-              97% 100%,
-              3% 100%,
-              0% 90%,
-              0% 10%
-            );
-            height: 38px;
-            min-width: 200px;
-          }
-          
-          .custom-button-inner {
-            clip-path: polygon(
-              3% 0%,
-              97% 0%,
-              100% 10%,
-              100% 90%,
-              97% 100%,
-              3% 100%,
-              0% 90%,
-              0% 10%
-            );
-            height: calc(38px - 2px);
-          }
-        }
-      `}</style>
     </div>
   );
 };
