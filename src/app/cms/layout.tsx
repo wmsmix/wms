@@ -12,12 +12,12 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0`}
     >
-      <div className="h-full w-64 bg-gray-800 px-3 py-4 text-white">
+      <div className="h-full w-64 bg-white px-3 py-4 text-gray-800 shadow-md">
         <div className="mb-6 flex items-center justify-between px-2">
           <div className="text-xl font-semibold">WMS CMS</div>
           <button
             onClick={toggleSidebar}
-            className="rounded-lg p-1 text-gray-400 hover:bg-gray-700 hover:text-white md:hidden"
+            className="rounded-lg p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700 md:hidden"
           >
             <svg
               className="h-6 w-6"
@@ -34,7 +34,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
           </button>
         </div>
         <nav className="space-y-2">
-          <Link href="/cms" className="flex items-center rounded-lg p-2 hover:bg-gray-700">
+          <Link href="/cms" className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600">
             <svg
               className="h-5 w-5"
               fill="currentColor"
@@ -48,7 +48,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
           </Link>
           <Link
             href="/cms/homepage"
-            className="flex items-center rounded-lg p-2 hover:bg-gray-700"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
           >
             <svg
               className="h-5 w-5"
@@ -60,10 +60,10 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
             </svg>
             <span className="ml-3">Homepage</span>
           </Link>
-          <div className="h-px bg-gray-600 my-5"></div>
+          <div className="h-px bg-gray-200 my-5"></div>
           <Link
             href="/"
-            className="flex items-center rounded-lg p-2 hover:bg-gray-700"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
           >
             <svg
               className="h-5 w-5"
