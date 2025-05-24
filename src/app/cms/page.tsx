@@ -110,32 +110,34 @@ export default function CMSDashboard() {
           </div>
         </Link>
 
-        {/* Coming Soon Cards */}
-        <div className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <Link
+          href="/cms/products-page"
+          className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md"
+        >
           <div className="mb-2 flex items-center justify-between">
-            <h5 className="text-xl font-medium text-gray-900">Products</h5>
+            <h5 className="text-xl font-medium text-gray-900">Products Page</h5>
             <svg
-              className="h-6 w-6 text-gray-400"
+              className="h-6 w-6 text-gray-500"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1v-3a1 1 0 00-1-1z"
+                d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM8 16H6v-2h2v2zm0-4H6v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2z"
                 clipRule="evenodd"
               />
             </svg>
           </div>
           <p className="text-gray-600">
-            Manage product listings, descriptions, and specifications.
+            Manage products page content including hero, services, and support letter sections.
           </p>
           <div className="mt-4">
-            <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-              Coming Soon
+            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700">
+              Edit Page
             </span>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="mt-8">
@@ -143,7 +145,7 @@ export default function CMSDashboard() {
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-lg bg-gray-50 p-4">
             <p className="text-sm font-medium text-gray-500">Pages</p>
-            <p className="text-2xl font-semibold text-gray-900">4 / 5</p>
+            <p className="text-2xl font-semibold text-gray-900">5 / 5</p>
           </div>
           <div className="rounded-lg bg-gray-50 p-4">
             <p className="text-sm font-medium text-gray-500">Products</p>

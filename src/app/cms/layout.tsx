@@ -102,6 +102,20 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
             </svg>
             <span className="ml-3">Projects Page</span>
           </Link>
+          <Link
+            href="/cms/products-page"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fillRule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM8 16H6v-2h2v2zm0-4H6v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2z" clipRule="evenodd" />
+            </svg>
+            <span className="ml-3">Products Page</span>
+          </Link>
           <div className="h-px bg-gray-200 my-5"></div>
           <Link
             href="/"

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "~/components/commons/Navbar";
@@ -16,8 +16,49 @@ import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import type { ProductsPageContent } from "~/types/cms";
+import { getProductsPageContent } from "~/data/products-page";
+import { getProductsPageContentFromSupabase } from "~/data/products-page-supabase";
 
 export default function ProductsPage() {
+  const [content, setContent] = useState<ProductsPageContent | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Load content from CMS
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Try to load from Supabase first, then fall back to localStorage
+        let productsContent: ProductsPageContent;
+        try {
+          productsContent = await getProductsPageContentFromSupabase();
+        } catch (e) {
+          console.error("Failed to load from Supabase, falling back to localStorage:", e);
+          productsContent = getProductsPageContent();
+        }
+
+        setContent(productsContent);
+      } catch (e) {
+        console.error("Error loading products page content:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadContent();
+  }, []);
+
+  if (isLoading || !content) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+        <div className="text-center">
+          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
@@ -25,17 +66,17 @@ export default function ProductsPage() {
       <section className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
         <div className="hero-container w-full overflow-hidden">
           <Hero
-            backgroundImage="/images/product-background.png"
-            mobileBackgroundImage="/images/product-background-mobile.png"
-            headline="Dari Pasokan hingga Pemeliharaan, Kami Ada untuk Anda"
-            subheadline="Mulai dari pengadaan material berkualitas seperti aspal dan beton hingga pelaksanaan proyek konstruksi secara profesional, kami siap menjadi mitra terpercaya Anda."
-            ctaText="KONSULTASI SEKARANG"
-            ctaHref="/contact"
+            backgroundImage={content.hero.backgroundImage}
+            mobileBackgroundImage={content.hero.mobileBackgroundImage}
+            headline={content.hero.headline}
+            subheadline={content.hero.subheadline}
+            ctaText={content.hero.ctaText}
+            ctaHref={content.hero.ctaHref}
             breadcrumbItems={[
-              { label: "Produk & Layanan", href: "/products" } 
+              { label: "Produk & Layanan", href: "/products" }
             ]}
-            breadcrumbsTopPosition="top-12 md:top-12"
-            breadcrumbsLeftPosition="left-2 md:left-12"
+            breadcrumbsTopPosition={content.hero.breadcrumbsTopPosition}
+            breadcrumbsLeftPosition={content.hero.breadcrumbsLeftPosition}
           />
         </div>
         <div
@@ -47,22 +88,18 @@ export default function ProductsPage() {
           }}
         >
           <span className="block px-4 text-center font-noto text-3xl text-black md:text-4xl lg:text-5xl">
-            Dari lapisan aspal hingga infrastrukur berat,
-            <br className="hidden md:block" />
-            Kustomisasi Produk Sesuai Kebutuhanmu
+            {content.introduction.title}
           </span>
           <p className="px-4 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px]">
-            Pilih dan kustomisasi produk sesuai dengan kebutuhan proyek anda,{' '}
-            <br className="hidden md:block" />
-            tim ahli siap membantu anda menemukan solusi yang tepat
+            {content.introduction.description}
           </p>
           <div className="flex justify-start pt-6 md:pt-8">
             <Button
-              text="KONSULTASI SEKARANG"
+              text={content.introduction.buttonText}
               height="40px"
               textSize="xl"
               className="text-sm md:text-2xl"
-              href="/contact"
+              href={content.introduction.buttonHref}
               clipPath={{
                 outer:
                   "polygon(3% 0%, 97% 0%, 100% 16%, 100% 84%, 97% 100%, 3% 100%, 0% 84%, 0% 16%)",
@@ -87,7 +124,7 @@ export default function ProductsPage() {
             left: 0;
             width: 100%;
           }
-          
+
           .custom-clip-path {
             clip-path: polygon(
               6% 0%,
@@ -108,7 +145,7 @@ export default function ProductsPage() {
               ); /* 95% dari tinggi asli untuk desktop */
               margin-top: 0; /* Menghapus margin negatif untuk breadcrumbs pada layar lebih besar */
             }
-            
+
             .custom-clip-path {
               clip-path: polygon(
                 4% 0%,
@@ -156,7 +193,7 @@ export default function ProductsPage() {
           buttonHref="/products/precast-concrete"
         />
       </section>
-    
+
       <section className="bg-blue-primary mt-[-2px]">
 
         <div
@@ -168,41 +205,23 @@ export default function ProductsPage() {
           }}
         >
           <span className="text-white-base block px-4 text-center font-noto text-3xl md:text-4xl lg:text-5xl">
-            Servis Satu Atap
+            {content.services.title}
           </span>
           <p className="text-white-base px-4 pt-4 text-center text-sm md:pt-8 md:text-base lg:text-[20px]">
-            Dari Konsep hingga Realisasi,
-            <br className="hidden md:block" />
-            Kami membantu dari perencanaan hingga pelaksanaan
+            {content.services.description}
           </p>
           <div className="grid grid-cols-1 px-4 py-8 md:grid-cols-2 md:px-8 md:py-16 lg:md:grid-cols-4 lg:px-24">
-            <ServiceCard
-              imageSrc="/images/img-jasa-gelar-aspal.png"
-              title="JASA GELAR ASPAL"
-              description="Jasa pengaspalan hot-mix dengan tim profesional dan peralatan modern."
-              italicWords={["hot-mix"]}
-              imagePosition="top"
-            />
-            <ServiceCard
-              imageSrc="/images/img-pengecoran-beton.png"
-              title="PENGECORAN BETON"
-              description="Layanan pengecoran beton langsung di lokasi proyek menggunakan campuran beton berkualitas tinggi."
-              imagePosition="bottom"
-            />
-            <ServiceCard
-              imageSrc="/images/img-support-letter.png"
-              title="SUPPORT LETTER"
-              italicTitle={true}
-              description="Surat dukungan resmi untuk memenuhi persyaratan tender dan memastikan kelancaran pengadaan material konstruksi."
-              italicWords={["tender"]}
-              imagePosition="top"
-            />
-            <ServiceCard
-              imageSrc="/images/img-solusi-khusus.png"
-              title="SOLUSI KHUSUS"
-              description="Semua kebutuhan dan solusi masalah infrastruktur Proyek Anda."
-              imagePosition="bottom"
-            />
+            {content.services.services.map((service, index) => (
+              <ServiceCard
+                key={index}
+                imageSrc={service.imageSrc}
+                title={service.title}
+                description={service.description}
+                italicWords={service.italicWords}
+                italicTitle={service.italicTitle}
+                imagePosition={service.imagePosition}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -210,10 +229,10 @@ export default function ProductsPage() {
         <div className="container mx-auto max-w-7xl px-4 md:px-8 lg:px-4">
           <div className="mb-8 text-center md:mb-12">
             <h2 className="font-noto text-3xl text-white-10 md:text-4xl lg:text-[40px]">
-              Proyek Makin Lancar
+              {content.supportLetter.title}
             </h2>
             <h3 className="mt-2 font-noto text-3xl text-white-10 md:text-4xl lg:text-[40px]">
-              dengan <span className="italic">Support Letter</span>
+              {content.supportLetter.subtitle}
             </h3>
           </div>
 
@@ -222,7 +241,7 @@ export default function ProductsPage() {
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <div className="support-letter-image h-full w-full">
                   <Image
-                    src="/images/img-support-letter.png"
+                    src={content.supportLetter.imageSrc}
                     alt="Support Letter"
                     fill
                     className="object-cover"
@@ -237,24 +256,18 @@ export default function ProductsPage() {
                 <br />
                 untuk Pengadaan Anda
               </h3>
-              {/* <h4 className="font-titilium text-3xl md:text-4xl mb-6">
-                untuk Pengadaan Anda
-              </h4> */}
 
               <p className="mt-4 text-base leading-relaxed md:text-base">
-                Surat dukungan resmi ini akan membantu Anda memenuhi persyaratan
-                tender, memberikan keyakinan kepada panitia pengadaan, dan
-                memastikan kelancaran pasokan material konstruksi dari
-                perusahaan kami untuk proyek Anda
+                {content.supportLetter.description}
               </p>
 
               <div className="mt-8">
                 <Button
-                  text="HUBUNGI KAMI"
+                  text={content.supportLetter.buttonText}
                   height="48px"
                   textSize="xl"
                   className="bg-orange-500 text-base md:text-lg"
-                  href="/contact"
+                  href={content.supportLetter.buttonHref}
                   clipPath={{
                     outer:
                       "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
@@ -295,7 +308,7 @@ export default function ProductsPage() {
               );
             }
           }
-          
+
           .services-clip-path {
             clip-path: polygon(
               6% 0%,
@@ -308,7 +321,7 @@ export default function ProductsPage() {
               0% 4%
             );
           }
-          
+
           @media (min-width: 768px) {
             .services-clip-path {
               clip-path: polygon(
@@ -326,17 +339,17 @@ export default function ProductsPage() {
         `}</style>
       </section>
       <ClippedSection
-        title="Proyek Impian Anda,<br>Realisasikan Bersama Kami"
-        description="Dengan pengalaman bertahun-tahun, kami telah berhasil menyelesaikan berbagai proyek dengan hasil<br>yang memuaskan. Percayakan proyek Anda pada kami dan rasakan perbedaannya."
-        buttonText="MULAI SEKARANG"
+        title={content.clippedSection.title}
+        description={content.clippedSection.description}
+        buttonText={content.clippedSection.buttonText}
         topBgColor="bg-blue-primary"
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-black"
-        buttonHref="/contact"
+        buttonHref={content.clippedSection.buttonHref}
       />
       <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-          Lihat Insight Proyek
+          {content.insightsSectionTitle}
         </span>
 
         <NewsGrid

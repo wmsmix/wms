@@ -182,3 +182,62 @@ export interface ProjectsPageContent {
   callToAction: ProjectsCallToAction;
   insightsSectionTitle: string;
 }
+
+// Types for Products page content
+export interface ProductsHeroSection {
+  backgroundImage: string;
+  mobileBackgroundImage: string;
+  headline: string;
+  subheadline: string;
+  ctaText: string;
+  ctaHref: string;
+  breadcrumbsTopPosition: string;
+  breadcrumbsLeftPosition: string;
+}
+
+export interface ProductsIntroSection {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface ServiceCard {
+  imageSrc: string;
+  title: string;
+  description: string;
+  italicWords?: string[];
+  italicTitle?: boolean;
+  imagePosition: 'top' | 'bottom';
+}
+
+export interface ProductsServicesSection {
+  title: string;
+  description: string;
+  services: ServiceCard[];
+}
+
+export interface ProductsSupportLetterSection {
+  title: string;
+  subtitle: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface ProductsClippedSection {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface ProductsPageContent {
+  hero: ProductsHeroSection;
+  introduction: ProductsIntroSection;
+  services: ProductsServicesSection;
+  supportLetter: ProductsSupportLetterSection;
+  clippedSection: ProductsClippedSection;
+  insightsSectionTitle: string;
+}
