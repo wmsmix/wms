@@ -16,7 +16,7 @@ export interface Certification {
 
 export interface Product {
   title: string;
-  italicText?: string;
+  italicText: string;
   description: string;
   imageSrc: string;
   href: string;
@@ -28,9 +28,9 @@ export interface FeatureSection {
   imageSrc: string;
   buttonText?: string;
   buttonHref?: string;
-  isInverted?: boolean;
-  bgColor?: string;
-  textColor?: string;
+  isInverted: boolean;
+  bgColor: string;
+  textColor: string;
 }
 
 export interface ProjectShowcase {
@@ -50,4 +50,135 @@ export interface HomepageContent {
   products: Product[];
   features: FeatureSection[];
   showcase: ProjectShowcase;
+}
+
+// Types for About page content
+export interface AboutHeroSection {
+  headline: string;
+  subheadline: string;
+  backgroundImage: string;
+  mobileBackgroundImage: string;
+  ctaText: string;
+  breadcrumbsLeftPosition: string;
+  breadcrumbsTopPosition: string;
+}
+
+export interface AboutFeatureCard {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface ProcessStep {
+  number: number;
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface ProfileCard {
+  title: string;
+  description: string | React.ReactNode; // Allow both string and ReactNode for misi list
+  imageSrc: string;
+  imageAlt: string;
+  variant: 'primary' | 'secondary';
+}
+
+export interface CertificateSection {
+  title: string;
+  certificates: {
+    id: number;
+    title: string;
+    image: string;
+    fullImage: string;
+  }[];
+  isDefault?: boolean;
+  large?: boolean;
+  landscape?: boolean;
+}
+
+export interface AboutPageContent {
+  hero: AboutHeroSection;
+  mainTitle: string;
+  features: AboutFeatureCard[];
+  processSteps: ProcessStep[];
+  profiles: {
+    visi: ProfileCard;
+    misi: ProfileCard;
+  };
+  certificateSections: CertificateSection[];
+}
+
+// Types for Insights page content
+export interface InsightsHeroSection {
+  backgroundImage: string;
+  title: string;
+  breadcrumbsTopPosition: string;
+  breadcrumbsLeftPosition: string;
+}
+
+export interface Article {
+  title: string;
+  date: string;
+  month: string;
+  description: string;
+  imageSrc: string;
+  url: string;
+}
+
+export interface SideArticle {
+  title: string;
+  date: string;
+  url: string;
+}
+
+export interface VideoSection {
+  videoUrl: string;
+  title: string;
+  subtitle: string;
+}
+
+export interface InsightsPageContent {
+  hero: InsightsHeroSection;
+  featuredArticle: Article;
+  sideArticles: SideArticle[];
+  newsGrid: Article[];
+  videoSection: VideoSection;
+}
+
+// Types for Projects page content
+export interface ProjectsHeroSection {
+  backgroundImage: string;
+  experienceYears: string;
+  experienceText: string;
+  headline: string;
+  description: string;
+  breadcrumbsTopPosition: string;
+  breadcrumbsLeftPosition: string;
+}
+
+export interface FeaturedProject {
+  title: string;
+  period: string;
+  description: string;
+  imageSrc: string;
+  projectValue: string;
+  projectValueText: string;
+  roadLength: string;
+  roadLengthText: string;
+  buttonText: string;
+  projectSlug: string;
+}
+
+export interface ProjectsCallToAction {
+  title: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface ProjectsPageContent {
+  hero: ProjectsHeroSection;
+  featuredProject: FeaturedProject;
+  callToAction: ProjectsCallToAction;
+  insightsSectionTitle: string;
 }

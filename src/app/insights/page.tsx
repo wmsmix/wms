@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -8,21 +8,50 @@ import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import type { InsightsPageContent } from "~/types/cms";
+import { getInsightsPageContent } from "~/data/insights";
+import { getInsightsPageContentFromSupabase } from "~/data/insights-supabase";
 
 export default function InsightsPage() {
   const router = useRouter();
+  const [content, setContent] = useState<InsightsPageContent | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 6;
   const mobileItemsPerPage = 3;
-  const totalItems = 12;
 
   const [isMobile, setIsMobile] = React.useState(false);
-  const [totalPages, setTotalPages] = React.useState(
-    Math.ceil(totalItems / itemsPerPage),
-  );
+  const [totalPages, setTotalPages] = React.useState(1);
+
+  // Load content from CMS
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Try to load from Supabase first, then fall back to localStorage
+        let insightsContent: InsightsPageContent;
+        try {
+          insightsContent = await getInsightsPageContentFromSupabase();
+        } catch (e) {
+          console.error("Failed to load from Supabase, falling back to localStorage:", e);
+          insightsContent = getInsightsPageContent();
+        }
+
+        setContent(insightsContent);
+      } catch (e) {
+        console.error("Error loading insights page content:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadContent();
+  }, []);
 
   React.useEffect(() => {
+    if (!content) return;
+
+    const totalItems = content.newsGrid.length;
     const handleResize = () => {
       const mobile = window.innerWidth < 640;
       setIsMobile(mobile);
@@ -32,11 +61,20 @@ export default function InsightsPage() {
     };
 
     handleResize();
-
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [content]);
+
+  if (isLoading || !content) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+        <div className="text-center">
+          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
@@ -45,8 +83,8 @@ export default function InsightsPage() {
       <section className="project-hero relative min-h-[320px] w-full overflow-hidden md:min-h-[400px]">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/img-insights.png"
-            alt="Projects"
+            src={content.hero.backgroundImage}
+            alt="Insights"
             fill
             className="object-cover"
             priority
@@ -55,14 +93,14 @@ export default function InsightsPage() {
 
         <div className="absolute top-0 left-0 z-50 w-full pt-20">
           <Breadcrumbs items={[
-            { label: "Insights", href: "/insights" , }
-          ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" />
+            { label: content.hero.title, href: "/insights" }
+          ]} topPosition={content.hero.breadcrumbsTopPosition} leftPosition={content.hero.breadcrumbsLeftPosition} />
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 z-10 flex w-full flex-col justify-end space-y-2 px-6 pb-16 md:flex-row md:items-end md:justify-between md:space-y-0 md:px-12 md:pb-16 lg:px-48">
           <div className="flex items-end gap-6">
             <span className="text-start font-noto text-4xl text-white-10 lg:text-6xl">
-              Insights
+              {content.hero.title}
             </span>
           </div>
         </div>
@@ -94,8 +132,8 @@ export default function InsightsPage() {
               <div className="relative">
                 <div className="relative h-[400px] w-full">
                   <Image
-                    src="/images/img-detail-jlt-1.png"
-                    alt="Jalan Lingkar Selatan Tuban"
+                    src={content.featuredArticle.imageSrc}
+                    alt={content.featuredArticle.title}
                     fill
                     className="object-cover"
                   />
@@ -112,26 +150,25 @@ export default function InsightsPage() {
                           "polygon(0 0, 100% 0, 100% 90%, 88% 100%, 12% 100%, 0 88%)",
                       }}
                     >
-                      <span className="text-3xl font-semibold">20</span>
+                      <span className="text-3xl font-semibold">{content.featuredArticle.date}</span>
                     </div>
 
                     <span className="mt-4 text-2xl font-medium uppercase text-black">
-                      MEI
+                      {content.featuredArticle.month}
                     </span>
                   </div>
                   <div className="flex-1 p-4">
                     <h3 className="font-titilium mb-4 text-xl text-black">
-                      Jalan Lingkar Selatan Tuban Mulai Diaktifkan Terbatas:
-                      Kendaraan Berat Boleh Lewat, tapi Tak Wajib
+                      {content.featuredArticle.title}
                     </h3>
                     <p className="mb-4 text-gray-500">
-                      Radar Tuban - Kamis, 30 Mei 2024
+                      {content.featuredArticle.description}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <div className="h-px flex-grow bg-gray-300"></div>
-                  <Link href="/insights/jalan-lingkar-selatan-tuban-mulai-diaktifkan-terbatas">
+                  <Link href={content.featuredArticle.url}>
                     <Button
                       text="BACA LEBIH LANJUT"
                       clipPath={{
@@ -148,77 +185,26 @@ export default function InsightsPage() {
           </div>
 
           <div className="news-list space-y-6 md:col-span-1">
-            <Link
-              href="/insights/ring-road-tuban-19-km-diuji-coba"
-              className="block transition-colors hover:text-blue-primary"
-            >
-              <div className="flex flex-col gap-1 border-b pb-4">
-                <div>
-                  <span className="text-2xl text-black">
-                    Ring Road Tuban 19 Km Diuji Coba, Kendaraan Besar Dialihkan
-                  </span>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="text-base text-gray-500">
-                    Kamis, 30 Mei 2024
+            {content.sideArticles.map((article, index) => (
+              <Link
+                key={index}
+                href={article.url}
+                className="block transition-colors hover:text-blue-primary"
+              >
+                <div className="flex flex-col gap-1 border-b pb-4">
+                  <div>
+                    <span className="text-2xl text-black">
+                      {article.title}
+                    </span>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <div className="text-base text-gray-500">
+                      {article.date}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/insights/gubernur-resmikan-tiga-nama"
-              className="block transition-colors hover:text-blue-primary"
-            >
-              <div className="flex flex-col gap-1 border-b pb-4">
-                <div>
-                  <span className="text-2xl text-black">
-                    Gubernur Resmikan Tiga Nama Jalan di Lingkar Tuban
-                  </span>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="text-base text-gray-500">
-                    Senin, 20 Maret 2024
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/insights/gubernur-jatim-resmikan"
-              className="block transition-colors hover:text-blue-primary"
-            >
-              <div className="flex flex-col gap-1 border-b pb-4">
-                <div>
-                  <span className="text-2xl text-black">
-                    Gubernur Jawa Timur Resmikan Penamaan Jalan Lingkar Selatan
-                  </span>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="text-base text-gray-500">
-                    Senin, 20 Maret 2024
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/insights/perkembangan-pembangunan-capai-90"
-              className="block transition-colors hover:text-blue-primary"
-            >
-              <div className="flex flex-col gap-1 border-b pb-4">
-                <div>
-                  <span className="text-2xl text-black">
-                    Perkembangan Pembangunan Jalan Lingkar Tuban Capai 90%
-                  </span>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="text-base text-gray-500">
-                    Selasa, 25 April 2024
-                  </div>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -228,136 +214,16 @@ export default function InsightsPage() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {Array.from({ length: isMobile ? 3 : 6 }).map((_, index) => {
             const newsIndex = (currentPage - 1) * (isMobile ? 3 : 6) + index;
-            const newsItems = [
-              {
-                title:
-                  "Pembangunan Jalan Lingkar Tuban: Dorong Pertumbuhan Ekonomi",
-                date: "20",
-                month: "MEI",
-                imageSrc: "/images/img-kabar-proyek-1.png",
-                description:
-                  "Setelah dilaporkan tuntas, jalan lingkar selatan (JLS) Tuban mulai diaktifkan secara...",
-                url: "/insights/pembangunan-jalan-lingkar",
-              },
-              {
-                title: "Ring Road Tuban Jadi Opsi Pengendara Kena Macet",
-                date: "16",
-                month: "JUN",
-                imageSrc: "/images/img-kabar-proyek-2.png",
-                description:
-                  "KBRN, Tuban: Setelah diresmikan, Ring Road/Jalur Lingkar Selatan Tuban yang berjalan...",
-                url: "/insights/ring-road-tuban-jadi-opsi",
-              },
-              {
-                title:
-                  "Ring Road Tuban 19 Km Diuji Coba, Kendaraan Besar Dialihkan",
-                date: "15",
-                month: "FEB",
-                imageSrc: "/images/img-kabar-proyek-3.png",
-                description:
-                  "KBRN, Tuban: Kapolres Tuban AKBP Suryono mengatakan bahwa dirinya sempat...",
-                url: "/insights/ring-road-tuban-diuji-coba",
-              },
-              {
-                title: "Gubernur Resmikan Tiga Nama Jalan di Lingkar Tuban",
-                date: "20",
-                month: "MAR",
-                imageSrc: "/images/img-kabar-proyek-1.png",
-                description:
-                  "Setelah dilaporkan tuntas, jalan lingkar selatan (JLS) Tuban mulai diaktifkan secara...",
-                url: "/insights/gubernur-resmikan-tiga-nama",
-              },
-              {
-                title:
-                  "Gubernur Jawa Timur Resmikan Penamaan Jalan Lingkar Selatan",
-                date: "20",
-                month: "MAR",
-                imageSrc: "/images/img-kabar-proyek-2.png",
-                description:
-                  "KBRN, Tuban: Setelah diresmikan, Ring Road/Jalur Lingkar Selatan Tuban yang berjalan...",
-                url: "/insights/gubernur-jatim-resmikan",
-              },
-              {
-                title: "Jalan Lingkar Selatan Tuban Mulai Diaktifkan Terbatas",
-                date: "30",
-                month: "MEI",
-                imageSrc: "/images/img-kabar-proyek-3.png",
-                description:
-                  "KBRN, Tuban: Kapolres Tuban AKBP Suryono mengatakan bahwa dirinya sempat...",
-                url: "/insights/jalan-lingkar-selatan-tuban-mulai-diaktifkan-terbatas",
-              },
-              {
-                title: "Perkembangan Pembangunan Jalan Lingkar Tuban Capai 90%",
-                date: "25",
-                month: "APR",
-                imageSrc: "/images/img-kabar-proyek-1.png",
-                description:
-                  "KBRN, Tuban: Progres pembangunan jalan lingkar selatan Tuban telah mencapai...",
-                url: "/insights/perkembangan-pembangunan-capai-90",
-              },
-              {
-                title: "Pembangunan Jalan Lingkar Berpengaruh pada Nilai Tanah",
-                date: "10",
-                month: "JAN",
-                imageSrc: "/images/img-kabar-proyek-2.png",
-                description:
-                  "Pembangunan jalan lingkar selatan (JLS) di Tuban memberikan dampak positif...",
-                url: "/insights/pengaruh-nilai-tanah",
-              },
-              {
-                title:
-                  "Alih Fungsi Lahan untuk Pembangunan Jalan Lingkar Tuban",
-                date: "05",
-                month: "DES",
-                imageSrc: "/images/img-kabar-proyek-3.png",
-                description:
-                  "Proses alih fungsi lahan pertanian menjadi jalan lingkar selatan Tuban...",
-                url: "/insights/alih-fungsi-lahan",
-              },
-              {
-                title: "Kemajuan Konstruksi Jalan Lingkar Tuban Periode 2023",
-                date: "12",
-                month: "JAN",
-                imageSrc: "/images/img-kabar-proyek-1.png",
-                description:
-                  "Laporan perkembangan konstruksi jalan lingkar Tuban pada periode tahun 2023...",
-                url: "/insights/kemajuan-konstruksi-2023",
-              },
-              {
-                title: "Dampak Ekonomi Pembangunan Jalan Lingkar Selatan",
-                date: "22",
-                month: "FEB",
-                imageSrc: "/images/img-kabar-proyek-2.png",
-                description:
-                  "Analisis dampak ekonomi dari pembangunan jalan lingkar selatan di Tuban...",
-                url: "/insights/dampak-ekonomi",
-              },
-              {
-                title:
-                  "Sosialisasi Penggunaan Jalan Lingkar Tuban kepada Masyarakat",
-                date: "17",
-                month: "APR",
-                imageSrc: "/images/img-kabar-proyek-3.png",
-                description:
-                  "Dinas Perhubungan mengadakan sosialisasi mengenai penggunaan jalan lingkar Tuban...",
-                url: "/insights/sosialisasi-penggunaan",
-              },
-            ];
 
-            if (newsIndex >= newsItems.length) return null;
+            if (newsIndex >= content.newsGrid.length) return null;
 
-            const news = newsItems[newsIndex] ?? {
-              title: "",
-              date: "",
-              month: "",
-              imageSrc: "",
-              description: "",
-              url: "",
-            };
+            const news = content.newsGrid[newsIndex];
+
+            if (!news) return null;
 
             return (
               <div key={newsIndex} className="flex flex-col">
-                <Link href={`/insights/${news.url.split("/").pop()}`}>
+                <Link href={news.url}>
                   <div
                     className="block h-full w-full overflow-hidden shadow-lg"
                     style={{
@@ -462,8 +328,8 @@ export default function InsightsPage() {
       <section className="video-section relative w-full">
         <div className="relative aspect-video w-full">
           <iframe
-            src="https://www.youtube.com/embed/zSA-gsM7n-I?autoplay=1&mute=1&controls=0&rel=0&loop=1&playlist=zSA-gsM7n-I&modestbranding=1&showinfo=0&fs=0&iv_load_policy=3&vq=hd1080"
-            title="Pembangunan Jalan Lingkar Tuban"
+            src={content.videoSection.videoUrl}
+            title={content.videoSection.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             className="h-full w-full"
             frameBorder="0"
@@ -475,10 +341,10 @@ export default function InsightsPage() {
             style={{ zIndex: 10 }}
           >
             <h2 className="font-titilium text-white text-4xl md:text-5xl lg:text-7xl">
-              PEMBANGUNAN JALAN LINGKAR TUBAN
+              {content.videoSection.title}
             </h2>
             <p className="text-white mt-4 text-xl font-medium lg:text-2xl">
-              #infobinamarga
+              {content.videoSection.subtitle}
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
@@ -9,13 +9,53 @@ import Button from "~/components/commons/Button";
 import GallerySection from "~/components/GallerySection";
 import NewsGrid from "~/components/NewsGrid";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import type { ProjectsPageContent } from "~/types/cms";
+import { getProjectsPageContent } from "~/data/projects";
+import { getProjectsPageContentFromSupabase } from "~/data/projects-supabase";
 
 export default function AspalProductPage() {
   const router = useRouter();
+  const [content, setContent] = useState<ProjectsPageContent | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Load content from CMS
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Try to load from Supabase first, then fall back to localStorage
+        let projectsContent: ProjectsPageContent;
+        try {
+          projectsContent = await getProjectsPageContentFromSupabase();
+        } catch (e) {
+          console.error("Failed to load from Supabase, falling back to localStorage:", e);
+          projectsContent = getProjectsPageContent();
+        }
+
+        setContent(projectsContent);
+      } catch (e) {
+        console.error("Error loading projects page content:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadContent();
+  }, []);
 
   const navigateToProjectDetail = (slug: string) => {
     router.push(`/projects/${slug}`);
   };
+
+  if (isLoading || !content) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+        <div className="text-center">
+          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
@@ -25,7 +65,7 @@ export default function AspalProductPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/img-projects.png"
+            src={content.hero.backgroundImage}
             alt="Projects"
             fill
             className="object-cover"
@@ -38,29 +78,26 @@ export default function AspalProductPage() {
         <div className="absolute top-0 left-0 z-50 w-full pt-20">
           <Breadcrumbs items={[
             { label: "Proyek", href: "/projects" }
-          ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" />
+          ]} topPosition={content.hero.breadcrumbsTopPosition} leftPosition={content.hero.breadcrumbsLeftPosition} />
         </div>
 
         {/* Content */}
         <div className="relative z-10 flex h-full flex-col items-start justify-start gap-4 px-6 py-12 pt-36 text-left md:flex-row md:items-center md:justify-center md:gap-32 md:px-12 md:pt-56 lg:px-24">
           <div className="mb-6 flex flex-col items-start md:mb-0 md:items-center">
             <span className="m-0 font-noto text-[120px] leading-tight md:text-[180px]">
-              20
+              {content.hero.experienceYears}
             </span>
             <span className="m-0 -mt-2 text-sm md:translate-y-[-12px] md:text-base">
-              TAHUN PENGALAMAN
+              {content.hero.experienceText}
             </span>
           </div>
 
           <h1 className="text-white mb-4 max-w-xs text-start font-noto text-lg md:mb-0 md:text-2xl lg:text-3xl">
-            Menghubungkan, membangun, dan menyuburkan negeri
+            {content.hero.headline}
           </h1>
 
           <p className="text-white-base mb-8 max-w-sm text-start text-sm opacity-75 md:mb-0 md:text-base md:text-xl">
-            Sukses membangun berbagai infrastruktur, termasuk jalan, dermaga,
-            dan sistem irigasi, WMS berkomitmen untuk memberikan solusi proyek
-            yang tidak hanya fungsional, tetapi juga bermanfaat dan
-            berkelanjutan.
+            {content.hero.description}
           </p>
         </div>
 
@@ -89,11 +126,11 @@ export default function AspalProductPage() {
           <div className="relative h-full w-full">
             <div
               className="relative h-full w-full cursor-pointer overflow-hidden main-image"
-              onClick={() => navigateToProjectDetail("jalan-lingkar-tuban")}
+              onClick={() => navigateToProjectDetail(content.featuredProject.projectSlug)}
             >
               <Image
-                src="/images/img-jejak.png"
-                alt="Jalan Lingkar Tuban"
+                src={content.featuredProject.imageSrc}
+                alt={content.featuredProject.title}
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
@@ -101,7 +138,7 @@ export default function AspalProductPage() {
                 .main-image {
                   clip-path: polygon(6% 0%, 94% 0%, 100% 6%, 100% 94%, 94% 100%, 6% 100%, 0% 94%, 0% 6%);
                 }
-                
+
                 @media (max-width: 768px) {
                   .main-image {
                     clip-path: polygon(4% 0%, 96% 0%, 100% 8%, 100% 96%, 92% 100%, 4% 100%, 0% 92%, 0% 8%);
@@ -129,10 +166,10 @@ export default function AspalProductPage() {
                 <span
                   className="text-[42px] md:text-[54px] font-semibold leading-none text-white-10 md:text-[64px]"
                 >
-                  103M
+                  {content.featuredProject.projectValue}
                 </span>
                 <span className="text-white-10 -mt-2 text-lg md:text-2xl">
-                  NILAI PROYEK
+                  {content.featuredProject.projectValueText}
                 </span>
               </div>
             </div>
@@ -143,20 +180,17 @@ export default function AspalProductPage() {
           <span
             className="mb-2 text-left text-3xl text-black md:mb-4 md:text-5xl"
           >
-            (2022-2024)
+            {content.featuredProject.period}
           </span>
           <span
             className="mb-2 text-left text-3xl text-black md:mb-4 md:text-5xl"
           >
-            Jalan Lingkar Tuban
+            {content.featuredProject.title}
           </span>
           <p
             className="text-left text-sm text-gray-base md:pe-48 md:text-base"
           >
-            Pembangunan Jalan Lingkar Tuban yang berlokasi di Desa Prunggahan
-            Kulon, Tuban, sepanjang 7,98 km. Ruang lingkup WMS berada pada
-            penyediaan dan aplikasi material konstruksi Aspal Hot-mix, Beton
-            Ready-mix, dan Beton Precast.
+            {content.featuredProject.description}
           </p>
 
           <div className="flex flex-col md:flex-row md:items-end md:justify-center md:gap-10">
@@ -171,19 +205,19 @@ export default function AspalProductPage() {
               />
               <div className="ms-2 flex flex-col">
                 <span className="text-[8px] text-black md:text-[10px]">
-                  TOTAL PANJANG JALAN
+                  {content.featuredProject.roadLengthText}
                 </span>
                 <span className="text-xl text-black md:text-2xl">
-                  7.98 KM
+                  {content.featuredProject.roadLength}
                 </span>
               </div>
             </div>
 
             <div className="order-2 mt-8 md:order-1 md:mt-12">
               <Button
-                text="LIHAT LEBIH LENGKAP"
+                text={content.featuredProject.buttonText}
                 className="text-lg font-normal md:text-2xl"
-                onClick={() => navigateToProjectDetail("jalan-lingkar-tuban")}
+                onClick={() => navigateToProjectDetail(content.featuredProject.projectSlug)}
                 clipPath={{
                   outer:
                     "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
@@ -200,13 +234,13 @@ export default function AspalProductPage() {
       <GallerySection />
       <div className="flex w-full flex-col items-center gap-6 bg-orange-secondary px-4 py-8 md:flex-row md:justify-between md:gap-0 md:px-24">
         <span className="px-4 text-center font-noto text-xl text-white-10 md:text-left md:text-3xl">
-          Yuk, Bangun Infrastruktur Negeri Bersama Kami!
+          {content.callToAction.title}
         </span>
         <Button
-          text="DISKUSI PROYEK BERSAMA"
+          text={content.callToAction.buttonText}
           className="bg-blue-primary text-lg font-normal md:text-2xl"
           bgColor="#0C1F5A"
-          href="/contact"
+          href={content.callToAction.buttonHref}
           clipPath={{
             outer:
               "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
@@ -219,7 +253,7 @@ export default function AspalProductPage() {
       </div>
       <div className="flex w-full flex-col items-center bg-white-10 pt-32">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-          Lihat Insight Proyek
+          {content.insightsSectionTitle}
         </span>
 
         <NewsGrid
@@ -240,7 +274,7 @@ export default function AspalProductPage() {
             inner:
               "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
           }}
-          margin="1px"  
+          margin="1px"
         />
       </div>
       <Footer />

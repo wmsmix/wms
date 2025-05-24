@@ -13,13 +13,42 @@ import ProcessStep from "~/components/ProcessStep";
 import Image from "next/image";
 import ProfileCard from "~/components/ProfileCard";
 import CertificateGallery from "~/components/CertificateGallery";
+import { AboutPageContent } from "~/types/cms";
+import { getAboutPageContent } from "~/data/about";
+import { getAboutPageContentFromSupabase } from "~/data/about-supabase";
 
 export default function AboutPage() {
   const [activeStep, setActiveStep] = useState<number>(1);
   const processContainerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [content, setContent] = useState<AboutPageContent | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const processSteps = [
+  // Load content from CMS
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Try to load from Supabase first, then fall back to localStorage
+        let aboutContent: AboutPageContent;
+        try {
+          aboutContent = await getAboutPageContentFromSupabase();
+        } catch (e) {
+          console.error("Failed to load from Supabase, falling back to localStorage:", e);
+          aboutContent = getAboutPageContent();
+        }
+
+        setContent(aboutContent);
+      } catch (e) {
+        console.error("Error loading about page content:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadContent();
+  }, []);
+
+  const processSteps = content?.processSteps ?? [
     {
       number: 1,
       title: "Konsultasi & Perencanaan",
@@ -129,6 +158,17 @@ export default function AboutPage() {
     }
   }, []);
 
+  if (isLoading || !content) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+        <div className="text-center">
+          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
@@ -136,18 +176,18 @@ export default function AboutPage() {
       <section className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
         <div className="hero-container w-full overflow-hidden">
           <Hero
-            backgroundImage="/images/img-hero-about.png"
-            mobileBackgroundImage="/images/img-hero-about.png"
-            headline="20 Tahun membangun, Mengintegrasikan keahlian, kepercayaan, dan inovasi"
-            subheadline="Bertahun-tahun berkarya, mengukir Jejak Kualitas dalam Setiap Proyek. Dari proyek kecil hingga berskala besar, kami telah membuktikan komitmen kami terhadap kualitas dan kepuasan pelanggan."
-            ctaText="BANGUN DENGAN WMS"
-            breadcrumbsLeftPosition="left-2 md:left-12"
-            breadcrumbsTopPosition="top-12 md:top-12"
+            backgroundImage={content.hero.backgroundImage}
+            mobileBackgroundImage={content.hero.mobileBackgroundImage}
+            headline={content.hero.headline}
+            subheadline={content.hero.subheadline}
+            ctaText={content.hero.ctaText}
+            breadcrumbsLeftPosition={content.hero.breadcrumbsLeftPosition}
+            breadcrumbsTopPosition={content.hero.breadcrumbsTopPosition}
           />
         </div>
         <div className="flex w-screen max-w-full flex-col items-center bg-white-10 py-8 md:py-16 md:pt-32">
           <span className="block px-4 text-center font-noto text-3xl text-black md:text-4xl lg:text-5xl">
-            Keunggulan Utama Kami
+            {content.mainTitle}
           </span>
           <div className="inline-flex w-full items-center justify-center gap-3.5 px-4 py-8 md:py-12">
             <div className="h-px max-w-[120px] flex-1 border-t border-neutral-400 border-opacity-30 md:max-w-[384px]"></div>
@@ -156,29 +196,14 @@ export default function AboutPage() {
           </div>
 
           <div className="container mx-auto mb-16 grid grid-cols-1 gap-2 px-4 md:grid-cols-2 md:gap-6">
-            <FeatureCard
-              icon="/svgs/icon-certified.svg"
-              title="Keberpihakan Pada Lokal"
-              description="Dengan TKDN tinggi dan waktu kerja fleksibel (24/7) sesuai kebutuhan proyek, kami berkomitmen mendukung ekonomi lokal dan memberikan hasil terbaik."
-            />
-
-            <FeatureCard
-              icon="/svgs/icon-certified.svg"
-              title="Standar Nasional"
-              description="Teknologi modern dan sistem produksi kami telah disesuaikan dengan spesifikasi teknis Kementrian PUPR, memenuhi standar nasional untuk mendukung proyek besar."
-            />
-
-            <FeatureCard
-              icon="/svgs/icon-trophy.svg"
-              title="Kualitas Terjamin"
-              description="Produk diproses menggunakan peralatan modern terkalibrasi dengan pengujian laboratorium internal untuk memastikan konsistensi di setiap produksi."
-            />
-
-            <FeatureCard
-              icon="/svgs/icon-truck.svg"
-              title="Kapasitas Produksi Besar"
-              description="Kapasitas produksi Aspal Hot-Mix mencapai 60 ton/jam, dan produksi Beton Ready-Mix mencapai 60 m³/jam."
-            />
+            {content.features.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+              />
+            ))}
           </div>
         </div>
 
@@ -211,6 +236,7 @@ export default function AboutPage() {
               ? "polygon(0 3%, 8% 0, 92% 0, 100% 3%, 100% 100%, 0 100%)"
               : "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
         }}
+        ref={processContainerRef}
       >
         {/* Logo W di bagian kanan */}
         <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-1/3 translate-x-[80%] scale-[4.5] md:block">
@@ -366,39 +392,21 @@ export default function AboutPage() {
 
             <div className="grid gap-8 md:grid-cols-2 lg:col-span-2">
               <ProfileCard
-                title="VISI"
-                description="Mendorong pembangunan infrastruktur melalui produk aspal dan beton berkualitas tinggi yang inovatif serta proses yang ramah lingkungan"
-                imageSrc="/images/img-visi.png"
-                imageAlt="Visi WMS"
-                variant="primary"
+                title={content.profiles.visi.title}
+                description={content.profiles.visi.description}
+                imageSrc={content.profiles.visi.imageSrc}
+                imageAlt={content.profiles.visi.imageAlt}
+                variant={content.profiles.visi.variant}
               />
 
               <ProfileCard
-                title="MISI"
+                title={content.profiles.misi.title}
                 description={
-                  <ol className="text-white/60 list-decimal space-y-3 pl-5">
-                    <li>
-                      Menggunakan bahan baku pilihan untuk mendukung upaya
-                      mengurangi dampak lingkungan.
-                    </li>
-                    <li>
-                      Menerapkan teknologi modern untuk memastikan efisiensi
-                      produk dan mutu produk.
-                    </li>
-                    <li>
-                      Memberikan solusi material; konstruksi berdaya tahan
-                      tinggi yang sesuai dengan standar nasional.
-                    </li>
-                    <li>
-                      Menjalin kerjasama strategis dengan mitra proyek untuk
-                      menciptakan pembangunan infrastruktur yang kokoh dan
-                      tangguh
-                    </li>
-                  </ol>
+                  <div dangerouslySetInnerHTML={{ __html: content.profiles.misi.description as string }} />
                 }
-                imageSrc="/images/img-misi.png"
-                imageAlt="Misi WMS"
-                variant="secondary"
+                imageSrc={content.profiles.misi.imageSrc}
+                imageAlt={content.profiles.misi.imageAlt}
+                variant={content.profiles.misi.variant}
               />
             </div>
           </div>
@@ -553,112 +561,25 @@ export default function AboutPage() {
         `}</style>
       </div>
 
-      <div className="bg-white-10 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
-            Sertifikat Tingkat Komponen Dalam Negeri
-          </h2>
+      {content.certificateSections.map((section, sectionIndex) => (
+        <div key={sectionIndex} className={`${sectionIndex % 2 === 0 ? 'bg-white-10' : ''} py-16`}>
+          <div className="container mx-auto px-4">
+            <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
+              {section.title}
+            </h2>
 
-          <div>
-            <CertificateGallery
-              title="Sertifikat Tingkat Komponen Dalam Negeri"
-              isDefault={true}
-            />
+            <div>
+              <CertificateGallery
+                title={section.title}
+                certificates={section.certificates}
+                isDefault={section.isDefault}
+                large={section.large}
+                landscape={section.landscape}
+              />
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="py-16">
-        <div className="container mx-auto px-2">
-          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
-            Surat Keterangan Kelaikan Operasi
-          </h2>
-
-          <div>
-            <CertificateGallery
-              title="Surat Keterangan Kelaikan Operasi"
-              certificates={[
-                {
-                  id: 1,
-                  title: "Surat Keterangan Kelaikan Operasi 1",
-                  image: "/images/img-laik-1.jpg",
-                  fullImage: "/images/img-laik-1.jpg",
-                },
-                {
-                  id: 2,
-                  title: "Surat Keterangan Kelaikan Operasi 2",
-                  image: "/images/img-laik-2.jpg",
-                  fullImage: "/images/img-laik-2.jpg",
-                },
-              ]}
-              large={true}
-              landscape={true}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white-10 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
-            Sertifikat ISO
-          </h2>
-
-          <div>
-            <CertificateGallery
-              title="Sertifikat ISO"
-              certificates={[
-                {
-                  id: 1,
-                  title: "Sertifikat ISO 9001",
-                  image: "/images/img-iso-1.jpg",
-                  fullImage: "/images/img-iso-1.jpg",
-                },
-                {
-                  id: 2,
-                  title: "Sertifikat ISO 14001",
-                  image: "/images/img-iso-2.jpg",
-                  fullImage: "/images/img-iso-2.jpg",
-                },
-                {
-                  id: 3,
-                  title: "Sertifikat ISO 45001",
-                  image: "/images/img-iso-3.jpg",
-                  fullImage: "/images/img-iso-3.jpg",
-                },
-              ]}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
-            Sertifikat SNI
-          </h2>
-
-          <div>
-            <CertificateGallery
-              title="Sertifikat SNI"
-              certificates={[
-                {
-                  id: 1,
-                  title: "Sertifikat SNI",
-                  image: "/images/img-sni-1.jpg",
-                  fullImage: "/images/img-sni-1.jpg",
-                },
-                {
-                  id: 2,
-                  title: "Sertifikat SNI",
-                  image: "/images/img-sni-2.jpg",
-                  fullImage: "/images/img-sni-2.jpg",
-                },
-              ]}
-            />
-          </div>
-        </div>
-      </div>
+      ))}
 
       <ClippedSection
         title="Tunggu Apa lagi?<br>Jadilah bagian dari kisah sukses kami!"
