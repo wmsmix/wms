@@ -210,7 +210,7 @@ export default function InsightsPage() {
       </section>
 
       {/* Section Grid News */}
-      <section className="grid-news-section bg-white-10 px-6 py-12 md:px-12 lg:px-48">
+      <section className="grid-news-section bg-white-10 px-6 py-12 md:px-12 lg:px-48 hidden">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {Array.from({ length: isMobile ? 3 : 6 }).map((_, index) => {
             const newsIndex = (currentPage - 1) * (isMobile ? 3 : 6) + index;

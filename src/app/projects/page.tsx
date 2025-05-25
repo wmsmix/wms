@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
-import GallerySection from "~/components/GallerySection";
+// import GallerySection from "~/components/GallerySection";
 import NewsGrid from "~/components/NewsGrid";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
 import type { ProjectsPageContent } from "~/types/cms";
@@ -231,7 +231,7 @@ export default function AspalProductPage() {
           </div>
         </div>
       </div>
-      <GallerySection />
+      {/* <GallerySection /> */}
       <div className="flex w-full flex-col items-center gap-6 bg-orange-secondary px-4 py-8 md:flex-row md:justify-between md:gap-0 md:px-24">
         <span className="px-4 text-center font-noto text-xl text-white-10 md:text-left md:text-3xl">
           {content.callToAction.title}

@@ -16,11 +16,11 @@ const projectCategories = [
 
 // Data galeri proyek (contoh)
 const projectsData = [
-  { 
-    id: 1, 
-    category: "jalan", 
-    image: "/images/img-about.png", 
-    title: "Pekerjaan Akses Petikemas II Pelabuhan", 
+  {
+    id: 1,
+    category: "jalan",
+    image: "/images/img-about.png",
+    title: "Pekerjaan Akses Petikemas II Pelabuhan",
     client: "PT. (PERSERO) Pelabuhan Indonesia III",
     value: "RP. 16.420.065.000",
     startDate: "10/01/2008",
@@ -44,13 +44,13 @@ const GallerySection: React.FC = () => {
   const projectsPerPage = 9; // 3x3 grid untuk desktop
 
   // Filter proyek berdasarkan kategori aktif
-  const filteredProjects = activeCategory === "semua" 
-    ? projectsData 
+  const filteredProjects = activeCategory === "semua"
+    ? projectsData
     : projectsData.filter(project => project.category === activeCategory);
-  
+
   // Hitung jumlah halaman
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
-  
+
   // Get projects for current page
   const currentProjects = filteredProjects.slice(
     (currentPage - 1) * projectsPerPage,
@@ -85,7 +85,7 @@ const GallerySection: React.FC = () => {
   return (
     <section className="bg-white-10 py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <GalleryTabs 
+        <GalleryTabs
           categories={projectCategories}
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}
@@ -100,13 +100,13 @@ const GallerySection: React.FC = () => {
                 fill
                 className="object-cover transition-all duration-300 group-hover:scale-105 group-hover:blur-sm"
               />
-              
+
               {/* Overlay dengan informasi proyek, muncul saat hover */}
               <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-white-10/40 p-3 md:p-4 text-center">
                 <h3 className="text-black text-xs sm:text-sm md:text-lg lg:text-3xl mb-1 md:mb-3 line-clamp-2">
                   {project.title}
                 </h3>
-                
+
                 {/* Nilai Proyek dengan efek blur tambahan */}
                 <div className="relative w-4/5 md:w-1/2 mb-1 md:mb-2 overflow-hidden">
                   <div className="absolute inset-0 bg-white-10/40 backdrop-blur-md"></div>
@@ -115,7 +115,7 @@ const GallerySection: React.FC = () => {
                     <p className="text-black text-xs sm:text-sm md:text-base lg:text-xl">{project.value ?? "RP. 16.420.065.000"}</p>
                   </div>
                 </div>
-                
+
                 <div className="text-black">
                   <p className="text-[10px] sm:text-xs md:text-sm lg:text-base line-clamp-1">
                     {project.client ?? "PT. (PERSERO) Pelabuhan Indonesia III"}
@@ -141,4 +141,4 @@ const GallerySection: React.FC = () => {
   );
 };
 
-export default GallerySection; 
+export default GallerySection;
