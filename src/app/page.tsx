@@ -37,7 +37,6 @@ export default function HomePage() {
       }
     }
 
-    // Use void operator to handle the promise
     void loadContent();
   }, []);
 
