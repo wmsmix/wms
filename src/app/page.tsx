@@ -253,7 +253,7 @@ export default function HomePage() {
             textBadgeColor="text-white-10"
           />
         </div>
-        <div className="flex justify-center pb-6 md:pb-12">
+        <div className="flex justify-center pb-6 md:pb-12 w-full bg-white-10">
           <Button
             text="LIHAT SEMUA"
             height="48px"

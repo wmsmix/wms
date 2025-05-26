@@ -13,14 +13,14 @@ export default function SmoothScrollAnchor() {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]');
-      
+
       if (!anchor) return;
-      
+
       const href = anchor.getAttribute("href");
       if (!href?.startsWith("#")) return;
-      
+
       e.preventDefault();
-      
+
       // Handle kasus untuk scroll ke top page (href="#")
       if (href === "#") {
         lenis.scrollTo(0, {
@@ -30,21 +30,21 @@ export default function SmoothScrollAnchor() {
         window.history.pushState({}, "", href);
         return;
       }
-      
+
       const targetId = href.substring(1);
       const targetElement = document.getElementById(targetId);
-      
+
       if (targetElement) {
         // Log untuk debugging
-        console.log(`Scrolling to element with id: ${targetId}`);
-        
+        // console.log(`Scrolling to element with id: ${targetId}`);
+
         try {
           lenis.scrollTo(targetElement, {
             duration: 1.2,
             offset: -80, // Sesuaikan offset jika Anda memiliki header fixed
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           });
-          
+
           // Update URL tanpa reload
           window.history.pushState({}, "", href);
         } catch (err) {
@@ -54,10 +54,10 @@ export default function SmoothScrollAnchor() {
         console.warn(`Target element with id '${targetId}' not found`);
       }
     };
-    
+
     // Tambahkan event listener pada document untuk event delegation
     document.addEventListener("click", handleClick);
-    
+
     return () => {
       document.removeEventListener("click", handleClick);
     };

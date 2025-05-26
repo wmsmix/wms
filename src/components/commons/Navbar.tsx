@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
     }
   }, [isOpen]);
 
-  console.log("Navbar state:", { hide, scrollPosition });
+  // console.log("Navbar state:", { hide, scrollPosition });
 
   return (
     <header
@@ -296,7 +296,7 @@ const Navbar: React.FC = () => {
                     <Link href="/products" onClick={() => setIsOpen(false)} className="text-lg">
                       PRODUK & LAYANAN
                     </Link>
-                    <div 
+                    <div
                       onClick={() => handleMobileNavigation("products")}
                       className="ml-2 p-2"
                     >
@@ -388,14 +388,14 @@ const Navbar: React.FC = () => {
                     <div
                       className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                     >
-                      <Link 
-                        href="/products/precast-concrete" 
+                      <Link
+                        href="/products/precast-concrete"
                         onClick={() => setIsOpen(false)}
                         className="text-lg"
                       >
                         Precast Concrete
                       </Link>
-                      <div 
+                      <div
                         onClick={() => handleMobileNavigation("precast")}
                         className="ml-2 p-2"
                       >
@@ -626,7 +626,7 @@ const Navbar: React.FC = () => {
         .custom-contact-button-inner span {
           padding: 0 16px;
         }
-        
+
         @media (max-width: 768px) {
           .custom-contact-button {
             height: 46px;
@@ -642,7 +642,7 @@ const Navbar: React.FC = () => {
               0% 16%
             );
           }
-          
+
           .custom-contact-button-inner {
             height: calc(46px - 2px);
             clip-path: polygon(
@@ -656,7 +656,7 @@ const Navbar: React.FC = () => {
               0% 16%
             );
           }
-          
+
           .custom-contact-button-inner span {
             padding: 0 20px;
           }
