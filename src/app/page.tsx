@@ -131,7 +131,7 @@ export default function HomePage() {
             const textColor = feature.textColor ?? "text-black";
 
             return (
-              <div key={index} className={`mt-24 flex w-full flex-col md:flex-row ${bgColor}`}>
+              <div key={index} className={`${index === 0 ? 'mt-24' : ''} flex w-full flex-col md:flex-row ${bgColor}`}>
                 {isInverted && (
                   <div className="relative order-1 h-[300px] w-full md:h-[500px] md:w-1/2">
                     <Image

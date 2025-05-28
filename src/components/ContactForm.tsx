@@ -41,7 +41,7 @@ export const MapWithCustomMarker = () => {
           while (mapRef.current.firstChild) {
             mapRef.current.removeChild(mapRef.current.firstChild);
           }
-          
+
           if (mapInstanceRef.current) {
             try {
               const mapToRemove = mapInstanceRef.current as { remove: () => void };
@@ -99,9 +99,9 @@ export const MapWithCustomMarker = () => {
             transform: translate(-50%, -50%) scale(0.7);
           }
           .location-info-box {
-            background: rgba(255, 255, 255, 0.9); 
-            padding: 10px; 
-            border-radius: 2px; 
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 2px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.3);
             margin-top: 10px;
             margin-left: 10px;
@@ -116,7 +116,7 @@ export const MapWithCustomMarker = () => {
             margin-bottom: 5px;
           }
           .location-title {
-            color: #333; 
+            color: #333;
             font-size: 14px;
             font-weight: bold;
           }
@@ -148,7 +148,7 @@ export const MapWithCustomMarker = () => {
             margin-bottom: 5px;
           }
           .location-subtitle {
-            color: #777; 
+            color: #777;
             font-size: 12px;
             display: block;
             margin-bottom: 5px;
@@ -251,14 +251,14 @@ export const MapWithCustomMarker = () => {
 
             // Buat container untuk judul dan ikon direction
             const titleContainer = L.DomUtil.create("div", "location-container", container);
-            
+
             const title = L.DomUtil.create(
               "strong",
               "location-title",
               titleContainer
             );
             title.innerHTML = "Aspal dan Beton PT. Wahana Makmur Sentosa";
-            
+
             // Tambahkan ikon direction inline di sebelah kanan judul
             const inlineDirectionLink = L.DomUtil.create("a", "location-directions-inline", titleContainer);
             inlineDirectionLink.href = directionsUrl;
@@ -270,7 +270,7 @@ export const MapWithCustomMarker = () => {
                 <path d="M8 11v4h2v-3h4v2.5l3.5-3.5-3.5-3.5v2.5h-6z"/>
               </svg>
             `;
-            
+
             const subtitle = L.DomUtil.create(
               "span",
               "location-subtitle",
@@ -278,7 +278,7 @@ export const MapWithCustomMarker = () => {
             );
             subtitle.innerHTML =
               "Asphalt Mixing Plant (AMP), Batching Plant, Cement, Ready Mix, Hot Mix, Precast";
-               
+
             const viewLargerLink = L.DomUtil.create(
               "a",
               "location-link",
@@ -303,7 +303,7 @@ export const MapWithCustomMarker = () => {
           const customAttribution = document.createElement('div');
           customAttribution.className = 'custom-attribution';
           customAttribution.innerHTML = 'Map data ©2025 Google | Terms';
-          
+
           // Tambahkan ke container peta
           const mapContainer = map.getContainer();
           mapContainer.appendChild(customAttribution);
@@ -718,7 +718,7 @@ Detail Proyek: ${formData.message}
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl">
+    <div className="mx-auto w-full max-w-7xl mb-16">
       <div className="contact-form-container relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image

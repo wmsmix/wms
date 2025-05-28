@@ -63,7 +63,7 @@ export default function ProductsPage() {
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
 
-      <section className="flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
+      <section className="flex w-full flex-col items-center justify-center overflow-x-hidden bg-gray-base pt-20">
         <div className="hero-container w-full overflow-hidden">
           <Hero
             backgroundImage={content.hero.backgroundImage}
@@ -80,17 +80,17 @@ export default function ProductsPage() {
           />
         </div>
         <div
-          className="custom-clip-path flex w-screen max-w-full flex-col items-center bg-white-10 py-8 text-gray-base md:py-16"
+          className="custom-clip-path flex w-screen max-w-full flex-col items-center bg-white-10 py-8 text-gray-base md:py-24"
           style={{
             marginLeft: "calc(-50vw + 50%)",
             marginRight: "calc(-50vw + 50%)",
             width: "100vw",
           }}
         >
-          <span className="block px-4 text-center font-noto text-3xl text-black md:text-4xl lg:text-5xl">
+          <span className="block px-4 text-center font-noto text-3xl text-black md:text-4xl lg:text-5xl max-w-[1100px] mx-auto">
             {content.introduction.title}
           </span>
-          <p className="px-4 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px]">
+          <p className="px-4 pt-4 text-center text-sm text-gray-500 md:pt-8 md:text-base lg:text-[20px] max-w-[700px] mx-auto">
             {content.introduction.description}
           </p>
           <div className="flex justify-start pt-6 md:pt-8">

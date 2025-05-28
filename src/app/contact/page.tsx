@@ -103,7 +103,7 @@ Detail Proyek: ${formData.message}
         Siap Bangun <br />
         Infratstruktur Berkualitas?
       </span>
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full max-w-7xl mb-8">
         <div className="contact-form-container bg-white relative overflow-hidden">
           <div className="relative z-10 flex flex-wrap py-12">
             <div className="w-full p-6 sm:p-10 md:w-1/2 md:p-16">
