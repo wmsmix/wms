@@ -53,7 +53,7 @@ export const defaultProductsPageContent: ProductsPageContent = {
   },
   supportLetter: {
     title: "Proyek Makin Lancar",
-    subtitle: "dengan Support Letter",
+    subtitle: "dengan Surat Dukungan",
     description: "Surat dukungan resmi ini akan membantu Anda memenuhi persyaratan tender, memberikan keyakinan kepada panitia pengadaan, dan memastikan kelancaran pasokan material konstruksi dari perusahaan kami untuk proyek Anda",
     imageSrc: "/images/img-support-letter.png",
     buttonText: "HUBUNGI KAMI",

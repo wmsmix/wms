@@ -182,7 +182,7 @@ const Navbar: React.FC = () => {
                   href="/products#support-letter"
                   className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                 >
-                  Support Letter
+                  Surat Dukungan
                 </Link>
               </div>
             </div>
@@ -419,7 +419,7 @@ const Navbar: React.FC = () => {
                       href="/products#support-letter"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Support Letter</span>
+                      <span className="text-lg">Surat Dukungan</span>
                     </Link>
                   </div>
                 </div>
