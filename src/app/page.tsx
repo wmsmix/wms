@@ -118,7 +118,7 @@ export default function HomePage() {
                 borderWidth="0.5px"
                 backgroundColor="white"
                 height="500px"
-                whatsappOnClick={true}
+                // whatsappOnClick={true}
                 href={product.href}
               />
             ))}
@@ -241,6 +241,10 @@ export default function HomePage() {
           </section>
         </div>
 
+        <div className="bg-white-10 w-full">
+          <ContactForm />
+        </div>
+
         <div className="flex w-full flex-col items-center bg-white-10">
           <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
             Lihat Insight Proyek
@@ -257,6 +261,7 @@ export default function HomePage() {
             text="LIHAT SEMUA"
             height="48px"
             textSize="xl"
+            href="/insights"
             className="text-sm md:text-lg"
             clipPath={{
               outer:
@@ -266,10 +271,6 @@ export default function HomePage() {
             }}
             margin="1px"
           />
-        </div>
-
-        <div className="bg-white-10 w-full">
-          <ContactForm />
         </div>
 
         <Footer />

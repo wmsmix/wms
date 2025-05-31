@@ -12,6 +12,15 @@ const Navbar: React.FC = () => {
   const [showPrecastSubmenu, setShowPrecastSubmenu] = useState(false);
   const [mobileMenuLevel, setMobileMenuLevel] = useState("main"); // 'main', 'products', 'precast'
 
+  // Email and phone handlers
+  const handleEmailClick = () => {
+    window.location.href = "mailto:halo@wmsmix.com";
+  };
+
+  const handlePhoneClick = () => {
+    window.open("https://wa.me/6282337900700", "_blank");
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentPosition = window.pageYOffset;
@@ -102,13 +111,13 @@ const Navbar: React.FC = () => {
                   href="/products/aspal"
                   className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                 >
-                  Aspal
+                  ASPAL
                 </Link>
                 <Link
                   href="/products/beton"
                   className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                 >
-                  Beton
+                  BETON
                 </Link>
 
                 {/* Item dengan submenu */}
@@ -149,31 +158,31 @@ const Navbar: React.FC = () => {
                       href="/products/precast-concrete/box-culvert"
                       className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                     >
-                      Box Culvert
+                      BOX CULVERT
                     </Link>
                     <Link
                       href="/products/precast-concrete/double-u-box"
                       className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                     >
-                      Double U-Box
+                      DOUBLE U-BOX
                     </Link>
                     <Link
                       href="/products/precast-concrete/u-ditch"
                       className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                     >
-                      U-Ditch
+                      U-DITCH
                     </Link>
                     <Link
                       href="/products/precast-concrete/u-ditch-cover"
                       className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                     >
-                      U-Ditch Cover
+                      U-DITCH COVER
                     </Link>
                     <Link
                       href="/products/precast-concrete/kansteen"
                       className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                     >
-                      Kansteen
+                      KANSTEEN
                     </Link>
                   </div>
                 </div>
@@ -182,7 +191,7 @@ const Navbar: React.FC = () => {
                   href="/products#support-letter"
                   className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
                 >
-                  Surat Dukungan
+                  SURAT DUKUNGAN
                 </Link>
               </div>
             </div>
@@ -373,16 +382,23 @@ const Navbar: React.FC = () => {
 
                   <div className="mt-8 space-y-6">
                     <Link
+                      href="/products"
+                      className="text-white border-white/5 block border-b pb-6"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="text-lg">OVERVIEW</span>
+                    </Link>
+                    <Link
                       href="/products/aspal"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Aspal</span>
+                      <span className="text-lg">ASPAL</span>
                     </Link>
                     <Link
                       href="/products/beton"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Beton</span>
+                      <span className="text-lg">BETON</span>
                     </Link>
 
                     <div
@@ -393,7 +409,7 @@ const Navbar: React.FC = () => {
                         onClick={() => setIsOpen(false)}
                         className="text-lg"
                       >
-                        Precast Concrete
+                        PRECAST CONCRETE
                       </Link>
                       <div
                         onClick={() => handleMobileNavigation("precast")}
@@ -419,7 +435,7 @@ const Navbar: React.FC = () => {
                       href="/products#support-letter"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Surat Dukungan</span>
+                      <span className="text-lg">SURAT DUKUNGAN</span>
                     </Link>
                   </div>
                 </div>
@@ -453,39 +469,46 @@ const Navbar: React.FC = () => {
                         d="M15 19l-7-7 7-7"
                       />
                     </svg>
-                    <span className="text-lg">Precast Concrete</span>
+                    <span className="text-lg">PRECAST CONCRETE</span>
                   </button>
 
                   <div className="mt-8 space-y-6">
                     <Link
+                      href="/products/precast-concrete"
+                      className="text-white border-white/5 block border-b pb-6"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="text-lg">OVERVIEW</span>
+                    </Link>
+                    <Link
                       href="/products/precast-concrete/box-culvert"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Box Culvert</span>
+                      <span className="text-lg">BOX CULVERT</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/double-u-box"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Double U-Box</span>
+                      <span className="text-lg">DOUBLE U-BOX</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/u-ditch"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">U-Ditch</span>
+                      <span className="text-lg">U-DITCH</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/u-ditch-cover"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">U-Ditch Cover</span>
+                      <span className="text-lg">U-DITCH COVER</span>
                     </Link>
                     <Link
                       href="/products/precast-concrete/kansteen"
                       className="text-white border-white/5 block border-b pb-6"
                     >
-                      <span className="text-lg">Kansteen</span>
+                      <span className="text-lg">KANSTEEN</span>
                     </Link>
                   </div>
                 </div>
@@ -510,7 +533,7 @@ const Navbar: React.FC = () => {
               {/* Social media icons */}
               <div className="px-4">
                 <div className="mb-6 flex justify-center space-x-6">
-                  <Link href="https://facebook.com" target="_blank">
+                  <Link href="https://www.facebook.com/profile.php?id=61571593506561" target="_blank">
                     <Image
                       src="/svgs/icon-facebook.svg"
                       alt="Facebook"
@@ -518,7 +541,7 @@ const Navbar: React.FC = () => {
                       height={24}
                     />
                   </Link>
-                  <Link href="https://instagram.com" target="_blank">
+                  <Link href="https://www.instagram.com/wms.mix" target="_blank">
                     <Image
                       src="/svgs/icon-instagram.svg"
                       alt="Instagram"
@@ -526,7 +549,7 @@ const Navbar: React.FC = () => {
                       height={24}
                     />
                   </Link>
-                  <Link href="https://linkedin.com" target="_blank">
+                  <Link href="https://www.linkedin.com/company/pt-wahana-makmur-sentosa" target="_blank">
                     <Image
                       src="/svgs/icon-linkedin.svg"
                       alt="LinkedIn"
@@ -534,22 +557,22 @@ const Navbar: React.FC = () => {
                       height={24}
                     />
                   </Link>
-                  <Link href="#" target="_blank">
+                  <div onClick={handleEmailClick} className="cursor-pointer">
                     <Image
                       src="/svgs/icon-mail.svg"
                       alt="Email"
                       width={28}
                       height={28}
                     />
-                  </Link>
-                  <Link href="#" target="_blank">
+                  </div>
+                  <div onClick={handlePhoneClick} className="cursor-pointer">
                     <Image
                       src="/svgs/icon-telephone.svg"
                       alt="Phone"
                       width={28}
                       height={28}
                     />
-                  </Link>
+                  </div>
                 </div>
 
                 {/* Copyright dengan padding bottom */}
