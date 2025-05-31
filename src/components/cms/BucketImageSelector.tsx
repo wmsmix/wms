@@ -130,7 +130,7 @@ const BucketImageSelector: React.FC<BucketImageSelectorProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl overflow-hidden">
+      <div className="w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl overflow-hidden" style={{ backgroundColor: 'white' }}>
         <div className="flex items-center justify-between p-4 border-b bg-white">
           <h2 className="text-lg font-medium">Select from Uploaded Images</h2>
           <button

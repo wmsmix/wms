@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import ProtectedRoute from '~/components/ProtectedRoute';
+import { useAuth } from '~/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 // Sidebar component
 const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: () => void }) => {
@@ -139,44 +141,78 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
 
 export default function CMSLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const handleLogout = () => {
+    logout();
+    router.push('/cms-login');
+  };
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+    <ProtectedRoute>
+      <div className="flex min-h-screen bg-gray-100">
+        <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
 
-      <div className="flex-1 md:ml-64">
-        <header className="bg-white shadow-sm">
-          <div className="h-16 flex items-center justify-between px-4 md:px-6">
-            <button
-              onClick={toggleSidebar}
-              className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 md:hidden"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+        <div className="flex-1 md:ml-64">
+          <header className="bg-white shadow-sm">
+            <div className="h-16 flex items-center justify-between px-4 md:px-6">
+              <button
+                onClick={toggleSidebar}
+                className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 md:hidden"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-            <div className="text-xl font-medium text-gray-800 md:hidden">WMS CMS</div>
-            <div className="ml-auto">
-              <span className="text-gray-600">Content Management System</span>
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div className="text-xl font-medium text-gray-800 md:hidden">WMS CMS</div>
+              <div className="ml-auto flex items-center space-x-4">
+                <span className="text-gray-600 hidden md:inline">Content Management System</span>
+                {user && (
+                  <div className="flex items-center space-x-3">
+                    <span className="text-sm text-gray-600">
+                      Welcome, {user.username}
+                    </span>
+                    <button
+                      onClick={handleLogout}
+                      className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    >
+                      <svg
+                        className="h-4 w-4 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <main className="p-4 md:p-6">{children}</main>
+          <main className="p-4 md:p-6">{children}</main>
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
