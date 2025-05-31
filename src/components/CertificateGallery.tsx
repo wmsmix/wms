@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import SupabaseImage from "~/components/SupabaseImage";
 
 interface Certificate {
   id: number;
@@ -218,13 +219,13 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   const renderGallery = () => {
     // Pendekatan baru: Untuk mobile (itemsPerView === 1), gunakan scroll snapping
     // yang selalu mencentering item
-    
+
     if (itemsPerView === 1) {
       // Mobile view dengan scroll snapping
       return (
         <div className="relative mx-auto max-w-6xl">
           <div className="relative w-full overflow-hidden py-6">
-            <div 
+            <div
               ref={sliderRef}
               className="flex snap-x snap-mandatory overflow-x-auto hide-scrollbar px-4"
               style={{
@@ -263,12 +264,23 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                             : "aspect-[3/4] w-full"
                       }`}
                     >
-                      <Image
-                        src={certificate.image}
-                        alt={certificate.title}
-                        fill
-                        className="object-contain"
-                      />
+                      {/* Use SupabaseImage for certificate images from CMS, regular Image for default certificates */}
+                      {isDefault ? (
+                        <Image
+                          src={certificate.image}
+                          alt={certificate.title}
+                          fill
+                          className="object-contain"
+                        />
+                      ) : (
+                        <SupabaseImage
+                          src={certificate.image}
+                          alt={certificate.title}
+                          fill
+                          className="object-contain"
+                          bucket="cms-uploads"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -278,20 +290,20 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
         </div>
       );
     }
-    
+
     // Desktop view dengan slider normal
     // Menghitung offset untuk memastikan item aktif selalu di tengah
     const centerOffset = Math.floor(itemsPerView / 2);
-    
+
     // Tentukan berapa banyak item yang tersisa di kanan dan kiri
     const maxStartPosition = Math.max(0, certificates.length - itemsPerView);
-    
+
     // Hitung posisi slide yang ideal (sertifikat aktif di tengah)
     let idealPosition = sliderIndex - centerOffset;
-    
+
     // Batasi ideal position agar tidak keluar batas
     idealPosition = Math.max(0, Math.min(idealPosition, maxStartPosition));
-    
+
     // Hitung translateX berdasarkan posisi yang sudah dibatasi
     const translateX = -(idealPosition * 100) / itemsPerView;
 
@@ -349,14 +361,14 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                 key={certificate.id}
                 className="flex-shrink-0 cursor-pointer px-3 transition-all duration-300 md:px-4"
                 style={{
-                  width: certificates.length <= 3 
-                    ? '100%' 
+                  width: certificates.length <= 3
+                    ? '100%'
                     : `${120 / itemsPerView}%`, // Ukuran lebih besar untuk <= 3 sertifikat
                   opacity: getItemOpacity(index),
                   transform: `scale(${getItemScale(index)})`,
                   zIndex: index === sliderIndex ? 10 : 5,
                   // Ukuran khusus berdasarkan tipe sertifikat
-                  maxWidth: certificates.length <= 3 
+                  maxWidth: certificates.length <= 3
                     ? landscape ? '560px' : '400px' // Ukuran lebih besar untuk kedua tipe
                     : 'none',
                 }}
@@ -380,12 +392,23 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                       maxHeight: landscape ? '70vh' : '80vh', // Memastikan tinggi tidak melebihi viewport
                     }}
                   >
-                    <Image
-                      src={certificate.image}
-                      alt={certificate.title}
-                      fill
-                      className="object-contain"
-                    />
+                    {/* Use SupabaseImage for certificate images from CMS, regular Image for default certificates */}
+                    {isDefault ? (
+                      <Image
+                        src={certificate.image}
+                        alt={certificate.title}
+                        fill
+                        className="object-contain"
+                      />
+                    ) : (
+                      <SupabaseImage
+                        src={certificate.image}
+                        alt={certificate.title}
+                        fill
+                        className="object-contain"
+                        bucket="cms-uploads"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -451,7 +474,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
         }
       `;
       document.head.appendChild(style);
-      
+
       return () => {
         document.head.removeChild(style);
       };
@@ -463,19 +486,19 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
     if (itemsPerView === 1 && sliderRef.current) {
       const handleScroll = () => {
         if (!sliderRef.current) return;
-        
+
         const scrollLeft = sliderRef.current.scrollLeft;
         const itemWidth = sliderRef.current.clientWidth;
         const newIndex = Math.round(scrollLeft / itemWidth);
-        
+
         if (newIndex !== sliderIndex) {
           setSliderIndex(newIndex);
         }
       };
-      
+
       const currentRef = sliderRef.current;
       currentRef.addEventListener('scroll', handleScroll);
-      
+
       return () => {
         currentRef.removeEventListener('scroll', handleScroll);
       };
@@ -570,14 +593,27 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                     transition: "transform 0.2s ease",
                   }}
                 >
-                  <Image
-                    src={selectedCertificate.fullImage}
-                    alt={selectedCertificate.title}
-                    width={1200}
-                    height={1700}
-                    className="h-auto max-h-[75vh] w-auto max-w-full object-contain"
-                    quality={95}
-                  />
+                  {/* Use SupabaseImage for certificate images from CMS, regular Image for default certificates */}
+                  {isDefault ? (
+                    <Image
+                      src={selectedCertificate.fullImage}
+                      alt={selectedCertificate.title}
+                      width={1200}
+                      height={1700}
+                      className="h-auto max-h-[75vh] w-auto max-w-full object-contain"
+                      quality={95}
+                    />
+                  ) : (
+                    <SupabaseImage
+                      src={selectedCertificate.fullImage}
+                      alt={selectedCertificate.title}
+                      width={1200}
+                      height={1700}
+                      className="h-auto max-h-[75vh] w-auto max-w-full object-contain"
+                      quality={95}
+                      bucket="cms-uploads"
+                    />
+                  )}
                 </div>
               </div>
 
