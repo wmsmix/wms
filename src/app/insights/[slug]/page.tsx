@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import NewsGrid from "~/components/NewsGrid";
@@ -81,13 +81,19 @@ export default function InsightDetailPage() {
   const [currentUrl, setCurrentUrl] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
+  // Cari berita berdasarkan slug
+  const news = newsData.find((item) => item.slug === slug);
+
+  // Jika berita tidak ditemukan, redirect ke halaman 404
+  if (!news) {
+    notFound();
+  }
+
   useEffect(() => {
     // Set currentUrl dan imageUrl setelah komponen dimount di browser
-    if (news) {
-      setCurrentUrl(window.location.href);
-      setImageUrl(`${window.location.origin}${news.image ?? ""}`);
-    }
-  }, []);
+    setCurrentUrl(window.location.href);
+    setImageUrl(`${window.location.origin}${news.image ?? ""}`);
+  }, [news]);
 
   // Fungsi untuk menangani berbagi ke media sosial
   const handleShare = (platform: string) => {
@@ -109,6 +115,7 @@ export default function InsightDetailPage() {
     }
 
     let shareUrl = "";
+    let useDirectOpen = false;
 
     switch (platform) {
       case "whatsapp":
@@ -118,25 +125,38 @@ export default function InsightDetailPage() {
         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`;
         break;
       case "instagram":
-        // Instagram tidak memiliki API berbagi langsung yang resmi
-        // Gunakan deep link untuk mengarahkan ke DM Instagram
-        shareUrl = `https://instagram.com/direct/inbox`;
-        alert("Buka Instagram dan paste link untuk dibagikan");
+        // Instagram tidak memiliki API berbagi langsung ke DM yang dapat diandalkan
+        useDirectOpen = true;
+        
+        // Copy konten ke clipboard untuk memudahkan pengguna
         navigator.clipboard
           .writeText(`${shareData.title} - ${shareData.url}`)
-          .catch((err) => console.error("Gagal menyalin teks:", err));
+          .then(() => {
+            alert("Link artikel telah disalin!\n\nSilakan buka aplikasi Instagram Anda, masuk ke Direct Message, pilih teman yang ingin Anda bagikan artikel ini, dan paste link yang telah disalin.");
+          })
+          .catch((err) => {
+            console.error("Gagal menyalin teks:", err);
+            alert("Terjadi kesalahan saat menyalin link. Silakan salin link secara manual: " + shareData.url);
+          });
         break;
       case "tiktok":
-        // TikTok tidak memiliki API berbagi langsung
-        // Gunakan deep link ke halaman pesan TikTok
-        shareUrl = `https://www.tiktok.com/messages`;
-        alert("Buka TikTok dan paste link untuk dibagikan");
+        // TikTok tidak memiliki API berbagi langsung ke DM yang dapat diandalkan
+        useDirectOpen = true;
+        
+        // Copy konten ke clipboard untuk memudahkan pengguna
         navigator.clipboard
           .writeText(`${shareData.title} - ${shareData.url}`)
-          .catch((err) => console.error("Gagal menyalin teks:", err));
+          .then(() => {
+            alert("Link artikel telah disalin!\n\nSilakan buka aplikasi TikTok Anda, masuk ke Messages, pilih teman yang ingin Anda bagikan artikel ini, dan paste link yang telah disalin.");
+          })
+          .catch((err) => {
+            console.error("Gagal menyalin teks:", err);
+            alert("Terjadi kesalahan saat menyalin link. Silakan salin link secara manual: " + shareData.url);
+          });
         break;
       case "twitter":
-        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareData.url)}&text=${encodeURIComponent(shareData.title)}&hashtags=${news.tags.join(",")}`;
+        // Twitter/X menyediakan API untuk direct message dengan teks yang sudah terisi
+        shareUrl = `https://twitter.com/messages/compose?text=${encodeURIComponent(`${shareData.title} - ${shareData.url}`)}`;
         break;
       case "copy":
         navigator.clipboard
@@ -153,37 +173,10 @@ export default function InsightDetailPage() {
         return;
     }
 
-    if (shareUrl) {
+    if (shareUrl && !useDirectOpen) {
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     }
   };
-
-  // Cari berita berdasarkan slug
-  const news = newsData.find((item) => item.slug === slug);
-
-  // Jika berita tidak ditemukan, tampilkan halaman not found
-  if (!news) {
-    return (
-      <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium">
-        <Navbar />
-        <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-black">
-            Artikel Tidak Ditemukan
-          </h1>
-          <p className="mb-8 text-gray-600">
-            Maaf, artikel yang Anda cari tidak tersedia.
-          </p>
-          <Link
-            href="/insights"
-            className="text-white rounded-md bg-blue-primary px-6 py-2 hover:bg-blue-700"
-          >
-            Kembali ke Insights
-          </Link>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
 
   // Berita terkait (exclude berita yang sedang dibuka)
   const relatedNews = newsData.filter((item) => item.slug !== slug).slice(0, 3);
@@ -256,7 +249,7 @@ export default function InsightDetailPage() {
                         alt="Share on WhatsApp"
                         width={20}
                         height={20}
-                        className="object-contain"
+                        className="object-contain opacity-60"
                       />
                     </div>
                   </button>
@@ -273,7 +266,7 @@ export default function InsightDetailPage() {
                         alt="Share on Facebook"
                         width={20}
                         height={20}
-                        className="object-contain"
+                        className="object-contain opacity-30"
                         style={{
                           filter:
                             "brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(40%) contrast(100%)",
@@ -294,7 +287,7 @@ export default function InsightDetailPage() {
                         alt="Share on Instagram"
                         width={20}
                         height={20}
-                        className="object-contain"
+                        className="object-contain opacity-30"
                         style={{
                           filter:
                             "brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(40%) contrast(100%)",
@@ -315,7 +308,7 @@ export default function InsightDetailPage() {
                         alt="Share on TikTok"
                         width={20}
                         height={20}
-                        className="object-contain"
+                        className="object-contain opacity-80"
                         style={{
                           filter:
                             "brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(40%) contrast(100%)",
@@ -336,7 +329,6 @@ export default function InsightDetailPage() {
                         alt="Share on X"
                         width={20}
                         height={20}
-                        className="object-contain"
                       />
                     </div>
                   </button>
@@ -353,7 +345,6 @@ export default function InsightDetailPage() {
                         alt="Copy Link"
                         width={20}
                         height={20}
-                        className="object-contain"
                       />
                     </div>
                   </button>
