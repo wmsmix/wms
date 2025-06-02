@@ -1,23 +1,26 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { getImageUrl } from "~/utils/supabase";
 
 interface ProjectCardProps {
   title: string;
   period: string;
   imageSrc: string;
+  url?: string; // Add URL prop for navigation
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   title,
   period,
   imageSrc,
+  url = "/projects",
 }) => {
   // Convert image path to public URL if it's a Supabase storage path
   const imageUrl = getImageUrl(imageSrc);
 
-  return (
-    <div className="relative h-[300px] w-full max-w-[380px] overflow-hidden rounded-lg shadow-lg">
+  const cardContent = (
+    <div className="relative h-[300px] w-full max-w-[380px] overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image src={imageUrl} alt={title} fill className="object-cover" />
@@ -42,6 +45,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
     </div>
   );
+
+  // Make the entire card clickable by wrapping it with a Link
+  return <Link href={url}>{cardContent}</Link>;
 };
 
 export default ProjectCard;

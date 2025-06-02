@@ -33,7 +33,10 @@ export default function AboutPage() {
         try {
           aboutContent = await getAboutPageContentFromSupabase();
         } catch (e) {
-          console.error("Failed to load from Supabase, falling back to localStorage:", e);
+          console.error(
+            "Failed to load from Supabase, falling back to localStorage:",
+            e,
+          );
           aboutContent = getAboutPageContent();
         }
 
@@ -101,7 +104,8 @@ export default function AboutPage() {
       const containerRect = container.getBoundingClientRect();
       const containerTop = containerRect.top;
       const containerHeight = container.offsetHeight;
-      const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
+      const viewportHeight =
+        typeof window !== "undefined" ? window.innerHeight : 0;
 
       if (containerTop < viewportHeight && containerTop + containerHeight > 0) {
         const stepsTotal = processSteps.length;
@@ -124,7 +128,7 @@ export default function AboutPage() {
       }
     };
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
     }
@@ -132,10 +136,12 @@ export default function AboutPage() {
 
   useEffect(() => {
     // Use matchMedia for more reliable responsive behavior
-    const mediaQuery = window.matchMedia('(max-width: 640px)');
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
 
     // Handler function
-    const handleMediaQueryChange = (event: MediaQueryListEvent | MediaQueryList) => {
+    const handleMediaQueryChange = (
+      event: MediaQueryListEvent | MediaQueryList,
+    ) => {
       setIsMobile(event.matches);
     };
 
@@ -144,9 +150,9 @@ export default function AboutPage() {
 
     // Modern browsers
     if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleMediaQueryChange);
+      mediaQuery.addEventListener("change", handleMediaQueryChange);
       return () => {
-        mediaQuery.removeEventListener('change', handleMediaQueryChange);
+        mediaQuery.removeEventListener("change", handleMediaQueryChange);
       };
     }
     // Older browsers (Safari)
@@ -181,6 +187,7 @@ export default function AboutPage() {
             headline={content.hero.headline}
             subheadline={content.hero.subheadline}
             ctaText={content.hero.ctaText}
+            ctaHref="/contact"
             breadcrumbsLeftPosition={content.hero.breadcrumbsLeftPosition}
             breadcrumbsTopPosition={content.hero.breadcrumbsTopPosition}
           />
@@ -232,7 +239,8 @@ export default function AboutPage() {
       <div
         className="relative bg-blue-primary py-24"
         style={{
-          clipPath: typeof window !== 'undefined' && window.innerWidth <= 768
+          clipPath:
+            typeof window !== "undefined" && window.innerWidth <= 768
               ? "polygon(0 3%, 8% 0, 92% 0, 100% 3%, 100% 100%, 0 100%)"
               : "polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 100%, 0 100%)",
         }}
@@ -402,7 +410,11 @@ export default function AboutPage() {
               <ProfileCard
                 title={content.profiles.misi.title}
                 description={
-                  <div dangerouslySetInnerHTML={{ __html: content.profiles.misi.description as string }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content.profiles.misi.description as string,
+                    }}
+                  />
                 }
                 imageSrc={content.profiles.misi.imageSrc}
                 imageAlt={content.profiles.misi.imageAlt}
@@ -414,67 +426,67 @@ export default function AboutPage() {
       </div>
 
       <div
-        className="relative mt-[-50px] w-full bg-orange-secondary px-4 pt-12 pb-2 overflow-hidden"
+        className="relative mt-[-50px] w-full overflow-hidden bg-orange-secondary px-4 pb-2 pt-12"
         style={{
           clipPath: isMobile
             ? "polygon(0 0, 100% 0, 100% 65%, 88% 100%, 12% 100%, 0 65%)"
             : "polygon(0 0, 100% 0, 100% 55%, 97% 100%, 3% 100%, 0 55%)",
         }}
       >
-        <div className="marquee-container py-4 flex items-center h-full">
+        <div className="marquee-container flex h-full items-center py-4">
           <div className="marquee-content">
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terjamin
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terpercaya
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Tersertifikasi
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terjamin
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terpercaya
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Tersertifikasi
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terjamin
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terpercaya
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Tersertifikasi
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terjamin
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terpercaya
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Tersertifikasi
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terjamin
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terpercaya
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Tersertifikasi
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terjamin
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Terpercaya
             </span>
-            <span className="marquee-item font-noto text-4xl text-white-10 md:text-6xl px-12">
+            <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">
               Tersertifikasi
             </span>
           </div>
@@ -527,7 +539,7 @@ export default function AboutPage() {
           /* Mobile styles */
           @media (max-width: 640px) {
             .marquee-container {
-             width: 80%;
+              width: 80%;
               overflow: hidden;
               white-space: nowrap;
               display: flex;
@@ -553,7 +565,6 @@ export default function AboutPage() {
               animation-duration: 60s !important; /* Slow down animation for mobile */
             }
             .marquee-item {
-
               padding-left: 12px !important;
               padding-right: 12px !important;
             }
@@ -562,7 +573,10 @@ export default function AboutPage() {
       </div>
 
       {content.certificateSections.map((section, sectionIndex) => (
-        <div key={sectionIndex} className={`${sectionIndex % 2 === 0 ? 'bg-white-10' : ''} py-16`}>
+        <div
+          key={sectionIndex}
+          className={`${sectionIndex % 2 === 0 ? "bg-white-10" : ""} py-16`}
+        >
           <div className="container mx-auto px-4">
             <h2 className="font-titilium mb-12 block text-center text-xl text-black md:text-3xl">
               {section.title}

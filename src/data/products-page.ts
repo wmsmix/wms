@@ -37,7 +37,7 @@ export const defaultProductsPageContent: ProductsPageContent = {
       },
       {
         imageSrc: "/images/img-support-letter.png",
-        title: "SUPPORT LETTER",
+        title: "SURAT DUKUNGAN",
         italicTitle: true,
         description: "Surat dukungan resmi untuk memenuhi persyaratan tender dan memastikan kelancaran pengadaan material konstruksi.",
         italicWords: ["tender"],

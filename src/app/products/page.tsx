@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
@@ -16,6 +17,7 @@ import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import { useSmoothScroll } from "~/contexts/SmoothScrollContext";
 import type { ProductsPageContent } from "~/types/cms";
 import { getProductsPageContent } from "~/data/products-page";
 import { getProductsPageContentFromSupabase } from "~/data/products-page-supabase";
@@ -23,6 +25,31 @@ import { getProductsPageContentFromSupabase } from "~/data/products-page-supabas
 export default function ProductsPage() {
   const [content, setContent] = useState<ProductsPageContent | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { lenis, isReady } = useSmoothScroll();
+  
+  // Handle hash navigation
+  useEffect(() => {
+    if (!isReady || !lenis || !content) return;
+    
+    // Check if URL has a hash
+    const hash = window.location.hash;
+    if (hash) {
+      // Remove the # and find the element
+      const id = hash.substring(1);
+      const element = document.getElementById(id);
+      
+      if (element) {
+        // Add a small delay to ensure page is fully loaded
+        setTimeout(() => {
+          lenis.scrollTo(element, {
+            duration: 1.2,
+            offset: -80, // Adjust for fixed header if needed
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        }, 500);
+      }
+    }
+  }, [lenis, isReady, content]);
 
   // Load content from CMS
   useEffect(() => {
@@ -242,7 +269,7 @@ export default function ProductsPage() {
                 <div className="support-letter-image h-full w-full">
                   <Image
                     src={content.supportLetter.imageSrc}
-                    alt="Support Letter"
+                    alt="Surat Dukungan"
                     fill
                     className="object-cover"
                   />

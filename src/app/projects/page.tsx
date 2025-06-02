@@ -12,6 +12,7 @@ import Breadcrumbs from "~/components/commons/Breadcrumbs";
 import type { ProjectsPageContent } from "~/types/cms";
 import { getProjectsPageContent } from "~/data/projects";
 import { getProjectsPageContentFromSupabase } from "~/data/projects-supabase";
+import RunningText from "~/components/Product/precast-concrete/RunningText";
 
 export default function AspalProductPage() {
   const router = useRouter();
@@ -60,6 +61,7 @@ export default function AspalProductPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
+      <RunningText text="TERJAMIN TERPERCAYA" backgroundColor="#0C1F5A" textColor="text-white" />
 
       <section className="project-hero relative min-h-[500px] w-full overflow-hidden md:min-h-[600px]">
         {/* Background Image */}
@@ -75,10 +77,10 @@ export default function AspalProductPage() {
         </div>
 
         {/* Breadcrumbs */}
-        <div className="absolute top-0 left-0 z-50 w-full pt-20">
+        <div className="absolute top-0 left-0 z-50 w-full pt-10">
           <Breadcrumbs items={[
             { label: "Proyek", href: "/projects" }
-          ]} topPosition={content.hero.breadcrumbsTopPosition} leftPosition={content.hero.breadcrumbsLeftPosition} />
+          ]} topPosition="top-6" leftPosition={content.hero.breadcrumbsLeftPosition} />
         </div>
 
         {/* Content */}
@@ -267,6 +269,7 @@ export default function AspalProductPage() {
           text="LIHAT SEMUA"
           height="48px"
           textSize="xl"
+          href="/insights"
           className="text-sm md:text-lg"
           clipPath={{
             outer:

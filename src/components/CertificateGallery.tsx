@@ -93,13 +93,18 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   const sliderRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const maxZoomLevel = isMobile ? 2.5 : 4; // Maximum zoom level: 2.5x for mobile, 4x for desktop
 
   // Jumlah item yang ditampilkan pada slider berdasarkan lebar layar
   const [itemsPerView, setItemsPerView] = useState(3);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      
+      if (mobile) {
         setItemsPerView(1);
       } else if (window.innerWidth < 1024) {
         setItemsPerView(2);
@@ -168,8 +173,8 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   };
 
   const zoomIn = () => {
-    if (zoomLevel < 2.5) {
-      setZoomLevel(zoomLevel + 0.25);
+    if (zoomLevel < maxZoomLevel) {
+      setZoomLevel(Math.min(maxZoomLevel, zoomLevel + 0.25));
     }
   };
 
@@ -530,29 +535,10 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               </h3>
             </div>
 
-            <div className="mb-4 flex justify-center">
-              <div className="flex items-center justify-center gap-4 px-2">
-                <button
-                  onClick={zoomOut}
-                  className="hover:bg-white hover:text-white h-10 w-10 bg-white-20 text-2xl text-black hover:bg-opacity-10"
-                  disabled={zoomLevel <= 0.5}
-                >
-                  −
-                </button>
-                <button
-                  onClick={zoomIn}
-                  className="hover:bg-white hover:text-white h-10 w-10 bg-white-20 text-2xl text-black hover:bg-opacity-10"
-                  disabled={zoomLevel >= 2.5}
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            <div className="mb-12 flex w-full flex-1 items-center justify-between px-4">
+            <div className="relative mb-12 flex w-full flex-1 items-center justify-between px-4">
               {/* Left arrow navigation */}
               <div
-                className="relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
+                className="relative z-20 h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
                 onClick={prevCertificate}
               >
                 <div
@@ -581,6 +567,27 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
               </div>
 
               <div className="mx-4 flex max-h-[90vh] flex-1 justify-center">
+                {/* Zoom controls positioned on top of the image */}
+                <div className="absolute top-0 z-30 flex items-center justify-center gap-4 px-2 py-2">
+                  <button
+                    onClick={zoomOut}
+                    className="h-10 w-10 rounded-md bg-blue-primary bg-opacity-80 text-2xl text-white hover:bg-opacity-100"
+                    disabled={zoomLevel <= 0.5}
+                  >
+                    −
+                  </button>
+                  <span className="text-white rounded bg-blue-primary bg-opacity-80 px-3 py-2">
+                    {Math.round(zoomLevel * 100)}%
+                  </span>
+                  <button
+                    onClick={zoomIn}
+                    className="h-10 w-10 rounded-md bg-blue-primary bg-opacity-80 text-2xl text-white hover:bg-opacity-100"
+                    disabled={zoomLevel >= maxZoomLevel}
+                  >
+                    +
+                  </button>
+                </div>
+                
                 <div
                   className={`flex items-center justify-center overflow-hidden ${
                     isDefault
@@ -619,7 +626,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
 
               {/* Right arrow navigation */}
               <div
-                className="relative h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
+                className="relative z-20 h-12 w-12 flex-shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110"
                 onClick={nextCertificate}
               >
                 <div

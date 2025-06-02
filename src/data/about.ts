@@ -8,6 +8,7 @@ export const defaultAboutPageContent: AboutPageContent = {
     backgroundImage: "/images/img-hero-about.png",
     mobileBackgroundImage: "/images/img-hero-about.png",
     ctaText: "BANGUN DENGAN WMS",
+    ctaHref: "/contacts",
     breadcrumbsLeftPosition: "left-2 md:left-12",
     breadcrumbsTopPosition: "top-12 md:top-12"
   },

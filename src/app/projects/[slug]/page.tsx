@@ -8,6 +8,7 @@ import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import NewsGrid from "~/components/NewsGrid";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import RunningText from "~/components/Product/precast-concrete/RunningText";
 
 interface ProjectData {
   title: string;
@@ -148,48 +149,48 @@ const ClippedContainer: React.FC<ClippedContainerProps> = ({
       <style jsx>{`
         .relative {
           --clip-path-main: polygon(
-            0 6%,
+            0 5%,
             6% 0,
             94% 0,
-            100% 6%,
-            100% 94%,
+            100% 5%,
+            100% 95%,
             94% 100%,
             6% 100%,
-            0 94%
+            0 95%
           );
           --clip-path-shadow: polygon(
-            0 6%,
+            0 5%,
             6% 0,
             94% 0,
-            100% 6%,
-            100% 94%,
+            100% 5%,
+            100% 95%,
             94% 100%,
             6% 100%,
-            0 94%
+            0 95%
           );
         }
 
         @media (min-width: 768px) {
           .relative {
             --clip-path-main: polygon(
-              0 5%,
+              0 4%,
               5% 0,
               95% 0,
-              100% 5%,
-              100% 95%,
+              100% 4%,
+              100% 96%,
               95% 100%,
               5% 100%,
-              0 95%
+              0 96%
             );
             --clip-path-shadow: polygon(
-              0 5%,
+              0 4%,
               5% 0,
               95% 0,
-              100% 5%,
-              100% 95%,
+              100% 4%,
+              100% 96%,
               95% 100%,
               5% 100%,
-              0 95%
+              0 96%
             );
           }
         }
@@ -238,20 +239,21 @@ export default function ProjectDetailPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
-
-      {/* Breadcrumbs */}
-      <div className="relative pt-20">
-        <Breadcrumbs
-          items={[
-            { label: "Proyek", href: "/projects" },
-            { label: currentProject.title },
-          ]}
-          topPosition="top-24 md:top-20"
-          leftPosition="left-2 md:left-12"
-        />
-      </div>
+      <RunningText text="TERJAMIN TERPERCAYA" backgroundColor="#0C1F5A" textColor="text-white" />
 
       <section className="project-hero relative min-h-[320px] w-full overflow-hidden md:min-h-[400px]">
+        {/* Breadcrumbs */}
+        <div className="absolute top-0 left-0 z-50 w-full pt-10">
+          <Breadcrumbs
+            items={[
+              { label: "Proyek", href: "/projects" },
+              { label: currentProject.title },
+            ]}
+            topPosition="top-6"
+            leftPosition="left-2 md:left-12"
+          />
+        </div>
+        
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/img-detail-project.png"
@@ -294,7 +296,11 @@ export default function ProjectDetailPage() {
       </section>
 
       {/* Section Detail Proyek */}
-      <section className="container relative z-10 max-w-full rounded-3xl bg-white-10 px-6 py-12 md:px-8 md:py-24 lg:px-40">
+      <section className="container relative z-20 max-w-full rounded-3xl bg-white-10 px-6 py-12 md:px-8 md:py-24 lg:px-40" style={{
+        borderBottomLeftRadius: "30px",
+        borderBottomRightRadius: "30px",
+        marginBottom: "-24px"
+      }}>
         <div className="flex flex-col md:flex-row md:gap-12">
           <div className="mb-10 md:mb-0 md:w-2/3">
             <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden">
@@ -471,8 +477,100 @@ export default function ProjectDetailPage() {
       </section>
 
 
-      <div className="flex w-full flex-col items-center bg-white-10 pt-32">
-        <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
+      <div className="flex w-full flex-col items-center bg-white-10">
+        {/* Running text section */}
+        <div className="relative w-full overflow-hidden z-10">          
+          <div className="w-full bg-orange-secondary"
+            style={{
+              clipPath: typeof window !== "undefined" && window.innerWidth <= 768
+                ? "polygon(0 0, 100% 0, 100% 65%, 88% 100%, 12% 100%, 0 65%)"
+                : "polygon(0 0, 100% 0, 100% 55%, 97% 100%, 3% 100%, 0 55%)",
+            }}
+          >
+            <div className="marquee-container flex h-full items-center pb-6 pt-10">
+              <div className="marquee-wrapper">
+                <div className="marquee-content">
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terjamin</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terpercaya</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Tersertifikasi</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terjamin</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terpercaya</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Tersertifikasi</span>
+                </div>
+                <div className="marquee-content" aria-hidden="true">
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terjamin</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terpercaya</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Tersertifikasi</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terjamin</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Terpercaya</span>
+                  <span className="marquee-item px-12 font-noto text-4xl text-white-10 md:text-6xl">Tersertifikasi</span>
+                </div>
+              </div>
+            </div>
+            <style jsx>{`
+              .marquee-container {
+                width: 100%;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              
+              .marquee-wrapper {
+                width: 100%;
+                overflow: hidden;
+                display: flex;
+                mask-image: linear-gradient(
+                  to right,
+                  transparent 0%,
+                  black 10%,
+                  black 90%,
+                  transparent 100%
+                );
+                -webkit-mask-image: linear-gradient(
+                  to right,
+                  transparent 0%,
+                  black 10%,
+                  black 90%,
+                  transparent 100%
+                );
+              }
+
+              .marquee-content {
+                display: flex;
+                animation: marquee 30s linear infinite;
+                white-space: nowrap;
+              }
+
+              .marquee-item {
+                flex-shrink: 0;
+                line-height: 1.3;
+         
+              }
+
+              @keyframes marquee {
+                from {
+                  transform: translateX(0);
+                }
+                to {
+                  transform: translateX(-100%);
+                }
+              }
+
+              /* Mobile styles */
+              @media (max-width: 640px) {
+                .marquee-content {
+                  animation-duration: 60s !important;
+                }
+                .marquee-item {
+                  padding-left: 12px !important;
+                  padding-right: 12px !important;
+                }
+              }
+            `}</style>
+          </div>
+        </div>
+        <span className="my-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>
 

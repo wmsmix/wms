@@ -33,7 +33,10 @@ export default function InsightsPage() {
         try {
           insightsContent = await getInsightsPageContentFromSupabase();
         } catch (e) {
-          console.error("Failed to load from Supabase, falling back to localStorage:", e);
+          console.error(
+            "Failed to load from Supabase, falling back to localStorage:",
+            e,
+          );
           insightsContent = getInsightsPageContent();
         }
 
@@ -91,10 +94,12 @@ export default function InsightsPage() {
           />
         </div>
 
-        <div className="absolute top-0 left-0 z-50 w-full pt-20">
-          <Breadcrumbs items={[
-            { label: content.hero.title, href: "/insights" }
-          ]} topPosition={content.hero.breadcrumbsTopPosition} leftPosition={content.hero.breadcrumbsLeftPosition} />
+        <div className="absolute left-0 top-0 z-50 w-full pt-20">
+          <Breadcrumbs
+            items={[{ label: content.hero.title, href: "/insights" }]}
+            topPosition={content.hero.breadcrumbsTopPosition}
+            leftPosition={content.hero.breadcrumbsLeftPosition}
+          />
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 z-10 flex w-full flex-col justify-end space-y-2 px-6 pb-16 md:flex-row md:items-end md:justify-between md:space-y-0 md:px-12 md:pb-16 lg:px-48">
@@ -113,7 +118,7 @@ export default function InsightsPage() {
           @media (max-width: 768px) {
             .project-hero {
               clip-path: polygon(
-               0 0,
+                0 0,
                 100% 0,
                 100% 84%,
                 90% 100%,
@@ -128,7 +133,10 @@ export default function InsightsPage() {
       <section className="news-section px-6 py-12 md:px-12 lg:px-48">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="news-main w-full md:col-span-2">
-            <div className="block w-full overflow-hidden">
+            <Link
+              href={content.featuredArticle.url}
+              className="group block w-full overflow-hidden"
+            >
               <div className="relative">
                 <div className="relative h-[400px] w-full">
                   <Image
@@ -150,7 +158,9 @@ export default function InsightsPage() {
                           "polygon(0 0, 100% 0, 100% 90%, 88% 100%, 12% 100%, 0 88%)",
                       }}
                     >
-                      <span className="text-3xl font-semibold">{content.featuredArticle.date}</span>
+                      <span className="text-3xl font-semibold">
+                        {content.featuredArticle.date}
+                      </span>
                     </div>
 
                     <span className="mt-4 text-2xl font-medium uppercase text-black">
@@ -158,7 +168,7 @@ export default function InsightsPage() {
                     </span>
                   </div>
                   <div className="flex-1 p-4">
-                    <h3 className="font-titilium mb-4 text-xl text-black">
+                    <h3 className="font-titilium mb-4 text-xl text-black group-hover:text-blue-primary">
                       {content.featuredArticle.title}
                     </h3>
                     <p className="mb-4 text-gray-500">
@@ -166,22 +176,29 @@ export default function InsightsPage() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="pointer-events-none flex items-center">
                   <div className="h-px flex-grow bg-gray-300"></div>
-                  <Link href={content.featuredArticle.url}>
-                    <Button
-                      text="BACA LEBIH LANJUT"
-                      clipPath={{
-                        outer:
-                          "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-                      }}
-                      margin="1px"
-                      textSize="xl"
-                    />
-                  </Link>
+                  <div className="pointer-events-auto">
+                    <Link href={content.featuredArticle.url}>
+                      <Button
+                        text="BACA LEBIH LANJUT"
+                        clipPath={{
+                          outer:
+                            "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+                          inner:
+                            "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+                        }}
+                        margin="1px"
+                        textSize="xl"
+                        bgColor="#FF7028"
+                        height="48px"
+                        className="text-base md:text-lg"
+                      />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="news-list space-y-6 md:col-span-1">
@@ -193,9 +210,7 @@ export default function InsightsPage() {
               >
                 <div className="flex flex-col gap-1 border-b pb-4">
                   <div>
-                    <span className="text-2xl text-black">
-                      {article.title}
-                    </span>
+                    <span className="text-2xl text-black">{article.title}</span>
                   </div>
                   <div className="flex-shrink-0">
                     <div className="text-base text-gray-500">
@@ -210,7 +225,7 @@ export default function InsightsPage() {
       </section>
 
       {/* Section Grid News */}
-      <section className="grid-news-section bg-white-10 px-6 py-12 md:px-12 lg:px-48 hidden">
+      <section className="grid-news-section hidden bg-white-10 px-6 py-12 md:px-12 lg:px-48">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {Array.from({ length: isMobile ? 3 : 6 }).map((_, index) => {
             const newsIndex = (currentPage - 1) * (isMobile ? 3 : 6) + index;
@@ -349,6 +364,24 @@ export default function InsightsPage() {
           </div>
         </div>
       </section>
+
+      <div className="flex justify-center pb-6 md:pb-12">
+        <Button
+          text="LIHAT SEMUA"
+          height="48px"
+          textSize="xl"
+          className="text-base md:text-lg"
+          href="/insights"
+          bgColor="#FF7028"
+          clipPath={{
+            outer:
+              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+            inner:
+              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+          }}
+          margin="1px"
+        />
+      </div>
 
       <Footer />
     </div>

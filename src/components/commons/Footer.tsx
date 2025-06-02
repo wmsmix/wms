@@ -19,7 +19,7 @@ const Footer = () => {
   return (
     <footer className="text-white-base bg-[#0B0B0B]">
       <div className="relative w-full px-4 py-16 sm:px-[120px]">
-        <div className="relative mx-auto flex max-w-full w-full flex-col items-start justify-start gap-4 sm:max-w-fit sm:items-center sm:justify-center sm:flex-row sm:gap-0">
+        <div className="relative mx-auto flex w-full max-w-full flex-col items-start justify-start gap-4 sm:max-w-fit sm:flex-row sm:items-center sm:justify-center sm:gap-0">
           {[
             {
               icon: "/svgs/icon-mail.svg",
@@ -68,7 +68,7 @@ const Footer = () => {
             }) => (
               <div
                 key={title}
-                className={`text-white-base relative flex h-[120px] w-full items-start md:items-center gap-4 p-6 sm:w-[420px] ${marginTop} ${marginLeft} ${zIndex} cursor-pointer hover:opacity-90 contact-card`}
+                className={`text-white-base relative flex h-[120px] w-full items-start gap-4 p-6 sm:w-[420px] md:items-center ${marginTop} ${marginLeft} ${zIndex} contact-card cursor-pointer hover:opacity-90`}
                 style={{
                   backgroundColor: bgColor,
                 }}
@@ -155,9 +155,9 @@ const Footer = () => {
                       <i>Precast</i> Concrete
                     </>
                   ),
-                  href: "/products/paving",
+                  href: "/products/precast-concrete",
                 },
-                { name: "Layanan", href: "/services" },
+                { name: "Layanan", href: "/products#support-letter" },
               ].map((item, index, array) => (
                 <li key={index} className="pt-4">
                   <Link
@@ -274,7 +274,7 @@ const Footer = () => {
             0% 8%
           );
         }
-        
+
         @media (min-width: 768px) {
           .contact-card {
             clip-path: polygon(

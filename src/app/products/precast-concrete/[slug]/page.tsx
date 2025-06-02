@@ -132,15 +132,25 @@ export default function PrecastConcreteProductDetail() {
       <Navbar />
 
       {/* Breadcrumbs */}
-      <div className="relative pt-20">
-        <Breadcrumbs items={[
-          { label: "Produk & Layanan", href: "/products" },
-          { label: "Precast Concrete", href: "/products/precast-concrete" },
-          { label: product.title }
-        ]} textColor="text-black" hoverColor="hover:text-gray-700" />
+      <div className="relative z-50 w-full">
+        <div className="w-full bg-white-10 pt-24 pb-4">
+          <div className="w-full px-[-6] md:container md:mx-auto">
+            <Breadcrumbs 
+              items={[
+                { label: "Produk & Layanan", href: "/products" },
+                { label: "Precast Concrete", href: "/products/precast-concrete" },
+                { label: product.title }
+              ]} 
+              textColor="text-black" 
+              hoverColor="hover:text-gray-700"
+              topPosition="top-0"
+              leftPosition="left-0"
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 pt-36">
+      <div className="container mx-auto px-4 pt-8">
         <h1 className="block text-center font-noto text-4xl italic text-black md:text-[64px]">
           {product.title}
         </h1>
@@ -224,6 +234,7 @@ Hemat Waktu dan Biaya"
           text="LIHAT SEMUA"
           height="48px"
           textSize="xl"
+          href="/insights"
           className="text-sm md:text-lg"
           clipPath={{
             outer:

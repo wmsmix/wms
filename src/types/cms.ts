@@ -59,6 +59,7 @@ export interface AboutHeroSection {
   backgroundImage: string;
   mobileBackgroundImage: string;
   ctaText: string;
+  ctaHref: string;
   breadcrumbsLeftPosition: string;
   breadcrumbsTopPosition: string;
 }

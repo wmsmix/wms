@@ -6,16 +6,19 @@ const projects = [
     title: "Pekerjaan Akses Petikemas II Pelabuhan",
     period: "10/01/2008 - 11/07/2008",
     imageSrc: "/images/img-lihat-proyek-1.png",
+    url: "/projects/petikemas-pelabuhan",
   },
   {
     title: "Pekerjaan Akses Petikemas II Pelabuhan",
     period: "10/01/2008 - 11/07/2008",
     imageSrc: "/images/img-lihat-proyek-2.png",
+    url: "/projects/petikemas-pelabuhan-2",
   },
   {
     title: "Pekerjaan Akses Petikemas II Pelabuhan",
     period: "10/01/2008 - 11/07/2008",
     imageSrc: "/images/img-lihat-proyek-3.png",
+    url: "/projects/petikemas-pelabuhan-3",
   },
 ];
 
@@ -29,6 +32,7 @@ const ProjectsGrid: React.FC = () => {
             title={project.title}
             period={project.period}
             imageSrc={project.imageSrc}
+            url={project.url}
           />
         ))}
       </div>

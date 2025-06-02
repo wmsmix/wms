@@ -109,7 +109,8 @@ export default function AspalProductPage() {
                 <div className="flex flex-col gap-8 md:flex-row md:items-center">
                   <div 
                     className="custom-cta-button cursor-pointer"
-                    onClick={() => handleWhatsAppClick("Beton Fc&apos; 10 = K 150, 10 MPa")}
+                    onClick={() => handleWhatsAppClick(`Beton Fc' 10 = K 150, 10 MPa`)
+                    }
                   >
                     <div className="custom-cta-button-inner">
                       <span className="text-white-10 whitespace-normal text-center font-titillium text-sm xs:text-lg sm:text-2xl font-light uppercase tracking-wide">
