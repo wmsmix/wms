@@ -200,7 +200,7 @@ const ClippedContainer: React.FC<ClippedContainerProps> = ({
 };
 
 export default function ProjectDetailPage() {
-  const router = useRouter();
+  const _router = useRouter();
   const params = useParams();
   const [currentProject, setCurrentProject] = useState<ProjectData | null>(
     null,
@@ -253,7 +253,7 @@ export default function ProjectDetailPage() {
             leftPosition="left-2 md:left-12"
           />
         </div>
-        
+
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/img-detail-project.png"
@@ -479,7 +479,7 @@ export default function ProjectDetailPage() {
 
       <div className="flex w-full flex-col items-center bg-white-10">
         {/* Running text section */}
-        <div className="relative w-full overflow-hidden z-10">          
+        <div className="relative w-full overflow-hidden z-10">
           <div className="w-full bg-orange-secondary"
             style={{
               clipPath: typeof window !== "undefined" && window.innerWidth <= 768
@@ -515,7 +515,7 @@ export default function ProjectDetailPage() {
                 align-items: center;
                 justify-content: center;
               }
-              
+
               .marquee-wrapper {
                 width: 100%;
                 overflow: hidden;
@@ -545,7 +545,7 @@ export default function ProjectDetailPage() {
               .marquee-item {
                 flex-shrink: 0;
                 line-height: 1.3;
-         
+
               }
 
               @keyframes marquee {

@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Button from "~/components/commons/Button";
 
 interface ClippedSectionProps {
   title: string;
@@ -55,7 +54,7 @@ const ClippedSection: React.FC<ClippedSectionProps> = ({
             <p className="max-w-4xl pt-4 text-center text-sm text-white-20 opacity-70 md:pt-8 md:text-base lg:text-[20px]">
               {description}
             </p>
-            <div 
+            <div
               className="custom-button cursor-pointer mt-8"
               onClick={() => {
                 if (onButtonClick) {
@@ -198,7 +197,7 @@ const ClippedSection: React.FC<ClippedSectionProps> = ({
           .custom-button {
             height: 42px;
           }
-          
+
           .custom-button-inner {
             height: calc(42px - 2px);
           }

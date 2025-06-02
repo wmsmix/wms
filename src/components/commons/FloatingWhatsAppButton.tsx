@@ -17,12 +17,12 @@ const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
 }) => {
   // Bersihkan nomor telepon dari karakter non-digit
   const cleanPhoneNumber = phoneNumber.replace(/\D/g, '');
-  
+
   // Pastikan nomor dimulai dengan kode negara Indonesia (62)
-  const formattedNumber = cleanPhoneNumber.startsWith('62') 
-    ? cleanPhoneNumber 
+  const formattedNumber = cleanPhoneNumber.startsWith('62')
+    ? cleanPhoneNumber
     : `62${cleanPhoneNumber.startsWith('0') ? cleanPhoneNumber.substring(1) : cleanPhoneNumber}`;
-  
+
   // Buat URL WhatsApp dengan nomor dan pesan
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedNumber}&text=${encodeURIComponent(message)}`;
 
@@ -51,7 +51,7 @@ const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
           <FontAwesomeIcon icon={faWhatsapp} className="text-[20px] md:text-[28px] text-[#ffffff]" />
         </div>
       </div>
-      
+
       <style jsx>{`
         .whatsapp-button {
           position: relative;
@@ -63,7 +63,7 @@ const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
           clip-path: polygon(12% 0%, 88% 0%, 100% 16%, 100% 84%, 88% 100%, 12% 100%, 0% 84%, 0% 16%);
           background-color: #FFFFFF;
         }
-        
+
         .whatsapp-button-inner {
           position: relative;
           width: calc(52px - 2px);  /* ukuran default untuk mobile */
@@ -81,7 +81,7 @@ const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
             width: 68px;
             height: 60px;
           }
-          
+
           .whatsapp-button-inner {
             width: calc(68px - 2px);
             height: calc(60px - 2px);
@@ -92,4 +92,4 @@ const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
   );
 };
 
-export default FloatingWhatsAppButton; 
+export default FloatingWhatsAppButton;

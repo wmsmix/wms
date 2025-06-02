@@ -2,21 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import Hero from "~/components/Hero";
-import ProjectsGrid from "~/components/ProjectsGrid";
-import ContactForm from "~/components/ContactForm";
 import NewsGrid from "~/components/NewsGrid";
-import ProjectShowcase from "~/components/ProjectShowcase";
-import CardProduct from "~/components/CardProduct";
 import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
-import Breadcrumbs from "~/components/commons/Breadcrumbs";
 import { useSmoothScroll } from "~/contexts/SmoothScrollContext";
 import type { ProductsPageContent } from "~/types/cms";
 import { getProductsPageContent } from "~/data/products-page";
@@ -26,18 +19,18 @@ export default function ProductsPage() {
   const [content, setContent] = useState<ProductsPageContent | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { lenis, isReady } = useSmoothScroll();
-  
+
   // Handle hash navigation
   useEffect(() => {
     if (!isReady || !lenis || !content) return;
-    
+
     // Check if URL has a hash
     const hash = window.location.hash;
     if (hash) {
       // Remove the # and find the element
       const id = hash.substring(1);
       const element = document.getElementById(id);
-      
+
       if (element) {
         // Add a small delay to ensure page is fully loaded
         setTimeout(() => {

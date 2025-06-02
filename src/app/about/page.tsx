@@ -7,13 +7,11 @@ import Button from "~/components/commons/Button";
 import Hero from "~/components/Hero";
 import NewsGrid from "~/components/NewsGrid";
 import ClippedSection from "~/components/ClippedSection";
-import ProductSection from "~/components/ProductSection";
 import FeatureCard from "~/components/FeatureCard";
-import ProcessStep from "~/components/ProcessStep";
 import Image from "next/image";
 import ProfileCard from "~/components/ProfileCard";
 import CertificateGallery from "~/components/CertificateGallery";
-import { AboutPageContent } from "~/types/cms";
+import type { AboutPageContent } from "~/types/cms";
 import { getAboutPageContent } from "~/data/about";
 import { getAboutPageContentFromSupabase } from "~/data/about-supabase";
 
@@ -282,7 +280,7 @@ export default function AboutPage() {
                   }}
                 ></div>
 
-                {processSteps.map((step, index) => (
+                {processSteps.map((step, _index) => (
                   <div
                     key={step.number}
                     className={`relative mb-8 flex cursor-pointer transition-all duration-300`}
@@ -362,7 +360,7 @@ export default function AboutPage() {
             {/* Image Column */}
             <div className="flex w-full items-center justify-center md:w-1/2">
               <div className="relative h-[480px] w-full overflow-hidden rounded bg-gray-800">
-                {processSteps.map((step) => (
+                {processSteps.map((step, _index) => (
                   <div
                     key={step.number}
                     className={`absolute inset-0 transition-opacity duration-500 ${

@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Hero from "~/components/Hero";
@@ -51,4 +49,4 @@ export default function NotFound() {
       <Footer />
     </div>
   );
-} 
+}

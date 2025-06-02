@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Button from "~/components/commons/Button";
 import { useRouter } from "next/navigation";
 
@@ -194,9 +193,9 @@ const CardProduct: React.FC<CardProductProps> = ({
   const cardContent = (
     <div
       className={`relative w-full max-w-[400px] ${href ? "cursor-pointer" : ""}`}
-      style={{ 
+      style={{
         height: height !== "auto" ? height : "500px",
-        minHeight: "500px" 
+        minHeight: "500px"
       }}
       onClick={href ? handleCardClick : undefined}
     >

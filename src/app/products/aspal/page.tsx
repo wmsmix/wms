@@ -2,17 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
-import Hero from "~/components/Hero";
-import ProjectsGrid from "~/components/ProjectsGrid";
-import ContactForm from "~/components/ContactForm";
 import NewsGrid from "~/components/NewsGrid";
-import ProjectShowcase from "~/components/ProjectShowcase";
 import CardProduct from "~/components/CardProduct";
-import ServiceCard from "~/components/ServiceCard";
 import ProductHero from "~/components/Product/ProductHero";
 import ClippedSection from "~/components/ClippedSection";
 
@@ -223,9 +217,9 @@ export default function AspalProductPage() {
           />
         </div>
       </div>
-      
-    
-      
+
+
+
       <ClippedSection
         title="Jalan Mulus, Proyek Lancar
 Pilih Aspal Juara, Pasti Tahan Lama"
@@ -273,7 +267,7 @@ Pilih Aspal Juara, Pasti Tahan Lama"
             clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 100%, 90% 100%, 10% 100%, 0% 100%, 0% 10%);
           }
         }
-        
+
         .clip-bottom-corners {
           clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 95% 100%, 5% 100%, 0% 85%);
         }
@@ -283,7 +277,7 @@ Pilih Aspal Juara, Pasti Tahan Lama"
             clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 95% 100%, 5% 100%, 0% 92%);
           }
         }
-        
+
         .marquee-container {
           width: 90%;
           overflow: hidden;
@@ -307,18 +301,18 @@ Pilih Aspal Juara, Pasti Tahan Lama"
             transparent 100%
           );
         }
-        
+
         .marquee-content {
           display: inline-block;
           animation: marquee 40s linear infinite;
           padding-right: 50px;
         }
-        
+
         .marquee-item {
           display: inline-block;
           line-height: 1;
         }
-        
+
         @keyframes marquee {
           0% {
             transform: translateX(0);

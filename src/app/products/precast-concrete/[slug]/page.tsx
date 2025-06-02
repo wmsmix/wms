@@ -7,7 +7,6 @@ import Footer from "~/components/commons/Footer";
 import ProductHeader from "~/components/Product/precast-concrete/ProductHeader";
 import ProductTypeVariants from "~/components/Product/precast-concrete/ProductTypeVariants";
 import ProductSpecTable from "~/components/Product/precast-concrete/ProductSpecTable";
-import RunningText from "~/components/Product/precast-concrete/RunningText";
 import Button from "~/components/commons/Button";
 import PrecastFeatures from "~/components/PrecastFeatures";
 import ClippedSection from "~/components/ClippedSection";
@@ -59,7 +58,7 @@ export default function PrecastConcreteProductDetail() {
   const [product, setProduct] = useState<ProductData | null>(null);
   const [loading, setLoading] = useState(true);
   const [isKansteen, setIsKansteen] = useState(false);
-  const [currentSlug, setCurrentSlug] = useState("");
+  const [_currentSlug, setCurrentSlug] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -71,12 +70,12 @@ export default function PrecastConcreteProductDetail() {
           : Array.isArray(params.slug)
             ? params.slug[0]
             : "";
-      
+
       // Set current slug for breadcrumbs
       if (slug) {
         setCurrentSlug(slug);
       }
-      
+
       // Set isKansteen flag
       setIsKansteen(slug === "kansteen");
 
@@ -135,13 +134,13 @@ export default function PrecastConcreteProductDetail() {
       <div className="relative z-50 w-full">
         <div className="w-full bg-white-10 pt-24 pb-4">
           <div className="w-full px-[-6] md:container md:mx-auto">
-            <Breadcrumbs 
+            <Breadcrumbs
               items={[
                 { label: "Produk & Layanan", href: "/products" },
                 { label: "Precast Concrete", href: "/products/precast-concrete" },
                 { label: product.title }
-              ]} 
-              textColor="text-black" 
+              ]}
+              textColor="text-black"
               hoverColor="hover:text-gray-700"
               topPosition="top-0"
               leftPosition="left-0"
@@ -194,14 +193,14 @@ export default function PrecastConcreteProductDetail() {
           className={index === (product.specifications?.length ?? 0) - 1 ?  "mb-[-1px]" : ""}
         />
       ))}
-      
+
       {isKansteen ? (
         <div className="relative ">
           <ClippedSection
             title="Butuh Kanstin Kustom Untuk Proyek Anda?"
             description="Kami menyediakan layanan pemesanan khusus, di mana bentuk dan ukuran kanstin dapat disesuaikan dengan kebutuhan spesifik proyek Anda."
             buttonText="PESAN SEKARANG"
-            topBgColor="bg-white-10" 
+            topBgColor="bg-white-10"
             bottomBgColor="bg-blue-primary"
             clipPathBgColor="bg-black"
           />
@@ -217,7 +216,7 @@ Hemat Waktu dan Biaya"
           clipPathBgColor="bg-black"
         />
       )}
-      
+
       <div className="flex w-full flex-col items-center bg-blue-primary px-4 pb-6 md:px-8 mt-[-1px]">
         <span className="mb-8 block text-center font-noto text-3xl text-white-10 sm:text-4xl md:mb-16 md:text-5xl lg:text-[64px]">
           Lihat Insight Proyek

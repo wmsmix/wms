@@ -13,7 +13,7 @@ import { getInsightsPageContent } from "~/data/insights";
 import { getInsightsPageContentFromSupabase } from "~/data/insights-supabase";
 
 export default function InsightsPage() {
-  const router = useRouter();
+  const _router = useRouter();
   const [content, setContent] = useState<InsightsPageContent | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

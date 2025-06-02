@@ -1,16 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
-import NewsGrid from "~/components/NewsGrid";
-import ProjectShowcase from "~/components/ProjectShowcase";
-import ProductHero from "~/components/Product/ProductHero";
-import ClippedSection from "~/components/ClippedSection";
-import PrecastFeatures from "~/components/PrecastFeatures";
-import CardProduct from "~/components/CardProduct";
 import { MapWithCustomMarker } from "~/components/ContactForm";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
 
@@ -78,7 +72,7 @@ Detail Proyek: ${formData.message}
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
       setStatus("success");
       resetForm();
-    } catch (error) {
+    } catch (_error) {
       setStatus("error");
     }
   };

@@ -79,7 +79,7 @@ export default function InsightDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
   const [currentUrl, setCurrentUrl] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [_imageUrl, setImageUrl] = useState("");
 
   // Cari berita berdasarkan slug
   const news = newsData.find((item) => item.slug === slug);
@@ -127,7 +127,7 @@ export default function InsightDetailPage() {
       case "instagram":
         // Instagram tidak memiliki API berbagi langsung ke DM yang dapat diandalkan
         useDirectOpen = true;
-        
+
         // Copy konten ke clipboard untuk memudahkan pengguna
         navigator.clipboard
           .writeText(`${shareData.title} - ${shareData.url}`)
@@ -142,7 +142,7 @@ export default function InsightDetailPage() {
       case "tiktok":
         // TikTok tidak memiliki API berbagi langsung ke DM yang dapat diandalkan
         useDirectOpen = true;
-        
+
         // Copy konten ke clipboard untuk memudahkan pengguna
         navigator.clipboard
           .writeText(`${shareData.title} - ${shareData.url}`)

@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import NewsGrid from "~/components/NewsGrid";
-import ProjectShowcase from "~/components/ProjectShowcase";
 import ProductHero from "~/components/Product/ProductHero";
 import ClippedSection from "~/components/ClippedSection";
 import PrecastFeatures from "~/components/PrecastFeatures";

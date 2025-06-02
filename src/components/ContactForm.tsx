@@ -712,7 +712,7 @@ Detail Proyek: ${formData.message}
       if (formSection) {
         formSection.scrollIntoView({ behavior: "smooth" });
       }
-    } catch (error) {
+    } catch (_error) {
       setStatus("error");
     }
   };

@@ -6,7 +6,6 @@ import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import NewsGrid from "~/components/NewsGrid";
-import ProjectShowcase from "~/components/ProjectShowcase";
 import ProductHero from "~/components/Product/ProductHero";
 import ClippedSection from "~/components/ClippedSection";
 
@@ -14,7 +13,7 @@ export default function AspalProductPage() {
   const handleWhatsAppClick = (productName: string) => {
     const phoneNumber = "6282337900700"; // Nomor WhatsApp PT WMS
     const message = `Halo, saya tertarik dengan produk ${productName}. Boleh minta informasi lebih lanjut?`;
-    
+
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -107,7 +106,7 @@ export default function AspalProductPage() {
 
               <div className="mt-6 flex flex-col gap-8 md:mt-8">
                 <div className="flex flex-col gap-8 md:flex-row md:items-center">
-                  <div 
+                  <div
                     className="custom-cta-button cursor-pointer"
                     onClick={() => handleWhatsAppClick(`Beton Fc' 10 = K 150, 10 MPa`)
                     }
@@ -147,7 +146,7 @@ export default function AspalProductPage() {
                 );
               }
             }
-            
+
             .custom-cta-button {
               position: relative;
               height: 52px;
@@ -234,7 +233,7 @@ export default function AspalProductPage() {
           .beton-jalan {
             clip-path: polygon(4% 0%, 96% 0%, 100% 48%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 48%);
           }
-          
+
           @media (max-width: 768px) {
             .beton-jalan {
               clip-path: polygon(10% 0%, 90% 0%, 100% 30%, 100% 100%, 90% 100%, 10% 100%, 0% 100%, 0% 30%);
@@ -412,7 +411,7 @@ export default function AspalProductPage() {
           />
         </div>
       </div>
-      
+
       <ClippedSection
         title="Campuran Aspal dan Beton Khusus"
         description="Campuran aspal dan beton yang dirancang untuk efisiensi biaya tanpa mengurangi kualitas maupun spesifikasi proyek"

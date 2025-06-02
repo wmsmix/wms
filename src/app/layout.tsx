@@ -5,7 +5,6 @@ import { Titillium_Web, Noto_Serif } from "next/font/google";
 import { type Metadata } from "next";
 import { SmoothScrollProvider } from "~/contexts/SmoothScrollContext";
 import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton";
-import Script from "next/script";
 import SmoothScrollAnchor from "~/components/SmoothScrollAnchor";
 
 export const metadata: Metadata = {
@@ -43,28 +42,6 @@ export default function RootLayout({
           message="Halo, saya tertarik dengan produk WMS"
           position="bottom-right"
         />
-        {/* <Script id="smooth-scroll" strategy="afterInteractive">
-          {`
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-              anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                  targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-
-                  // Opsional: Update URL dengan hash
-                  history.pushState(null, null, targetId);
-                }
-              });
-            });
-          `}
-        </Script> */}
       </body>
     </html>
   );
