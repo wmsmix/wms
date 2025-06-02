@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Image, { ImageProps } from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 import { useSupabaseImage } from '~/hooks/useSupabaseImage';
 
 interface SupabaseImageProps extends Omit<ImageProps, 'src'> {
@@ -28,11 +28,12 @@ interface SupabaseImageProps extends Omit<ImageProps, 'src'> {
 const SupabaseImage: React.FC<SupabaseImageProps> = ({
   src,
   bucket = 'cms-uploads',
+  alt = '',
   ...props
 }) => {
   const imageUrl = useSupabaseImage(src, bucket);
 
-  return <Image src={imageUrl} {...props} />;
+  return <Image src={imageUrl} alt={alt} {...props} />;
 };
 
 export default SupabaseImage;

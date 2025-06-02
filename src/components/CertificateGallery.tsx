@@ -85,25 +85,20 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   large = false,
   landscape = false,
 }) => {
-  const [selectedCertificate, setSelectedCertificate] =
-    useState<Certificate | null>(null);
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
-  const [sliderIndex, setSliderIndex] = useState(0);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const maxZoomLevel = isMobile ? 2.5 : 4; // Maximum zoom level: 2.5x for mobile, 4x for desktop
-
-  // Jumlah item yang ditampilkan pada slider berdasarkan lebar layar
   const [itemsPerView, setItemsPerView] = useState(3);
+  const [_isMobile, setIsMobile] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const maxZoomLevel = 3;
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 640;
       setIsMobile(mobile);
-      
+
       if (mobile) {
         setItemsPerView(1);
       } else if (window.innerWidth < 1024) {
@@ -119,31 +114,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   }, []);
 
   // Touch event handlers untuk mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches?.[0]?.clientX ?? null);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches?.[0]?.clientX ?? null);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe && sliderIndex < certificates.length - 1) {
-      nextSlide();
-    }
-    if (isRightSwipe && sliderIndex > 0) {
-      prevSlide();
-    }
-
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
+  // Note: These are currently not used but kept for potential future implementation
 
   const openModal = (certificate: Certificate) => {
     setSelectedCertificate(certificate);
@@ -195,10 +166,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
   };
 
   // Fungsi untuk menentukan opacity item berdasarkan posisi (untuk semua gallery)
-  const getItemOpacity = (index: number) => {
-    const activeIndex = sliderIndex;
-    const distance = Math.abs(index - activeIndex);
-
+  const getItemOpacity = (_index: number) => {
     // Pada tampilan mobile gunakan opacity 1 untuk semua item
     if (itemsPerView === 1) return 1;
 
@@ -208,12 +176,9 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
 
   // Fungsi untuk menentukan scale item berdasarkan posisi (untuk semua gallery)
   const getItemScale = (index: number) => {
-    const activeIndex = sliderIndex;
-    const distance = Math.abs(index - activeIndex);
-
     // Pada tampilan mobile, gunakan skala yang berbeda (lebih besar)
     if (itemsPerView === 1) {
-      return index === activeIndex ? 1 : 0.95;
+      return index === sliderIndex ? 1 : 0.95;
     }
 
     // Untuk desktop, semua sertifikat memiliki skala yang sama
@@ -587,7 +552,7 @@ const CertificateGallery: React.FC<CertificateGalleryProps> = ({
                     +
                   </button>
                 </div>
-                
+
                 <div
                   className={`flex items-center justify-center overflow-hidden ${
                     isDefault

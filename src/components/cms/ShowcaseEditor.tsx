@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProjectShowcase } from '~/types/cms';
+import type { ProjectShowcase } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface ShowcaseEditorProps {

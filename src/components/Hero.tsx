@@ -1,12 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import {
-  FontAwesomeIcon,
-  type FontAwesomeIconProps,
-} from "@fortawesome/react-fontawesome";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Breadcrumbs from "./commons/Breadcrumbs";
 import SupabaseImage from "./SupabaseImage";
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { getImageUrl } from "~/utils/supabase";
 import Image from "next/image";
+import { getImageUrl } from "~/utils/supabase";
 
 interface FeatureCardProps {
   icon: string;
@@ -44,8 +44,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         }}
       >
         <div className="flex gap-8 items-start p-6 h-full">
-          <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12">
-            <img src={iconUrl} alt={title} className="w-full h-full" />
+          <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 relative">
+            <Image src={iconUrl} alt={title} fill className="object-contain" />
           </div>
           <div className="text-start flex flex-col h-full">
             <h3 className="text-lg md:text-xl font-semibold text-black mb-2">{title}</h3>
@@ -64,8 +64,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         }}
       >
         <div className="flex flex-col items-center">
-          <div className="flex-shrink-0 w-14 h-14 mb-4">
-            <img src={iconUrl} alt={title} className="w-full h-full" />
+          <div className="flex-shrink-0 w-14 h-14 mb-4 relative">
+            <Image src={iconUrl} alt={title} fill className="object-contain" />
           </div>
           <div className="text-start">
             <h3 className="text-lg font-semibold text-black mb-2">{title}</h3>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { ProfileCard } from '~/types/cms';
+import type { ProfileCard } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface ProfileCardsEditorProps {

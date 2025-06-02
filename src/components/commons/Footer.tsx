@@ -113,7 +113,7 @@ const Footer = () => {
                 { name: "Tentang Kami", href: "/about" },
                 { name: "Proyek Kami", href: "/projects" },
                 { name: "Insights", href: "/insights" },
-              ].map((item, index, array) => (
+              ].map((item, _index, _array) => (
                 <li key={item.name} className="pt-4">
                   <Link
                     href={item.href}
@@ -158,7 +158,7 @@ const Footer = () => {
                   href: "/products/precast-concrete",
                 },
                 { name: "Layanan", href: "/products#support-letter" },
-              ].map((item, index, array) => (
+              ].map((item, index, _array) => (
                 <li key={index} className="pt-4">
                   <Link
                     href={item.href}
@@ -190,7 +190,7 @@ const Footer = () => {
                   href: "https://wa.me/6282337900700",
                   target: "_blank",
                 },
-              ].map((item, index, array) => (
+              ].map((item, _index, _array) => (
                 <li key={item.text} className="pt-4">
                   <Link
                     href={item.href}

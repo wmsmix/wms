@@ -51,7 +51,7 @@ const Button: React.FC<ButtonProps> = ({
   maxWidth,
   padding = "px-4",
   margin,
-  helper,
+  helper: _helper,
   width = "auto",
 }) => {
   const baseClasses =

@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useSmoothScroll } from "~/contexts/SmoothScrollContext";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

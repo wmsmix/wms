@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useSmoothScroll } from '~/contexts/SmoothScrollContext';
 
 const SomeComponent = () => {
@@ -17,19 +17,6 @@ const SomeComponent = () => {
     }
   };
 
-  // Contoh bagaimana mempause Lenis saat dibutuhkan
-  const pauseLenis = () => {
-    if (isReady && lenis) {
-      lenis.stop();
-    }
-  };
-
-  const resumeLenis = () => {
-    if (isReady && lenis) {
-      lenis.start();
-    }
-  };
-
   return (
     <div>
       <button onClick={scrollToSection}>Scroll to Section</button>
@@ -38,4 +25,4 @@ const SomeComponent = () => {
   );
 };
 
-export default SomeComponent; 
+export default SomeComponent;

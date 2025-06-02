@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '~/types/cms';
+import type { Product } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface ProductsEditorProps {

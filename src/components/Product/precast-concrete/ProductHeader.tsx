@@ -11,7 +11,7 @@ interface ProductHeaderProps {
   }[];
 }
 
-const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features }) => {
+const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features: _features }) => {
   return (
     <div className="bg-white-10 pb-24 text-black w-full">
       <div className="container mx-auto px-4 mt-24">
@@ -21,8 +21,8 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features }
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-6 mt-24">
           {images.map((image, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="relative w-full md:w-1/2 aspect-[4/3] max-w-xl"
             >
               <Image
@@ -40,11 +40,11 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features }
             {features.map((feature, index) => (
               <div key={index} className="bg-white/10 p-4 rounded-lg flex items-start gap-4">
                 <div className="bg-orange-500 p-2 rounded-md flex-shrink-0">
-                  <Image 
-                    src={feature.icon} 
-                    alt={feature.title} 
-                    width={24} 
-                    height={24} 
+                  <Image
+                    src={feature.icon}
+                    alt={feature.title}
+                    width={24}
+                    height={24}
                   />
                 </div>
                 <div>
@@ -60,4 +60,4 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features }
   );
 };
 
-export default ProductHeader; 
+export default ProductHeader;

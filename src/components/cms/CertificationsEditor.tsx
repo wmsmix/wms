@@ -1,5 +1,5 @@
 import React from 'react';
-import { Certification } from '~/types/cms';
+import type { Certification } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface CertificationsEditorProps {

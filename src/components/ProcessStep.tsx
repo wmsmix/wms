@@ -18,12 +18,6 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
   isLast = false,
   onClick,
 }) => {
-  // Warna background berdasarkan nomor step
-  const getBgColor = () => {
-    if (number === 1) return "#F36A2B"; // Step 1 - Orange
-    return "#A75A42"; // Step 2-4 - Merah kecoklatan
-  };
-
   return (
     <div
       className={`flex transition-all duration-500 ${isActive ? "opacity-100" : "opacity-40"} relative mb-12 cursor-pointer`}
@@ -34,7 +28,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
         <div className="relative mr-3">
           <Button
             text={number.toString()}
-            
+
             height="56px"
             textColor="#FFFFFF"
             className="rounded-xl text-2xl font-bold shadow-md"

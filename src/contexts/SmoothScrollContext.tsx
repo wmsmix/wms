@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type Lenis from "@studio-freight/lenis";
-import { initSmoothScroll, destroyLenis, getLenis } from "~/utils/smoothScroll";
+import { initSmoothScroll, destroyLenis, getLenis as _getLenis } from "~/utils/smoothScroll";
 
 interface SmoothScrollContextType {
   lenis: Lenis | null;

@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { getImageUrl } from "~/utils/supabase";
 import Button from "~/components/commons/Button";
 
@@ -39,11 +38,8 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = (originalProps) => {
     projectValue = "103M",
     projectLength = "7.98 KM",
     textColor = "text-white",
-    valueColor = "text-white-10",
-    labelColor = "text-white-10",
     projectLabel = "Nilai Proyek",
     bgLabelColor = "bg-blue-primary",
-    descriptionColor = "text-gray-700",
     showProjectLength = false,
     italicWords = [],
     projectSlug = "#",

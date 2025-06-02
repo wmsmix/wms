@@ -2,18 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Button from "~/components/commons/Button";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
-import Button from "~/components/commons/Button";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
 import type { InsightsPageContent } from "~/types/cms";
 import { getInsightsPageContent } from "~/data/insights";
 import { getInsightsPageContentFromSupabase } from "~/data/insights-supabase";
 
 export default function InsightsPage() {
-  const _router = useRouter();
   const [content, setContent] = useState<InsightsPageContent | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

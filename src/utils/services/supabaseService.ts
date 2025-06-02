@@ -1,5 +1,5 @@
 import { supabase } from '../supabase';
-import { PostgrestError } from '@supabase/supabase-js';
+import type { PostgrestError } from '@supabase/supabase-js';
 
 /**
  * Generic service for Supabase database operations
@@ -12,7 +12,7 @@ export const supabaseService = {
    * @returns Promise with data and error
    */
   async fetch<T>(
-    table: string, 
+    table: string,
     options: {
       columns?: string;
       filters?: Record<string, unknown>;
@@ -21,31 +21,31 @@ export const supabaseService = {
     } = {}
   ) {
     const { columns = '*', filters = {}, limit, orderBy } = options;
-    
+
     let query = supabase
       .from(table)
       .select(columns);
-    
+
     // Apply filters
     Object.entries(filters).forEach(([key, value]) => {
       query = query.eq(key, value);
     });
-    
+
     // Apply limit
     if (limit) {
       query = query.limit(limit);
     }
-    
+
     // Apply ordering
     if (orderBy) {
-      query = query.order(orderBy.column, { 
-        ascending: orderBy.ascending ?? true 
+      query = query.order(orderBy.column, {
+        ascending: orderBy.ascending ?? true
       });
     }
-    
+
     return await query as { data: T[] | null; error: PostgrestError | null };
   },
-  
+
   /**
    * Insert data into a table
    * @param table The table name
@@ -58,7 +58,7 @@ export const supabaseService = {
       .insert(data)
       .select() as { data: T[] | null; error: PostgrestError | null };
   },
-  
+
   /**
    * Update data in a table
    * @param table The table name
@@ -67,7 +67,7 @@ export const supabaseService = {
    * @returns Promise with data and error
    */
   async update<T>(
-    table: string, 
+    table: string,
     data: Record<string, unknown>,
     match: { column: string; value: unknown }
   ) {
@@ -77,7 +77,7 @@ export const supabaseService = {
       .eq(match.column, match.value)
       .select() as { data: T[] | null; error: PostgrestError | null };
   },
-  
+
   /**
    * Delete data from a table
    * @param table The table name
@@ -94,4 +94,4 @@ export const supabaseService = {
       .eq(match.column, match.value)
       .select() as { data: T[] | null; error: PostgrestError | null };
   }
-}; 
+};

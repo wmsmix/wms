@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { ProcessStep } from '~/types/cms';
+import type { ProcessStep } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface ProcessStepsEditorProps {

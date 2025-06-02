@@ -19,7 +19,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   hoverColor = "hover:text-gray-200",
   topPosition = "top-12 md:top-12",
   leftPosition = "left-4 md:left-24",
-  isDarkBackground = true
+  isDarkBackground: _isDarkBackground = true
 }) => {
   const pathname = usePathname();
 

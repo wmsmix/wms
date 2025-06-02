@@ -32,7 +32,7 @@ const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
     "bottom-right": "right-6 bottom-6",
   };
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (_e: React.MouseEvent) => {
     console.log("Mencoba membuka WhatsApp dengan URL:", whatsappUrl);
     // Buka di tab baru jika pengguna menggunakan metode standar
     // Tetapi biarkan default behavior handle URL

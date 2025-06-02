@@ -72,7 +72,7 @@ Detail Proyek: ${formData.message}
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
       setStatus("success");
       resetForm();
-    } catch (_error) {
+    } catch {
       setStatus("error");
     }
   };

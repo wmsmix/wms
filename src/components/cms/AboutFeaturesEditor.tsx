@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { AboutFeatureCard } from '~/types/cms';
+import type { AboutFeatureCard } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface AboutFeaturesEditorProps {

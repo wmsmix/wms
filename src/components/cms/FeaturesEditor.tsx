@@ -1,5 +1,5 @@
 import React from 'react';
-import { FeatureSection } from '~/types/cms';
+import type { FeatureSection } from '~/types/cms';
 import FileUploader from './FileUploader';
 
 interface FeaturesEditorProps {
