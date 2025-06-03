@@ -5,7 +5,7 @@
 @layer utilities {
   .clip-path-octagon {
     clip-path: polygon(
-      10% 0%, 90% 0%, 100% 20%, 100% 80%, 
+      10% 0%, 90% 0%, 100% 20%, 100% 80%,
       90% 100%, 10% 100%, 0% 80%, 0% 20%
     );
   }
@@ -76,8 +76,10 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
-
-/* 
+.bg-white {
+  background-color: #fff;
+}
+/*
 
 @layer base {
   * {

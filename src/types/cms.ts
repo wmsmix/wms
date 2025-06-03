@@ -242,3 +242,38 @@ export interface ProductsPageContent {
   clippedSection: ProductsClippedSection;
   insightsSectionTitle: string;
 }
+
+// Types for Gallery Projects
+export interface GalleryProject {
+  id?: number;
+  title: string;
+  category: string;
+  image_url: string;
+  client?: string;
+  value?: string;
+  start_date?: string;
+  end_date?: string;
+  description?: string;
+  is_featured?: boolean;
+  sort_order?: number;
+  project_type?: string;
+  slug?: string;
+  location?: string;
+  length?: string;
+  detailed_description?: string[];
+  specifications?: Record<string, unknown>;
+  challenges?: string[];
+  additional_images?: string[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface GalleryCategory {
+  id: string;
+  label: string;
+}
+
+export interface GalleryData {
+  categories: GalleryCategory[];
+  projects: GalleryProject[];
+}
