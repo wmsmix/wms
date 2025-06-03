@@ -277,3 +277,74 @@ export interface GalleryData {
   categories: GalleryCategory[];
   projects: GalleryProject[];
 }
+
+// Types for Detailed Projects (separate from gallery projects)
+export interface DetailedProject {
+  id?: number;
+  title: string;
+  slug: string;
+  period?: string;
+  location?: string;
+  client?: string;
+  value?: string;
+  length?: string;
+  description?: string;
+  detailed_description?: string[];
+  specifications?: Array<{ title: string; value: string }>;
+  challenges?: string[];
+  images?: string[];
+  category: string;
+  image_url?: string;
+  is_featured?: boolean;
+  sort_order?: number;
+  created_at?: string;
+  updated_at?: string;
+  content_title?: string;
+  specifications_title?: string;
+  challenges_title?: string;
+  insights_title?: string;
+  image_source?: string;
+  road_width?: string;
+  funding_source?: string;
+  execution_time?: string;
+  maintenance_period?: string;
+  contractor?: string;
+  description_title?: string;
+  project_info?: Array<{ key: string; value: string }>;
+}
+
+// Mixed project types for gallery display
+export type MixedProject =
+  | (GalleryProject & { projectType: 'gallery' })
+  | (DetailedProject & { projectType: 'detailed' });
+
+// Type guards for mixed projects
+export const isGalleryProject = (project: MixedProject): project is GalleryProject & { projectType: 'gallery' } => {
+  return project.projectType === 'gallery';
+};
+
+export const isDetailedProject = (project: MixedProject): project is DetailedProject & { projectType: 'detailed' } => {
+  return project.projectType === 'detailed';
+};
+
+// Project display utilities
+export interface ProjectDateInfo {
+  startDate?: string;
+  endDate?: string;
+  period?: string;
+}
+
+// Common project fields for type safety
+export interface BaseProject {
+  id?: number;
+  title: string;
+  category: string;
+  image_url?: string;
+  client?: string;
+  value?: string;
+  description?: string;
+  is_featured?: boolean;
+  sort_order?: number;
+  created_at?: string;
+  updated_at?: string;
+}

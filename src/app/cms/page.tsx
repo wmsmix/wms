@@ -138,6 +138,64 @@ export default function CMSDashboard() {
             </span>
           </div>
         </Link>
+
+        <Link
+          href="/cms/gallery"
+          className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md"
+        >
+          <div className="mb-2 flex items-center justify-between">
+            <h5 className="text-xl font-medium text-gray-900">Gallery Management</h5>
+            <svg
+              className="h-6 w-6 text-gray-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <p className="text-gray-600">
+            Manage project gallery with images, titles, categories, and basic project information.
+          </p>
+          <div className="mt-4">
+            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700">
+              Gallery
+            </span>
+          </div>
+        </Link>
+
+        <Link
+          href="/cms/detailed-projects"
+          className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md"
+        >
+          <div className="mb-2 flex items-center justify-between">
+            <h5 className="text-xl font-medium text-gray-900">Detailed Projects</h5>
+            <svg
+              className="h-6 w-6 text-gray-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <p className="text-gray-600">
+            Manage detailed project information including specifications, project details, and comprehensive data.
+          </p>
+          <div className="mt-4">
+            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700">
+              Detailed CMS
+            </span>
+          </div>
+        </Link>
       </div>
 
       <div className="mt-8">
