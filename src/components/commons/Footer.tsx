@@ -157,7 +157,7 @@ const Footer = () => {
                   ),
                   href: "/products/precast-concrete",
                 },
-                { name: "Layanan", href: "/products#support-letter" },
+                { name: "Surat Dukungan", href: "/products#support-letter" },
               ].map((item, index, _array) => (
                 <li key={index} className="pt-4">
                   <Link
