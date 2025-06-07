@@ -301,9 +301,12 @@ const Navbar: React.FC = () => {
                   <div
                     className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                   >
-                    <Link href="/products" onClick={() => setIsOpen(false)} className="text-lg">
+                    <div 
+                      onClick={() => handleMobileNavigation("products")} 
+                      className="text-lg cursor-pointer"
+                    >
                       PRODUK & LAYANAN
-                    </Link>
+                    </div>
                     <div
                       onClick={() => handleMobileNavigation("products")}
                       className="ml-2 p-2"
@@ -403,13 +406,12 @@ const Navbar: React.FC = () => {
                     <div
                       className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                     >
-                      <Link
-                        href="/products/precast-concrete"
-                        onClick={() => setIsOpen(false)}
-                        className="text-lg"
+                      <div
+                        onClick={() => handleMobileNavigation("precast")}
+                        className="text-lg cursor-pointer"
                       >
                         PRECAST CONCRETE
-                      </Link>
+                      </div>
                       <div
                         onClick={() => handleMobileNavigation("precast")}
                         className="ml-2 p-2"
