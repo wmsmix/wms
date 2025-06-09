@@ -7,12 +7,16 @@ import Button from "~/components/commons/Button";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
-import type { InsightsPageContent } from "~/types/cms";
+import type { InsightsPageContent, InsightPost } from "~/types/cms";
 import { getInsightsPageContent } from "~/data/insights";
 import { getInsightsPageContentFromSupabase } from "~/data/insights-supabase";
+import { getInsightPostsFromSupabase } from "~/data/insight-posts-supabase";
+import { getImageUrl } from "~/utils/supabase";
+
 
 export default function InsightsPage() {
   const [content, setContent] = useState<InsightsPageContent | null>(null);
+  const [insightPosts, setInsightPosts] = useState<InsightPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -22,11 +26,19 @@ export default function InsightsPage() {
   const [isMobile, setIsMobile] = React.useState(false);
   const [totalPages, setTotalPages] = React.useState(1);
 
-  // Load content from CMS
+  // Helper function to format date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString();
+    const month = date.toLocaleDateString('id-ID', { month: 'short' }).toUpperCase();
+    return { day, month };
+  };
+
+  // Load content from CMS and insight posts from database
   useEffect(() => {
     const loadContent = async () => {
       try {
-        // Try to load from Supabase first, then fall back to localStorage
+        // Load page content
         let insightsContent: InsightsPageContent;
         try {
           insightsContent = await getInsightsPageContentFromSupabase();
@@ -38,7 +50,18 @@ export default function InsightsPage() {
           insightsContent = getInsightsPageContent();
         }
 
+        // Load insight posts from database
+        let posts: InsightPost[] = [];
+        try {
+          posts = await getInsightPostsFromSupabase();
+          // Filter only published posts
+          posts = posts.filter(post => post.is_published);
+        } catch (e) {
+          console.error("Failed to load insight posts:", e);
+        }
+
         setContent(insightsContent);
+        setInsightPosts(posts);
       } catch (e) {
         console.error("Error loading insights page content:", e);
       } finally {
@@ -50,9 +73,9 @@ export default function InsightsPage() {
   }, []);
 
   React.useEffect(() => {
-    if (!content) return;
+    if (!content || !insightPosts) return;
 
-    const totalItems = content.newsGrid.length;
+    const totalItems = insightPosts.length;
     const handleResize = () => {
       const mobile = window.innerWidth < 640;
       setIsMobile(mobile);
@@ -64,7 +87,7 @@ export default function InsightsPage() {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [content]);
+  }, [content, insightPosts]);
 
   if (isLoading || !content) {
     return (
@@ -177,22 +200,20 @@ export default function InsightsPage() {
                 <div className="pointer-events-none flex items-center">
                   <div className="h-px flex-grow bg-gray-300"></div>
                   <div className="pointer-events-auto">
-                    <Link href={content.featuredArticle.url}>
-                      <Button
-                        text="BACA LEBIH LANJUT"
-                        clipPath={{
-                          outer:
-                            "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
-                          inner:
-                            "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
-                        }}
-                        margin="1px"
-                        textSize="xl"
-                        bgColor="#FF7028"
-                        height="48px"
-                        className="text-base md:text-lg"
-                      />
-                    </Link>
+                    <Button
+                      text="BACA LEBIH LANJUT"
+                      clipPath={{
+                        outer:
+                          "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+                        inner:
+                          "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
+                      }}
+                      margin="1px"
+                      textSize="xl"
+                      bgColor="#FF7028"
+                      height="48px"
+                      className="text-base md:text-lg"
+                    />
                   </div>
                 </div>
               </div>
@@ -223,20 +244,22 @@ export default function InsightsPage() {
       </section>
 
       {/* Section Grid News */}
-      <section className="grid-news-section hidden bg-white-10 px-6 py-12 md:px-12 lg:px-48">
+      <section className="grid-news-section bg-white-10 px-6 py-12 md:px-12 lg:px-48">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {Array.from({ length: isMobile ? 3 : 6 }).map((_, index) => {
-            const newsIndex = (currentPage - 1) * (isMobile ? 3 : 6) + index;
+          {Array.from({ length: isMobile ? mobileItemsPerPage : itemsPerPage }).map((_, index) => {
+            const postIndex = (currentPage - 1) * (isMobile ? mobileItemsPerPage : itemsPerPage) + index;
 
-            if (newsIndex >= content.newsGrid.length) return null;
+            if (postIndex >= insightPosts.length) return null;
 
-            const news = content.newsGrid[newsIndex];
+            const post = insightPosts[postIndex];
 
-            if (!news) return null;
+            if (!post) return null;
+
+            const { day, month } = formatDate(post.published_date ?? new Date().toISOString());
 
             return (
-              <div key={newsIndex} className="flex flex-col">
-                <Link href={news.url}>
+              <div key={post.id ?? postIndex} className="flex flex-col">
+                <Link href={`/insights/${post.slug}`}>
                   <div
                     className="block h-full w-full overflow-hidden shadow-lg"
                     style={{
@@ -247,8 +270,8 @@ export default function InsightsPage() {
                     <div className="relative">
                       <div className="relative h-[200px] w-full">
                         <Image
-                          src={news.imageSrc}
-                          alt={news.title}
+                          src={post.image_url ? getImageUrl(post.image_url, 'cms-uploads') : '/images/default-insight.jpg'}
+                          alt={post.title}
                           fill
                           className="object-cover"
                         />
@@ -265,21 +288,24 @@ export default function InsightsPage() {
                           }}
                         >
                           <span className="text-2xl font-semibold">
-                            {news.date}
+                            {day}
                           </span>
                         </div>
 
                         <span className="mt-3 text-lg font-medium uppercase text-black">
-                          {news.month}
+                          {month}
                         </span>
                       </div>
 
                       <div className="flex-1 p-4">
                         <h3 className="font-titilium mb-2 text-base text-black">
-                          {news.title}
+                          {post.title}
                         </h3>
                         <p className="text-sm text-gray-500">
-                          {news.description}
+                          {(post.description ?? '').length > 100
+                            ? (post.description ?? '').substring(0, 100) + '...'
+                            : (post.description ?? '')
+                          }
                         </p>
                       </div>
                     </div>

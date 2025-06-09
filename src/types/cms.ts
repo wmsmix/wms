@@ -327,6 +327,27 @@ export const isDetailedProject = (project: MixedProject): project is DetailedPro
   return project.projectType === 'detailed';
 };
 
+// Types for Insight Posts
+export interface InsightPost {
+  id?: number;
+  title: string;
+  slug: string;
+  description?: string;
+  content?: string;
+  image_url?: string;
+  author?: string;
+  published_date?: string;
+  category?: string;
+  tags?: string[];
+  is_featured?: boolean;
+  is_published?: boolean;
+  sort_order?: number;
+  meta_title?: string;
+  meta_description?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // Project display utilities
 export interface ProjectDateInfo {
   startDate?: string;

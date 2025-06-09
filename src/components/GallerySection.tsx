@@ -17,7 +17,7 @@ import type {
 
 const GallerySection: React.FC = () => {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [activeCategory, setActiveCategory] = useState<string>("semua");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [galleryProjects, setGalleryProjects] = useState<GalleryProject[]>([]);
   const [detailedProjects, setDetailedProjects] = useState<DetailedProject[]>([]);

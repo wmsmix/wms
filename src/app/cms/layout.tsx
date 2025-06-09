@@ -91,6 +91,21 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
             <span className="ml-3">Insights Page</span>
           </Link>
           <Link
+            href="/cms/insight-posts"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fillRule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clipRule="evenodd" />
+              <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V9a1 1 0 00-1-1h-1v4.5a1.5 1.5 0 01-3 0V8a1 1 0 011-1z" />
+            </svg>
+            <span className="ml-3">Insight Posts</span>
+          </Link>
+          <Link
             href="/cms/projects"
             className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
           >
