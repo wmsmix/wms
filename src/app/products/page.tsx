@@ -6,7 +6,6 @@ import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import Hero from "~/components/Hero";
-import NewsGrid from "~/components/NewsGrid";
 import ServiceCard from "~/components/ServiceCard";
 import ClippedSection from "~/components/ClippedSection";
 import ProductSection from "~/components/ProductSection";
@@ -14,6 +13,7 @@ import { useSmoothScroll } from "~/contexts/SmoothScrollContext";
 import type { ProductsPageContent } from "~/types/cms";
 import { getProductsPageContent } from "~/data/products-page";
 import { getProductsPageContentFromSupabase } from "~/data/products-page-supabase";
+
 
 export default function ProductsPage() {
   const [content, setContent] = useState<ProductsPageContent | null>(null);
@@ -367,7 +367,7 @@ export default function ProductsPage() {
         clipPathBgColor="bg-black"
         buttonHref={content.clippedSection.buttonHref}
       />
-      <div className="flex w-full flex-col items-center bg-white-10">
+      {/* <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           {content.insightsSectionTitle}
         </span>
@@ -392,7 +392,7 @@ export default function ProductsPage() {
               "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
           }}
         />
-      </div>
+      </div> */}
       <Footer />
     </div>
   );

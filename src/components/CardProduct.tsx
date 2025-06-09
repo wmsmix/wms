@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "~/components/commons/Button";
 import { useRouter } from "next/navigation";
+import { getImagePublicUrl } from "~/utils/image";
 
 interface CardProductProps {
   imageSrc: string;
@@ -25,6 +26,7 @@ interface CardProductProps {
   };
   whatsappOnClick?: boolean;
   buttonText?: string;
+  onWhatsAppClick?: () => void;
 }
 
 const CardProduct: React.FC<CardProductProps> = ({
@@ -53,6 +55,7 @@ const CardProduct: React.FC<CardProductProps> = ({
   },
   whatsappOnClick = false,
   buttonText = "PELAJARI PRODUK",
+  onWhatsAppClick,
 }) => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
@@ -83,14 +86,18 @@ const CardProduct: React.FC<CardProductProps> = ({
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "6282337900700";
-    const productName = subtitle
-      ? `${subtitle} ${title} ${italicText ?? ""}`
-      : `${title} ${italicText ?? ""}`;
-    const message = `Halo, saya tertarik dengan produk ${productName}. Boleh minta informasi lebih lanjut?`;
+    if (onWhatsAppClick) {
+      onWhatsAppClick();
+    } else {
+      const phoneNumber = "6282337900700";
+      const productName = subtitle
+        ? `${subtitle} ${title} ${italicText ?? ""}`
+        : `${title} ${italicText ?? ""}`;
+      const message = `Halo, saya tertarik dengan produk ${productName}. Boleh minta informasi lebih lanjut?`;
 
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, "_blank");
+    }
   };
 
   const handleButtonClick = () => {
@@ -135,7 +142,7 @@ const CardProduct: React.FC<CardProductProps> = ({
               <div className="relative h-full w-full">
                 {!imageError ? (
                   <Image
-                    src={imageSrc}
+                    src={getImagePublicUrl(imageSrc)}
                     alt={title}
                     fill
                     sizes="(max-width: 768px) 100vw, 400px"
@@ -238,7 +245,7 @@ const CardProduct: React.FC<CardProductProps> = ({
           <div className="relative h-full w-full">
             {!imageError ? (
               <Image
-                src={imageSrc}
+                src={getImagePublicUrl(imageSrc)}
                 alt={title}
                 fill
                 sizes="(max-width: 768px) 100vw, 400px"

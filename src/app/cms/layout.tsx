@@ -1,13 +1,29 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ProtectedRoute from '~/components/ProtectedRoute';
 import { useAuth } from '~/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { getProductNames, type ProductName } from '~/data/product-names';
 
 // Sidebar component
 const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: () => void }) => {
+  const [productNames, setProductNames] = useState<ProductName[]>([]);
+
+  // Load dynamic product names
+  useEffect(() => {
+    const loadProductNames = async () => {
+      try {
+        const names = await getProductNames();
+        setProductNames(names);
+      } catch (error) {
+        console.error('Error loading product names for CMS sidebar:', error);
+      }
+    };
+
+    void loadProductNames();
+  }, []);
   return (
     <div
       className={`fixed top-0 left-0 z-40 h-screen transition-transform ${
@@ -132,6 +148,62 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
               <path fillRule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM8 16H6v-2h2v2zm0-4H6v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2z" clipRule="evenodd" />
             </svg>
             <span className="ml-3">Products Page</span>
+          </Link>
+          <Link
+            href="/cms/products/aspal"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
+            <span className="ml-3">{productNames.find(product => product.key === 'aspal')?.title ?? 'Aspal Product'}</span>
+          </Link>
+          <Link
+            href="/cms/products/beton"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
+            <span className="ml-3">{productNames.find(product => product.key === 'beton')?.title ?? 'Beton Product'}</span>
+          </Link>
+          <Link
+            href="/cms/products/precast-concrete"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
+            <span className="ml-3">{productNames.find(product => product.key === 'precast')?.title ?? 'Precast Concrete'}</span>
+          </Link>
+          <Link
+            href="/cms/products/precast-subproducts"
+            className="flex items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span className="ml-3">Precast Subproducts</span>
           </Link>
           <Link
             href="/cms/gallery"

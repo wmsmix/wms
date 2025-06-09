@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Button from "~/components/commons/Button";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import { getImagePublicUrl } from "~/utils/image";
 
 interface ProductHeroProps {
   title: string;
@@ -27,13 +28,13 @@ const ProductHero: React.FC<ProductHeroProps> = ({
   const italicizeEnglishWords = (text: string) => {
     // Daftar kata bahasa Inggris yang umum dalam konteks konstruksi
     const englishWords = ['ready-mix', 'hot-mix', 'precast', 'concrete', 'ready mix', 'hot mix'];
-    
+
     let formattedText = text;
     englishWords.forEach(word => {
       const regex = new RegExp(`(${word})`, 'gi');
       formattedText = formattedText.replace(regex, '<i>$1</i>');
     });
-    
+
     return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
   };
 
@@ -41,12 +42,12 @@ const ProductHero: React.FC<ProductHeroProps> = ({
     <div className="relative">
       {/* Breadcrumbs - posisi absolute di atas */}
       <div className="absolute top-0 left-0 right-0 z-[100] w-full">
-        <Breadcrumbs 
-          items={breadcrumbItems} 
+        <Breadcrumbs
+          items={breadcrumbItems}
           textColor="text-white"
           hoverColor="hover:text-white/80"
-          topPosition="top-24 md:top-20" 
-          leftPosition="left-2 md:left-12" 
+          topPosition="top-24 md:top-20"
+          leftPosition="left-2 md:left-12"
         />
       </div>
 
@@ -54,7 +55,7 @@ const ProductHero: React.FC<ProductHeroProps> = ({
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src={imageSrc}
+            src={getImagePublicUrl(imageSrc)}
             alt={title}
             fill
             className="object-cover"

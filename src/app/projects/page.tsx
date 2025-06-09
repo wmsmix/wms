@@ -7,7 +7,6 @@ import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import Button from "~/components/commons/Button";
 import GallerySection from "~/components/GallerySection";
-import NewsGrid from "~/components/NewsGrid";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
 import type { ProjectsPageContent } from "~/types/cms";
 import { getProjectsPageContent } from "~/data/projects";
@@ -253,7 +252,7 @@ export default function AspalProductPage() {
           textSize="xl"
         />
       </div>
-      <div className="flex w-full flex-col items-center bg-white-10 pt-32">
+      {/* <div className="flex w-full flex-col items-center bg-white-10 pt-32">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           {content.insightsSectionTitle}
         </span>
@@ -279,7 +278,7 @@ export default function AspalProductPage() {
           }}
           margin="1px"
         />
-      </div>
+      </div> */}
       <Footer />
     </div>
   );

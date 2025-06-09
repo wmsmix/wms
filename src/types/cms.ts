@@ -369,3 +369,182 @@ export interface BaseProject {
   created_at?: string;
   updated_at?: string;
 }
+
+// Types for Aspal page content
+export interface AspalHeroSection {
+  title: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface AspalProduct {
+  title: string;
+  subtitle: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  whatsappMessage: string;
+}
+
+export interface AspalProductSection {
+  title: string;
+  description: string;
+  products: AspalProduct[];
+}
+
+export interface AspalFeature {
+  title: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  whatsappMessage: string;
+  imagePosition: 'left' | 'right';
+  backgroundColor: string;
+  textColor: string;
+}
+
+export interface AspalFeatureSection {
+  title: string;
+  description: string;
+  features: AspalFeature[];
+}
+
+export interface AspalClippedSection {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface AspalPageContent {
+  hero: AspalHeroSection;
+  lapisPermukaan: AspalProductSection;
+  lapisAntara: AspalFeatureSection;
+  lapisPondasi: AspalProductSection;
+  clippedSection: AspalClippedSection;
+  insightsSectionTitle: string;
+}
+
+// Types for Beton page content
+export interface BetonHeroSection {
+  title: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface BetonProduct {
+  title: string;
+  subtitle: string;
+  strength: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  whatsappMessage: string;
+  imagePosition: 'left' | 'right';
+  backgroundColor: string;
+  textColor: string;
+}
+
+export interface BetonProductSection {
+  title: string;
+  description: string;
+  products: BetonProduct[];
+}
+
+export interface BetonClippedSection {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface BetonPageContent {
+  hero: BetonHeroSection;
+  nonStruktural: BetonProductSection;
+  struktural: BetonProductSection;
+  clippedSection: BetonClippedSection;
+  insightsSectionTitle: string;
+}
+
+// Types for Precast Concrete page content
+export interface PrecastHeroSection {
+  title: string;
+  description: string;
+  imageSrc: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface PrecastFeature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface PrecastClippedSection {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+export interface PrecastPageContent {
+  hero: PrecastHeroSection;
+  features: PrecastFeature[];
+  productsSection: {
+    title: string;
+  };
+  clippedSection: PrecastClippedSection;
+}
+
+// Types for individual Precast Products
+export interface PrecastProductFeature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface PrecastProductSpecification {
+  title: string;
+  columns: Array<{
+    key: string;
+    header: string;
+    unit?: string;
+  }>;
+  rows: Array<Record<string, string | number>>;
+}
+
+export interface PrecastProductVariant {
+  title: string;
+  types: Array<{
+    label: string;
+    image: string;
+  }>;
+}
+
+export type PrecastProductSchematicNote = Record<string, {
+  label: string;
+  size?: string;
+}>;
+
+export interface PrecastProduct {
+  id?: string;
+  slug: string;
+  title: string;
+  description?: string;
+  images: string[];
+  features: PrecastProductFeature[];
+  specifications: PrecastProductSpecification[];
+  variants?: PrecastProductVariant;
+  running_text?: string;
+  schematic_image?: string;
+  schematic_notes?: PrecastProductSchematicNote;
+  is_published: boolean;
+  sort_order: number;
+  created_at?: string;
+  updated_at?: string;
+}
