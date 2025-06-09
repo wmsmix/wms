@@ -335,8 +335,16 @@ export default function ProjectDetailPage() {
 
               <ClippedContainer>
                 <div className="grid grid-cols-2 gap-6 text-gray-700">
-                  {/* Render project_info if available, otherwise show default fields */}
-                  {currentProject.project_info && currentProject.project_info.length > 0 ? (
+                  {/* Always show fixed fields first */}
+                  <div className="text-base font-medium uppercase text-gray-500">
+                    LOKASI
+                  </div>
+                  <div className="text-base text-gray-800">
+                    {currentProject.location ?? "N/A"}
+                  </div>
+
+                  {/* Render dynamic project_info fields */}
+                  {currentProject.project_info && currentProject.project_info.length > 0 && (
                     currentProject.project_info.map((info, index) => (
                       <React.Fragment key={index}>
                         <div className="text-base font-medium uppercase text-gray-500">
@@ -347,64 +355,6 @@ export default function ProjectDetailPage() {
                         </div>
                       </React.Fragment>
                     ))
-                  ) : (
-                    <>
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        LOKASI
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.location ?? "N/A"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        PANJANG JALAN
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.length ?? "N/A"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        LEBAR BAHU JALAN
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.road_width ?? "1,5 meter"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        PERIODE
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.period ?? "N/A"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        PENDANAAN
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.funding_source ?? "Surat Berharga Syariah Negara (SBSN)"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        WAKTU PELAKSANAAN
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.execution_time ?? "480 hari kalender"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        MASA PEMELIHARAAN
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.maintenance_period ?? "365 hari kalender"}
-                      </div>
-
-                      <div className="text-base font-medium uppercase text-gray-500">
-                        KONTRAKTOR
-                      </div>
-                      <div className="text-base text-gray-800">
-                        {currentProject.contractor ?? "PT. Mina Fajar Abadi"}
-                      </div>
-                    </>
                   )}
                 </div>
               </ClippedContainer>
@@ -415,7 +365,7 @@ export default function ProjectDetailPage() {
                 {currentProject.specifications_title ?? "Rincian Pemakaian Produk"}
               </h3>
 
-              {/* Render specifications from database */}
+              {/* Render dynamic specifications from database */}
               {currentProject.specifications && currentProject.specifications.length > 0 ? (
                 currentProject.specifications.map((spec, index) => (
                   <div key={index} className="mb-6">
@@ -428,41 +378,9 @@ export default function ProjectDetailPage() {
                   </div>
                 ))
               ) : (
-                <>
-                  <div className="mb-6">
-                    <h4 className="tex-xl mb-2 font-noto text-black">
-                      Aspal Hot-mix
-                    </h4>
-                    <ul className="font-titilium list-disc pl-5 text-base text-black/75">
-                      <li className="mb-1">Aspal Emulsi: 57.000 liter</li>
-                      <li className="mb-1">AC WC Modifikasi: 8.000 ton</li>
-                      <li className="mb-1">AC BC Modifikasi: 14.000 ton</li>
-                      <li className="mb-1">AC Base Modifikasi: 10.000 ton</li>
-                    </ul>
-                  </div>
-
-                  <div className="mb-6">
-                    <h4 className="tex-xl mb-2 font-noto text-black">
-                      Beton Precast
-                    </h4>
-                    <ul className="font-titilium list-disc pl-5 text-base text-black/75">
-                      <li className="mb-1">Kansteen (Curb): 1.900 buah</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="tex-xl mb-2 font-noto text-black">
-                      Beton Ready-mix
-                    </h4>
-                    <ul className="font-titilium list-disc pl-5 text-base text-black/75">
-                      <li className="mb-1">fc&apos; 35 MPa: 55 m³</li>
-                      <li className="mb-1">fc&apos; 30 MPa: 1.800 m³</li>
-                      <li className="mb-1">fc&apos; 15 MPa: 2.000 m³</li>
-                      <li className="mb-1">fc&apos; 10 MPa: 350 m³</li>
-                      <li className="mb-1">Cement Treated Base: 14.000 m³</li>
-                    </ul>
-                  </div>
-                </>
+                <div className="text-center text-gray-500 py-8">
+                  <p>No specifications available for this project.</p>
+                </div>
               )}
             </div>
           </div>

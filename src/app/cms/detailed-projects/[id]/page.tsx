@@ -31,11 +31,7 @@ interface DetailedProjectFormData {
   title: string;
   slug: string;
   category: string;
-  period: string;
   location: string;
-  client: string;
-  value: string;
-  length: string;
   description: string;
   detailed_description: string[];
   specifications: SpecificationPair[];
@@ -47,12 +43,6 @@ interface DetailedProjectFormData {
   specifications_title: string;
   challenges_title: string;
   insights_title: string;
-  image_source: string;
-  road_width: string;
-  funding_source: string;
-  execution_time: string;
-  maintenance_period: string;
-  contractor: string;
   description_title: string;
 }
 
@@ -69,11 +59,7 @@ export default function DetailedProjectEditPage() {
     title: '',
     slug: '',
     category: 'jalan',
-    period: '',
     location: '',
-    client: '',
-    value: '',
-    length: '',
     description: '',
     detailed_description: [],
     specifications: [],
@@ -85,12 +71,6 @@ export default function DetailedProjectEditPage() {
     specifications_title: 'Rincian Pemakaian Produk',
     challenges_title: 'Tantangan Proyek',
     insights_title: 'Lihat Insight Proyek',
-    image_source: 'Ahmad Adirin/Liputan6.com',
-    road_width: '',
-    funding_source: '',
-    execution_time: '',
-    maintenance_period: '',
-    contractor: '',
     description_title: 'Menghubungkan Infrastruktur dengan Pertumbuhan Ekonomi'
   });
   const [imageUrl, setImageUrl] = useState<string>('');
@@ -114,11 +94,7 @@ export default function DetailedProjectEditPage() {
             title: foundProject.title ?? '',
             slug: foundProject.slug ?? '',
             category: foundProject.category ?? 'jalan',
-            period: foundProject.period ?? '',
             location: foundProject.location ?? '',
-            client: foundProject.client ?? '',
-            value: foundProject.value ?? '',
-            length: foundProject.length ?? '',
             description: foundProject.description ?? '',
             detailed_description: foundProject.detailed_description ?? [],
             specifications: (foundProject.specifications as SpecificationPair[]) ?? [],
@@ -130,12 +106,6 @@ export default function DetailedProjectEditPage() {
             specifications_title: foundProject.specifications_title ?? 'Rincian Pemakaian Produk',
             challenges_title: foundProject.challenges_title ?? 'Tantangan Proyek',
             insights_title: foundProject.insights_title ?? 'Lihat Insight Proyek',
-            image_source: foundProject.image_source ?? 'Ahmad Adirin/Liputan6.com',
-            road_width: foundProject.road_width ?? '',
-            funding_source: foundProject.funding_source ?? '',
-            execution_time: foundProject.execution_time ?? '',
-            maintenance_period: foundProject.maintenance_period ?? '',
-            contractor: foundProject.contractor ?? '',
             description_title: foundProject.description_title ?? 'Menghubungkan Infrastruktur dengan Pertumbuhan Ekonomi'
           });
           setImageUrl(foundProject.image_url ?? '');
@@ -278,7 +248,7 @@ export default function DetailedProjectEditPage() {
 
       <div className="px-6 py-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Basic Information */}
+          {/* Basic Information - Only Fixed Fields */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-700">Title</label>
@@ -318,55 +288,13 @@ export default function DetailedProjectEditPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Period</label>
-              <input
-                type="text"
-                value={formData.period}
-                onChange={(e) => setFormData({ ...formData, period: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-                placeholder="e.g., 2020-2022"
-              />
-            </div>
-
-            <div>
               <label className="block text-sm font-medium text-gray-700">Location</label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Client</label>
-              <input
-                type="text"
-                value={formData.client}
-                onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Project Value</label>
-              <input
-                type="text"
-                value={formData.value}
-                onChange={(e) => setFormData({ ...formData, value: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-                placeholder="e.g., Rp 50 Miliar"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Length</label>
-              <input
-                type="text"
-                value={formData.length}
-                onChange={(e) => setFormData({ ...formData, length: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-                placeholder="e.g., 15 KM"
+                required
               />
             </div>
           </div>
@@ -482,69 +410,9 @@ export default function DetailedProjectEditPage() {
             />
           </div>
 
-          {/* Additional Fields */}
+          {/* Additional Settings */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Road Width</label>
-              <input
-                type="text"
-                value={formData.road_width}
-                onChange={(e) => setFormData({ ...formData, road_width: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Funding Source</label>
-              <input
-                type="text"
-                value={formData.funding_source}
-                onChange={(e) => setFormData({ ...formData, funding_source: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Execution Time</label>
-              <input
-                type="text"
-                value={formData.execution_time}
-                onChange={(e) => setFormData({ ...formData, execution_time: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Maintenance Period</label>
-              <input
-                type="text"
-                value={formData.maintenance_period}
-                onChange={(e) => setFormData({ ...formData, maintenance_period: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Contractor</label>
-              <input
-                type="text"
-                value={formData.contractor}
-                onChange={(e) => setFormData({ ...formData, contractor: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Image Source</label>
-              <input
-                type="text"
-                value={formData.image_source}
-                onChange={(e) => setFormData({ ...formData, image_source: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div>
+np[]            <div>
               <label className="block text-sm font-medium text-gray-700">Sort Order</label>
               <input
                 type="number"
