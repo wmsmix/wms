@@ -363,24 +363,6 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <div className="flex justify-center pb-6 md:pb-12">
-        <Button
-          text="LIHAT SEMUA"
-          height="48px"
-          textSize="xl"
-          className="text-base md:text-lg"
-          href="/insights"
-          bgColor="#FF7028"
-          clipPath={{
-            outer:
-              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
-            inner:
-              "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
-          }}
-          margin="1px"
-        />
-      </div>
-
       <Footer />
     </div>
   );
