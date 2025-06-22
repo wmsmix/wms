@@ -3,9 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
-import Button from "~/components/commons/Button";
 import Hero from "~/components/Hero";
-import NewsGrid from "~/components/NewsGrid";
 import ClippedSection from "~/components/ClippedSection";
 import FeatureCard from "~/components/FeatureCard";
 import Image from "next/image";
@@ -601,32 +599,6 @@ export default function AboutPage() {
         bottomBgColor="bg-white-10"
         clipPathBgColor="bg-blue-primary"
       />
-      <div className="flex w-full flex-col items-center bg-white-10">
-        <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
-          Lihat Insight Proyek
-        </span>
-
-        <NewsGrid
-          bgColor="bg-blue-primary"
-          textColor="text-black"
-          textBadgeColor="text-white-10"
-        />
-      </div>
-      <div className="flex justify-center pb-6 md:pb-12">
-        <Button
-          text="LIHAT SEMUA"
-          height="48px"
-          textSize="xl"
-          className="text-sm md:text-lg"
-          clipPath={{
-            outer:
-              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-            inner:
-              "polygon(4% 0%, 96% 0%, 100% 16%, 100% 84%, 96% 100%, 4% 100%, 0% 84%, 0% 16%)",
-          }}
-          margin="1px"
-        />
-      </div>
 
       <Footer />
     </div>

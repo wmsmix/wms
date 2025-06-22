@@ -9,7 +9,6 @@ import Labels from "~/components/Label";
 import CardProduct from "~/components/CardProduct";
 import ProjectShowcase from "~/components/ProjectShowcase";
 import ContactForm from "~/components/ContactForm";
-import NewsGrid from "~/components/NewsGrid";
 import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton";
 import { useEffect, useState } from "react";
 import type { HomepageContent } from "~/types/cms";
@@ -245,7 +244,7 @@ export default function HomePage() {
           <ContactForm />
         </div>
 
-        <div className="flex w-full flex-col items-center bg-white-10">
+        {/* <div className="flex w-full flex-col items-center bg-white-10">
           <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
             Lihat Insight Proyek
           </span>
@@ -271,7 +270,7 @@ export default function HomePage() {
             }}
             margin="1px"
           />
-        </div>
+        </div> */}
 
         <Footer />
       </main>

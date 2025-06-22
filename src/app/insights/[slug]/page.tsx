@@ -6,102 +6,107 @@ import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
-import NewsGrid from "~/components/NewsGrid";
-import Button from "~/components/commons/Button";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
-
-// Data berita untuk simulasi database
-const newsData = [
-  {
-    slug: "jalan-lingkar-selatan-tuban-mulai-diaktifkan-terbatas",
-    title:
-      "Jalan Lingkar Selatan Tuban Mulai Diaktifkan Terbatas: Kendaraan Berat Boleh Lewat, tapi Tak Wajib",
-    date: "15",
-    month: "FEB",
-    author: "Muhammad Azlan Syah",
-    publishDate: "Kamis, 30 Mei 2024 | 10:00 WIB",
-    image: "/images/img-detail-jlt-1.png",
-    content: [
-      "Setelah dilaporkan tuntas, Jalan Lingkar Selatan (JLS) Tuban mulai diaktifkan secara terbatas. Kendaraan berat bisa melintas ke jalan baru tersebut karena sudah dibuka sistem dua lajur. Keputusan tersebut, berdasarkan hasil rapat forum lalu lintas angkutan jalan (LLAJ) Tuban. Demi keamanan, sejumlah rambu arus lalu lintas mulai dipasang di sejumlah titik. Selain rambu pengarah jalan, terlihat juga papan peringatan titik rawan pengendara lawan arus.",
-      "Pembukaan Dua Jalur Untuk Mengurangi Kerawanan Kecelakaan",
-      "Kepala Bidang LLAJ Dinas Lingkungan Hidup dan Perhubungan (DLHP) Tuban Imam Isdarmawan mengatakan, kesepakatan dibukanya dua jalur berdasarkan keluhan masyarakat. Banyak yang protes maraknya pengendara melawan arus di sepanjang JLS.",
-      "Untuk meminimalisir potensi bahaya pengguna jalan sekaligus mengurangi kerawanan kecelakaan, ungkap Beliau.",
-      "DLHP Tuban bersama Satlantas Polres Tuban, kata Imam, hingga kemarin masih masif melakukan sosialisasi kepada pengendara agar mematuhi rambu lalu lintas. Salah satunya melalui banner peringatan yang dibentang di sejumlah titik.",
-      '"Saat ini pengoperasian masih terbatas karena masih tahap melengkapi kelengkapan di sepanjang JLS," ujar dia. Lulusan Sekolah Tinggi Transportasi Darat (STTD) Bekasi ini menegatakan, saat ini kendaraan berat dari arah Surabaya maupun Semarang belum diwajibkan melewati JLS. Sebab, prasarana penunjang lalu lintas seperti penerangan jalan umum (PJU), rambu, dan perlengkapan lainnya masih dalam tahap penyelesaian.',
-      "Pengoperasian Masih Terbatas",
-      '"Pengoperasian untuk saat ini masih terbatas, nantinya jika perlengkapan penunjang telah tuntas seluruhnya maka jalur JLS akan menjadi jalur kendaraan berat dari arah Surabaya maupun Semarang," jelas Imam.',
-      'Harapannya setelah pengaktifan JLS secara terbatas ini, kata Imam, dapat mengurangi kasus kecelakaan yang ada di JLS Tuban. "Semoga pengendara dapat tertib berlalu lintas dan mematuhi peraturan yang ada," pungkasnya.',
-    ],
-    tags: ["Tuban", "JLS", "Jalan Lingkar Selatan"],
-  },
-  {
-    slug: "pembangunan-jalan-lingkar-tuban-dorong-pertumbuhan-ekonomi",
-    title: "Pembangunan Jalan Lingkar Tuban: Dorong Pertumbuhan Ekonomi",
-    date: "20",
-    month: "MEI",
-    author: "Muhammad Azlan",
-    publishDate: "Kamis, 30 Mei 2024",
-    image: "/images/img-kabar-proyek-1.png",
-    content: [
-      "Setelah dilaporkan tuntas, jalan lingkar selatan (JLS) Tuban mulai diaktifkan secara...",
-    ],
-    tags: ["Tuban", "JLS", "Ekonomi"],
-  },
-  {
-    slug: "ring-road-tuban-jadi-opsi-pengendara-kena-macet",
-    title: "Ring Road Tuban Jadi Opsi Pengendara Kena Macet",
-    date: "16",
-    month: "JUNI",
-    author: "Muhammad Azlan",
-    publishDate: "Senin, 16 Juni 2024",
-    image: "/images/img-kabar-proyek-2.png",
-    content: [
-      "KBRN, Tuban: Setelah diresmikan, Ring Road/Jalur Lingkar Selatan Tuban yang berjalan...",
-    ],
-    tags: ["Tuban", "Ring Road", "Macet"],
-  },
-  {
-    slug: "ring-road-tuban-19-km-diuji-coba",
-    title: "Ring Road Tuban 19 Km Diuji Coba, Kendaraan Besar Dialihkan",
-    date: "15",
-    month: "FEB",
-    author: "Muhammad Azlan",
-    publishDate: "Rabu, 15 Feb 2024",
-    image: "/images/img-kabar-proyek-3.png",
-    content: [
-      "KBRN, Tuban: Kapolres Tuban AKBP Suryono mengatakan bahwa dirinya sempat...",
-    ],
-    tags: ["Tuban", "Ring Road", "Uji Coba"],
-  },
-];
+import type { InsightPost } from "~/types/cms";
+import { getInsightPostBySlugFromSupabase, getInsightPostsFromSupabase } from "~/data/insight-posts-supabase";
+import { getImageUrl } from "~/utils/supabase";
+import { renderMarkdown } from "~/utils/markdown";
+import "~/styles/markdown.css";
 
 export default function InsightDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
   const [currentUrl, setCurrentUrl] = useState("");
   const [_imageUrl, setImageUrl] = useState("");
+  const [post, setPost] = useState<InsightPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<InsightPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Cari berita berdasarkan slug
-  const news = newsData.find((item) => item.slug === slug);
+  // Load post data from database
+  useEffect(() => {
+    const loadPost = async () => {
+      try {
+        const postData = await getInsightPostBySlugFromSupabase(slug);
+        if (!postData) {
+          notFound();
+          return;
+        }
+        setPost(postData);
 
-  // Jika berita tidak ditemukan, redirect ke halaman 404
-  if (!news) {
+        // Load related posts (exclude current post)
+        const allPosts = await getInsightPostsFromSupabase();
+        const related = allPosts
+          .filter(p => p.slug !== slug && p.is_published)
+          .slice(0, 3);
+        setRelatedPosts(related);
+      } catch (error) {
+        console.error('Error loading post:', error);
+        notFound();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadPost();
+  }, [slug]);
+
+    useEffect(() => {
+    // Set currentUrl dan imageUrl setelah komponen dimount di browser
+    if (post) {
+      setCurrentUrl(window.location.href);
+      setImageUrl(`${window.location.origin}${post.image_url ?? ""}`);
+    }
+  }, [post]);
+
+  // Helper functions to format data
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString();
+    const month = date.toLocaleDateString('id-ID', { month: 'short' }).toUpperCase();
+    return { day, month };
+  };
+
+  const formatPublishDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    const dayName = days[date.getDay()];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    return `${dayName}, ${day} ${month} ${year} | ${hours}:${minutes} WIB`;
+  };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+        <div className="text-center">
+          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show 404 if post not found
+  if (!post) {
     notFound();
   }
 
-  useEffect(() => {
-    // Set currentUrl dan imageUrl setelah komponen dimount di browser
-    setCurrentUrl(window.location.href);
-    setImageUrl(`${window.location.origin}${news.image ?? ""}`);
-  }, [news]);
+  const { day, month } = formatDate(post.published_date ?? new Date().toISOString());
 
   // Fungsi untuk menangani berbagi ke media sosial
   const handleShare = (platform: string) => {
-    if (!news) return;
+    if (!post) return;
 
     const shareData = {
-      title: news.title,
-      text: `${news.title}`,
+      title: post.title,
+      text: `${post.title}`,
       url: currentUrl,
     };
 
@@ -178,9 +183,6 @@ export default function InsightDetailPage() {
     }
   };
 
-  // Berita terkait (exclude berita yang sedang dibuka)
-  const relatedNews = newsData.filter((item) => item.slug !== slug).slice(0, 3);
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
       <Navbar />
@@ -189,7 +191,7 @@ export default function InsightDetailPage() {
       <div className="relative pt-20">
         <Breadcrumbs items={[
           { label: "Insights", href: "/insights" },
-          { label: news.title.length > 20 ? news.title.substring(0, 20) + "..." : news.title }
+          { label: post.title.length > 20 ? post.title.substring(0, 20) + "..." : post.title }
         ]} topPosition="top-24 md:top-20" leftPosition="left-2 md:left-12" textColor="text-black" hoverColor="hover:text-gray-700" />
       </div>
 
@@ -200,8 +202,8 @@ export default function InsightDetailPage() {
             {/* Hero Image */}
             <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden">
               <Image
-                src={news.image}
-                alt={news.title}
+                src={post.image_url ? getImageUrl(post.image_url, 'cms-uploads') : '/images/default-insight.jpg'}
+                alt={post.title}
                 fill
                 className="object-cover"
               />
@@ -217,20 +219,20 @@ export default function InsightDetailPage() {
                       "polygon(0 0, 100% 0, 100% 90%, 88% 100%, 12% 100%, 0 88%)",
                   }}
                 >
-                  <span className="text-2xl">{news.date}</span>
+                  <span className="text-2xl">{day}</span>
                 </div>
                 <span className="mt-2 text-lg font-medium uppercase text-black">
-                  {news.month}
+                  {month}
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl">{news.title}</h1>
+              <h1 className="text-3xl md:text-4xl">{post.title}</h1>
             </div>
 
             <div className="item flex justify-between">
               {/* Author and publish date */}
               <div className="mb-6 text-sm text-gray-500">
-                {news.author} - {news.publishDate}
+                {post.author ?? 'Tim WMS'} - {formatPublishDate(post.published_date ?? new Date().toISOString())}
               </div>
 
               {/* Social Sharing */}
@@ -352,25 +354,27 @@ export default function InsightDetailPage() {
               </div>
             </div>
 
-            {/* Article Text */}
-            <div className="prose max-w-none">
-              {news.content.map((paragraph, index) => (
-                <React.Fragment key={index}>
-                  {paragraph.includes("Pembukaan Dua Jalur") ||
-                  paragraph.includes("Pengoperasian Masih Terbatas") ? (
-                    <h2 className="mb-4 mt-8 text-2xl">{paragraph}</h2>
-                  ) : paragraph.includes("Untuk meminimalisir") ? (
-                    <blockquote className="relative my-6 border-l-4 border-blue-primary py-4 pl-8">
-                      <span className="absolute left-2 top-0 font-serif text-5xl text-blue-primary">
-                        &ldquo;
-                      </span>
-                      <p className="text-lg">{paragraph}</p>
-                    </blockquote>
-                  ) : (
-                    <p className="mb-6 leading-relaxed">{paragraph}</p>
-                  )}
-                </React.Fragment>
-              ))}
+                        {/* Description */}
+            {post.description && (
+              <div className="mb-6">
+                <p className="text-gray-700 leading-relaxed">
+                  {post.description}
+                </p>
+              </div>
+            )}
+
+                        {/* Article Text */}
+            <div className="prose prose-lg max-w-none">
+              {post.content ? (
+                <div
+                  className="markdown-content mb-6 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
+                />
+              ) : (
+                <p className="mb-6 leading-relaxed text-gray-500">
+                  No content available for this post.
+                </p>
+              )}
             </div>
           </div>
 
@@ -379,14 +383,14 @@ export default function InsightDetailPage() {
             <h3 className="mb-6 text-xl uppercase">LIHAT INSIGHT LAIN</h3>
 
             <div className="space-y-6">
-              {relatedNews.map((item, index) => (
+              {relatedPosts.map((item, index) => (
                 <div
-                  key={index}
+                  key={item.id ?? index}
                   className="flex gap-4 sm:flex-row sm:items-center"
                 >
                   <div className="relative h-24 flex-shrink-0 overflow-hidden sm:w-24">
                     <Image
-                      src={item.image}
+                      src={item.image_url ? getImageUrl(item.image_url, 'cms-uploads') : '/images/default-insight.jpg'}
                       alt={item.title}
                       width={96}
                       height={96}
@@ -401,7 +405,7 @@ export default function InsightDetailPage() {
                       {item.title}
                     </Link>
                     <p className="mt-1 text-xs text-gray-500">
-                      {item.publishDate}
+                      {formatPublishDate(item.published_date ?? new Date().toISOString())}
                     </p>
                   </div>
                 </div>
@@ -412,22 +416,27 @@ export default function InsightDetailPage() {
             <div className="mb-12 mt-8">
               <h4 className="mb-3 uppercase">TAG</h4>
               <div className="flex flex-wrap gap-2">
-                {news.tags.map((tag, index) => (
-                  <Link
-                    key={index}
-                    href={`/insights?tag=${tag}`}
-                    className="border border-gray-300 px-6 py-2 text-gray-600 hover:border-gray-500 hover:text-gray-800"
-                  >
-                    {tag}
-                  </Link>
-                ))}
+                {post.tags && post.tags.length > 0 ? (
+                  post.tags.map((tag: string, index: number) => (
+                    <Link
+                      key={index}
+                      href={`/insights?tag=${tag}`}
+                      className="border border-gray-300 px-6 py-2 text-gray-600 hover:border-gray-500 hover:text-gray-800"
+                    >
+                      {tag}
+                    </Link>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No tags available</p>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex w-full flex-col items-center bg-white-10">
+      <div style={{height: '200px'}}></div>
+      {/* <div className="flex w-full flex-col items-center bg-white-10">
         <span className="mb-16 block text-center font-noto text-4xl text-black sm:text-5xl md:text-6xl lg:text-[64px]">
           Lihat Insight Proyek
         </span>
@@ -452,9 +461,9 @@ export default function InsightDetailPage() {
               "polygon(5% 0%, 95% 0%, 100% 16%, 100% 84%, 95% 100%, 5% 100%, 0% 84%, 0% 16%)",
           }}
         />
-      </div>
+      </div> */}
 
-      <Footer />
+            <Footer />
     </div>
   );
 }

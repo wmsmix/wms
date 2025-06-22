@@ -11,91 +11,63 @@ import Button from "~/components/commons/Button";
 import PrecastFeatures from "~/components/PrecastFeatures";
 import ClippedSection from "~/components/ClippedSection";
 import NewsGrid from "~/components/NewsGrid";
-import precastProductsData from "~/data/precast-products.json";
 import Breadcrumbs from "~/components/commons/Breadcrumbs";
+import { getPrecastProductBySlugFromSupabase } from "~/data/precast-supabase";
 
-interface Feature {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-interface Variant {
-  image: string;
-  label: string;
-}
-
-interface TableColumn {
-  header: string;
-  key: string;
-  unit?: string;
-}
-
-type TableRow = Record<string, number | string>;
-
-interface Specification {
-  title: string;
-  columns: TableColumn[];
-  rows: TableRow[];
-}
-
-interface ProductData {
-  title: string;
-  description?: string;
-  images: string[];
-  features?: Feature[];
-  variants?: {
-    title: string;
-    types: Variant[];
-  };
-  specifications?: Specification[];
-  runningText?: string;
-  schematicImage?: string;
-}
+import type { PrecastProduct } from "~/types/cms";
 
 export default function PrecastConcreteProductDetail() {
   const params = useParams();
-  const [product, setProduct] = useState<ProductData | null>(null);
+  const [product, setProduct] = useState<PrecastProduct | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isKansteen, setIsKansteen] = useState(false);
   const [_currentSlug, setCurrentSlug] = useState("");
 
   useEffect(() => {
-    setLoading(true);
+    const loadProduct = async () => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const slug =
-        typeof params.slug === "string"
-          ? params.slug
-          : Array.isArray(params.slug)
-            ? params.slug[0]
-            : "";
+      try {
+        const slug =
+          typeof params.slug === "string"
+            ? params.slug
+            : Array.isArray(params.slug)
+              ? params.slug[0]
+              : "";
 
-      // Set current slug for breadcrumbs
-      if (slug) {
-        setCurrentSlug(slug);
-      }
+        // Set current slug for breadcrumbs
+        if (slug) {
+          setCurrentSlug(slug);
+        }
 
-      // Set isKansteen flag
-      setIsKansteen(slug === "kansteen");
+        // Set isKansteen flag
+        setIsKansteen(slug === "kansteen");
 
-      // Ambil data dari precast-products.json berdasarkan slug
-      if (
-        slug &&
-        Object.prototype.hasOwnProperty.call(precastProductsData, slug)
-      ) {
-        setProduct(
-          precastProductsData[slug as keyof typeof precastProductsData] ?? null,
-        );
-      } else {
+        // Load product data from Supabase
+        if (slug) {
+          const productData = await getPrecastProductBySlugFromSupabase(slug);
+          if (productData?.is_published) {
+            setProduct(productData);
+          } else {
+            setProduct(null);
+            setError("Product not found or not published");
+          }
+        } else {
+          setProduct(null);
+          setError("Invalid product slug");
+        }
+      } catch (err) {
+        console.error("Error loading product:", err);
+        setError("Failed to load product data");
         setProduct(null);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error loading product:", error);
-      setProduct(null);
-    } finally {
-      setLoading(false);
-    }
+    };
+
+    void loadProduct();
   }, [params.slug]);
 
   if (loading) {
@@ -106,13 +78,13 @@ export default function PrecastConcreteProductDetail() {
     );
   }
 
-  if (!product) {
+  if (!product || error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white-10">
         <Navbar />
         <div className="py-20">
           <h1 className="text-center text-2xl text-gray-700">
-            Produk tidak ditemukan
+            {error ?? "Produk tidak ditemukan"}
           </h1>
           <div className="mt-8 flex justify-center">
             <Button
@@ -186,7 +158,7 @@ export default function PrecastConcreteProductDetail() {
           title={spec.title}
           columns={spec.columns}
           rows={spec.rows}
-          runningText={product.runningText}
+          runningText={product.running_text}
           isPrimaryBackground={
             index === (product.specifications?.length ?? 0) - 1
           }

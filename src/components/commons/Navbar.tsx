@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import { getPublishedPrecastProductsForDisplay } from "~/data/precast-supabase";
+import { getProductNames, type ProductName } from "~/data/product-names";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +12,61 @@ const Navbar: React.FC = () => {
   const [hide, setHide] = useState(false);
   const [showPrecastSubmenu, setShowPrecastSubmenu] = useState(false);
   const [mobileMenuLevel, setMobileMenuLevel] = useState("main"); // 'main', 'products', 'precast'
+  const [precastProducts, setPrecastProducts] = useState<Array<{
+    href: string;
+    title: string;
+    slug: string;
+  }>>([]);
+  const [productNames, setProductNames] = useState<ProductName[]>([]);
+
+  // Load precast products for navigation
+  const loadPrecastProducts = async () => {
+    try {
+      const products = await getPublishedPrecastProductsForDisplay();
+      setPrecastProducts(products.map(product => ({
+        href: product.href,
+        title: product.title.toUpperCase(),
+        slug: product.href.split('/').pop() ?? ''
+      })));
+    } catch (error) {
+      console.error('Error loading precast products for navigation:', error);
+    }
+  };
+
+  // Load dynamic product names
+  const loadProductNames = async () => {
+    try {
+      const names = await getProductNames();
+      setProductNames(names);
+    } catch (error) {
+      console.error('Error loading product names for navigation:', error);
+    }
+  };
+
+  useEffect(() => {
+    void loadPrecastProducts();
+    void loadProductNames();
+
+    // Refresh navigation when page regains focus (useful when coming back from CMS)
+    const handleFocus = () => {
+      void loadPrecastProducts();
+      void loadProductNames();
+    };
+
+    // Refresh navigation when custom event is triggered (useful for CMS updates)
+    const handleRefreshNavigation = () => {
+      void loadPrecastProducts();
+      void loadProductNames();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('refreshNavigation', handleRefreshNavigation);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('refreshNavigation', handleRefreshNavigation);
+    };
+  }, []);
 
   // Email and phone handlers
   const handleEmailClick = () => {
@@ -106,18 +163,24 @@ const Navbar: React.FC = () => {
 
               {/* Dropdown level 1 */}
               <div className="invisible absolute left-0 z-50 mt-4 w-56 rounded-sm bg-blue-primary opacity-0 shadow-lg transition-all duration-300 group-hover:visible group-hover:opacity-100">
-                <Link
-                  href="/products/aspal"
-                  className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                >
-                  ASPAL
-                </Link>
-                <Link
-                  href="/products/beton"
-                  className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                >
-                  BETON
-                </Link>
+                {productNames.filter(product => product.key === 'aspal').map(product => (
+                  <Link
+                    key={product.key}
+                    href={product.href}
+                    className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                  >
+                    {product.title}
+                  </Link>
+                ))}
+                {productNames.filter(product => product.key === 'beton').map(product => (
+                  <Link
+                    key={product.key}
+                    href={product.href}
+                    className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                  >
+                    {product.title}
+                  </Link>
+                ))}
 
                 {/* Item dengan submenu */}
                 <div
@@ -127,7 +190,7 @@ const Navbar: React.FC = () => {
                 >
                   <Link href="/products/precast-concrete">
                     <div className="text-white-base hover:bg-blue-secondary flex cursor-pointer items-center justify-between px-6 py-3 transition-colors">
-                      <span>Precast Concrete</span>
+                      <span>{productNames.find(product => product.key === 'precast')?.title ?? 'PRECAST CONCRETE'}</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="ml-3 h-4 w-4"
@@ -153,36 +216,15 @@ const Navbar: React.FC = () => {
                         : "invisible opacity-0"
                     } transition-all duration-300`}
                   >
-                    <Link
-                      href="/products/precast-concrete/box-culvert"
-                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                    >
-                      BOX CULVERT
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/double-u-box"
-                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                    >
-                      DOUBLE U-BOX
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/u-ditch"
-                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                    >
-                      U-DITCH
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/u-ditch-cover"
-                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                    >
-                      U-DITCH COVER
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/kansteen"
-                      className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
-                    >
-                      KANSTEEN
-                    </Link>
+                    {precastProducts.map((product) => (
+                      <Link
+                        key={product.slug}
+                        href={product.href}
+                        className="text-white-base hover:bg-blue-secondary block px-6 py-3 transition-colors"
+                      >
+                        {product.title}
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
@@ -301,8 +343,8 @@ const Navbar: React.FC = () => {
                   <div
                     className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
                   >
-                    <div 
-                      onClick={() => handleMobileNavigation("products")} 
+                    <div
+                      onClick={() => handleMobileNavigation("products")}
                       className="text-lg cursor-pointer"
                     >
                       PRODUK & LAYANAN
@@ -390,18 +432,24 @@ const Navbar: React.FC = () => {
                     >
                       <span className="text-lg">OVERVIEW</span>
                     </Link>
-                    <Link
-                      href="/products/aspal"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">ASPAL</span>
-                    </Link>
-                    <Link
-                      href="/products/beton"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">BETON</span>
-                    </Link>
+                    {productNames.filter(product => product.key === 'aspal').map(product => (
+                      <Link
+                        key={product.key}
+                        href={product.href}
+                        className="text-white border-white/5 block border-b pb-6"
+                      >
+                        <span className="text-lg">{product.title}</span>
+                      </Link>
+                    ))}
+                    {productNames.filter(product => product.key === 'beton').map(product => (
+                      <Link
+                        key={product.key}
+                        href={product.href}
+                        className="text-white border-white/5 block border-b pb-6"
+                      >
+                        <span className="text-lg">{product.title}</span>
+                      </Link>
+                    ))}
 
                     <div
                       className="text-white border-white/5 flex cursor-pointer items-center justify-between border-b pb-6"
@@ -410,7 +458,7 @@ const Navbar: React.FC = () => {
                         onClick={() => handleMobileNavigation("precast")}
                         className="text-lg cursor-pointer"
                       >
-                        PRECAST CONCRETE
+                        {productNames.find(product => product.key === 'precast')?.title ?? 'PRECAST CONCRETE'}
                       </div>
                       <div
                         onClick={() => handleMobileNavigation("precast")}
@@ -470,7 +518,7 @@ const Navbar: React.FC = () => {
                         d="M15 19l-7-7 7-7"
                       />
                     </svg>
-                    <span className="text-lg">PRECAST CONCRETE</span>
+                    <span className="text-lg">{productNames.find(product => product.key === 'precast')?.title ?? 'PRECAST CONCRETE'}</span>
                   </button>
 
                   <div className="mt-8 space-y-6">
@@ -481,36 +529,16 @@ const Navbar: React.FC = () => {
                     >
                       <span className="text-lg">OVERVIEW</span>
                     </Link>
-                    <Link
-                      href="/products/precast-concrete/box-culvert"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">BOX CULVERT</span>
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/double-u-box"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">DOUBLE U-BOX</span>
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/u-ditch"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">U-DITCH</span>
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/u-ditch-cover"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">U-DITCH COVER</span>
-                    </Link>
-                    <Link
-                      href="/products/precast-concrete/kansteen"
-                      className="text-white border-white/5 block border-b pb-6"
-                    >
-                      <span className="text-lg">KANSTEEN</span>
-                    </Link>
+                    {precastProducts.map((product) => (
+                      <Link
+                        key={product.slug}
+                        href={product.href}
+                        className="text-white border-white/5 block border-b pb-6"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span className="text-lg">{product.title}</span>
+                      </Link>
+                    ))}
                   </div>
                 </div>
               </div>

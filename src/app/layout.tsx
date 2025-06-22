@@ -6,6 +6,7 @@ import { type Metadata } from "next";
 import { SmoothScrollProvider } from "~/contexts/SmoothScrollContext";
 import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton";
 import SmoothScrollAnchor from "~/components/SmoothScrollAnchor";
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: "WMS - PT. Wahana Makmur Sentosa",
@@ -33,6 +34,18 @@ export default function RootLayout({
       lang="en"
       className={`${GeistSans.variable} ${titilliumWeb.variable} ${notoSerif.variable}`}
     >
+      <head>
+           {/* Define isSpace function globally to fix markdown-it issues with Next.js + Turbopack */}
+           <Script id="markdown-it-fix" strategy="beforeInteractive">
+          {`
+            if (typeof window !== 'undefined' && typeof window.isSpace === 'undefined') {
+              window.isSpace = function(code) {
+                return code === 0x20 || code === 0x09 || code === 0x0A || code === 0x0B || code === 0x0C || code === 0x0D;
+              };
+            }
+          `}
+        </Script>
+      </head>
       <body>
         <SmoothScrollProvider>
           {children}

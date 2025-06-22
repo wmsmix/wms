@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { getImagePublicUrl } from "~/utils/image";
 
 interface ProductHeaderProps {
   title: string;
@@ -26,7 +27,7 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({ title, images, features: 
               className="relative w-full md:w-1/2 aspect-[4/3] max-w-xl"
             >
               <Image
-                src={image}
+                src={getImagePublicUrl(image)}
                 alt={`${title} gambar ${index + 1}`}
                 fill
                 className="object-contain"
