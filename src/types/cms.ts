@@ -131,6 +131,7 @@ export interface SideArticle {
   title: string;
   date: string;
   url: string;
+  postId?: number; // Optional reference to InsightPost ID
 }
 
 export interface VideoSection {

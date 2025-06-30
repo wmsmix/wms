@@ -144,7 +144,7 @@ export default function CMSDashboard() {
           className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md"
         >
           <div className="mb-2 flex items-center justify-between">
-            <h5 className="text-xl font-medium text-gray-900">Gallery Management</h5>
+            <h5 className="text-xl font-medium text-gray-900">Project Gallery</h5>
             <svg
               className="h-6 w-6 text-gray-500"
               fill="currentColor"

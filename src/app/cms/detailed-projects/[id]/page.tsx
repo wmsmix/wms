@@ -311,6 +311,67 @@ export default function DetailedProjectEditPage() {
             />
           </div>
 
+          {/* Section Titles */}
+          <div className="border-t pt-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Section Titles</h3>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Content Title</label>
+                <input
+                  type="text"
+                  value={formData.content_title}
+                  onChange={(e) => setFormData({ ...formData, content_title: e.target.value })}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                  placeholder="Enter content title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Description Title</label>
+                <input
+                  type="text"
+                  value={formData.description_title}
+                  onChange={(e) => setFormData({ ...formData, description_title: e.target.value })}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                  placeholder="Enter description title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Specifications Title</label>
+                <input
+                  type="text"
+                  value={formData.specifications_title}
+                  onChange={(e) => setFormData({ ...formData, specifications_title: e.target.value })}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                  placeholder="Enter specifications title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Challenges Title</label>
+                <input
+                  type="text"
+                  value={formData.challenges_title}
+                  onChange={(e) => setFormData({ ...formData, challenges_title: e.target.value })}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                  placeholder="Enter challenges title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Insights Title</label>
+                <input
+                  type="text"
+                  value={formData.insights_title}
+                  onChange={(e) => setFormData({ ...formData, insights_title: e.target.value })}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                  placeholder="Enter insights title"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Image Upload Section */}
           <FileUploader
             currentImageUrl={imageUrl}
@@ -412,7 +473,7 @@ export default function DetailedProjectEditPage() {
 
           {/* Additional Settings */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-np[]            <div>
+            <div>
               <label className="block text-sm font-medium text-gray-700">Sort Order</label>
               <input
                 type="number"

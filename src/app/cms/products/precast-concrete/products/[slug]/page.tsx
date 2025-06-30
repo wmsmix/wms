@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
 import type { PrecastProduct, PrecastProductFeature } from '~/types/cms';
@@ -56,8 +57,7 @@ export default function PrecastProductEditor() {
           if (productData) {
             setProduct(productData);
           } else {
-            alert('Product not found');
-            router.push('/cms/products/precast-concrete');
+            notFound();
           }
           setIsLoading(false);
         } catch (error) {
@@ -198,11 +198,7 @@ export default function PrecastProductEditor() {
   }
 
   if (!product) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg text-red-600">Product not found</div>
-      </div>
-    );
+    notFound();
   }
 
   return (

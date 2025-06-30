@@ -4,8 +4,8 @@ import { GeistSans } from "geist/font/sans";
 import { Titillium_Web, Noto_Serif } from "next/font/google";
 import { type Metadata } from "next";
 import { SmoothScrollProvider } from "~/contexts/SmoothScrollContext";
-import FloatingWhatsAppButton from "~/components/commons/FloatingWhatsAppButton";
 import SmoothScrollAnchor from "~/components/SmoothScrollAnchor";
+import ConditionalWhatsAppButton from "~/components/commons/ConditionalWhatsAppButton";
 import Script from 'next/script';
 
 export const metadata: Metadata = {
@@ -51,10 +51,7 @@ export default function RootLayout({
           {children}
           <SmoothScrollAnchor />
         </SmoothScrollProvider>
-        <FloatingWhatsAppButton
-          message="Halo, saya tertarik dengan produk WMS"
-          position="bottom-right"
-        />
+        <ConditionalWhatsAppButton />
       </body>
     </html>
   );

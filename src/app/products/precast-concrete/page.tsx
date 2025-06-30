@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { notFound } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import CardProduct from "~/components/CardProduct";
@@ -53,14 +54,7 @@ export default function PrecastConcreteProductPage() {
   }
 
   if (!content) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl text-gray-700">Content not found</h1>
-          <p className="mt-2 text-gray-500">Please check the CMS configuration.</p>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
   return (

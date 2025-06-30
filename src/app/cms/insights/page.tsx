@@ -5,7 +5,6 @@ import type { InsightsPageContent } from '~/types/cms';
 import InsightsHeroSectionEditor from '~/components/cms/InsightsHeroSectionEditor';
 import FeaturedArticleEditor from '~/components/cms/FeaturedArticleEditor';
 import SideArticlesEditor from '~/components/cms/SideArticlesEditor';
-import NewsGridEditor from '~/components/cms/NewsGridEditor';
 import VideoSectionEditor from '~/components/cms/VideoSectionEditor';
 import { getInsightsPageContent, saveInsightsPageContent } from '~/data/insights';
 import { getInsightsPageContentFromSupabase, saveInsightsPageContentToSupabase } from '~/data/insights-supabase';
@@ -142,11 +141,6 @@ export default function InsightsPageEditor() {
         <SideArticlesEditor
           data={content.sideArticles}
           onChange={(newSideArticles) => setContent({ ...content, sideArticles: newSideArticles })}
-        />
-
-        <NewsGridEditor
-          data={content.newsGrid}
-          onChange={(newNewsGrid) => setContent({ ...content, newsGrid: newNewsGrid })}
         />
 
         <VideoSectionEditor

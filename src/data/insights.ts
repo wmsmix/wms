@@ -31,11 +31,6 @@ export const defaultInsightsPageContent: InsightsPageContent = {
       title: "Gubernur Jawa Timur Resmikan Penamaan Jalan Lingkar Selatan",
       date: "Senin, 20 Maret 2024",
       url: "/insights/gubernur-jatim-resmikan"
-    },
-    {
-      title: "Perkembangan Pembangunan Jalan Lingkar Tuban Capai 90%",
-      date: "Selasa, 25 April 2024",
-      url: "/insights/perkembangan-pembangunan-capai-90"
     }
   ],
   newsGrid: [

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import Navbar from "~/components/commons/Navbar";
 import Footer from "~/components/commons/Footer";
 import ProductHeader from "~/components/Product/precast-concrete/ProductHeader";
@@ -20,14 +21,12 @@ export default function PrecastConcreteProductDetail() {
   const params = useParams();
   const [product, setProduct] = useState<PrecastProduct | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [isKansteen, setIsKansteen] = useState(false);
   const [_currentSlug, setCurrentSlug] = useState("");
 
   useEffect(() => {
     const loadProduct = async () => {
       setLoading(true);
-      setError(null);
 
       try {
         const slug =
@@ -51,17 +50,14 @@ export default function PrecastConcreteProductDetail() {
           if (productData?.is_published) {
             setProduct(productData);
           } else {
-            setProduct(null);
-            setError("Product not found or not published");
+            notFound();
           }
         } else {
-          setProduct(null);
-          setError("Invalid product slug");
+          notFound();
         }
       } catch (err) {
         console.error("Error loading product:", err);
-        setError("Failed to load product data");
-        setProduct(null);
+        notFound();
       } finally {
         setLoading(false);
       }
@@ -78,24 +74,8 @@ export default function PrecastConcreteProductDetail() {
     );
   }
 
-  if (!product || error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white-10">
-        <Navbar />
-        <div className="py-20">
-          <h1 className="text-center text-2xl text-gray-700">
-            {error ?? "Produk tidak ditemukan"}
-          </h1>
-          <div className="mt-8 flex justify-center">
-            <Button
-              text="KEMBALI KE DAFTAR PRODUK"
-              href="/products/precast-concrete"
-            />
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
+  if (!product) {
+    notFound();
   }
 
   return (

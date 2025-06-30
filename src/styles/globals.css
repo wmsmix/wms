@@ -76,9 +76,28 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+
 .bg-white {
   background-color: #fff;
 }
+
+/* CMS Button Text Color Override */
+.bg-blue-500 {
+  color: white !important;
+}
+
+.bg-red-500 {
+  color: white !important;
+}
+
+.bg-green-500 {
+  color: white !important;
+}
+
+.bg-gray-500 {
+  color: white !important;
+}
+
 /*
 
 @layer base {
