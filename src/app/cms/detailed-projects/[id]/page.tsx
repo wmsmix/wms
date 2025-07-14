@@ -32,6 +32,8 @@ interface DetailedProjectFormData {
   slug: string;
   category: string;
   location: string;
+  period: string;
+  client: string;
   description: string;
   detailed_description: string[];
   specifications: SpecificationPair[];
@@ -60,6 +62,8 @@ export default function DetailedProjectEditPage() {
     slug: '',
     category: 'jalan',
     location: '',
+    period: '',
+    client: '',
     description: '',
     detailed_description: [],
     specifications: [],
@@ -95,6 +99,8 @@ export default function DetailedProjectEditPage() {
             slug: foundProject.slug ?? '',
             category: foundProject.category ?? 'jalan',
             location: foundProject.location ?? '',
+            period: foundProject.period ?? '',
+            client: foundProject.client ?? '',
             description: foundProject.description ?? '',
             detailed_description: foundProject.detailed_description ?? [],
             specifications: (foundProject.specifications as SpecificationPair[]) ?? [],
@@ -142,8 +148,14 @@ export default function DetailedProjectEditPage() {
     setSaveStatus('saving');
 
     try {
+      // Extract "NILAI PROYEK" from project_info array
+      const nilaiProyekItem = formData.project_info.find(
+        item => item.key.toUpperCase() === 'NILAI PROYEK' || item.key.toUpperCase() === 'NILAI PROJEK'
+      );
+
       const projectData = {
         ...formData,
+        value: nilaiProyekItem?.value ?? undefined,
         image_url: imageUrl ?? undefined,
         images: additionalImages
       };
@@ -295,6 +307,28 @@ export default function DetailedProjectEditPage() {
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Period</label>
+              <input
+                type="text"
+                value={formData.period}
+                onChange={(e) => setFormData({ ...formData, period: e.target.value })}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder="e.g., 2022-2024"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Client</label>
+              <input
+                type="text"
+                value={formData.client}
+                onChange={(e) => setFormData({ ...formData, client: e.target.value })}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder="e.g., Pemerintah Kabupaten Tuban"
               />
             </div>
           </div>

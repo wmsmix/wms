@@ -249,11 +249,7 @@ export default function ProjectDetailPage() {
                 className="object-cover"
               />
             </div>
-            <div className="mb-2 flex items-end justify-between">
-              <p className="text-sm text-gray-500 md:text-base">
-                Source : {currentProject.image_source ?? "Ahmad Adirin/Liputan6.com"}
-              </p>
-            </div>
+
 
             <h2 className="mb-6 mt-16 font-noto text-2xl text-black md:text-[32px]">
               {currentProject.description_title ?? "Menghubungkan Infrastruktur dengan Pertumbuhan Ekonomi"}
@@ -297,11 +293,6 @@ export default function ProjectDetailPage() {
                     className="object-cover"
                   />
                 </div>
-                <div className="mb-2 flex items-end justify-between">
-                  <p className="text-sm text-gray-500 md:text-base">
-                    Source : {currentProject.image_source ?? "Ahmad Adirin/Liputan6.com"}
-                  </p>
-                </div>
               </>
             )}
 
@@ -314,11 +305,6 @@ export default function ProjectDetailPage() {
                     fill
                     className="object-cover"
                   />
-                </div>
-                <div className="mb-2 flex items-end justify-between">
-                  <p className="text-sm text-gray-500 md:text-base">
-                    Source : {currentProject.image_source ?? "Ahmad Adirin/Liputan6.com"}
-                  </p>
                 </div>
               </>
             )}
