@@ -28,9 +28,8 @@ export default function AspalProductPage() {
   };
 
   return (
-    // VVV INI PEMBUNGKUS LUAR (FRAGMENT) VVV
+    // VVV PEMBUNGKUS LUAR (INI WAJIB) VVV
     <>
-      {/* Ini adalah div utama Anda */}
       <div className="min-h-screen overflow-x-hidden bg-white-10 font-titillium text-white-10">
         <Navbar />
 
@@ -38,7 +37,7 @@ export default function AspalProductPage() {
           title="Aspal (Hot-Mix)"
           description="Produk laston yang dirancang untuk memberikan daya tahan, fleksibilitas, dan performa maksimal pada berbagai infrastruktur jalan."
           imageSrc="/images/img-aspal.png"
-          buttonText="TANYA LEBIBIH LANJUT"
+          buttonText="TANYA LEBIH LANJUT"
           onButtonClick={() => {
             window.location.href = "/contact";
           }}
@@ -47,9 +46,9 @@ export default function AspalProductPage() {
             { label: "Aspal", href: "/products/aspal" },
           ]}
         />
-        
-        {/* ... (SEMUA KONTEN HALAMAN ANDA ADA DI DALAM DIV INI) ... */}
-        
+
+        {/* ...SEMUA KONTEN HALAMAN ANDA ADA DI SINI... */}
+
         <div
           className="relative w-full bg-orange-secondary px-4 py-8 md:py-10 overflow-hidden"
           style={{
@@ -57,52 +56,50 @@ export default function AspalProductPage() {
           }}
         >
           <div className="marquee-container py-4 flex items-center h-full">
-            {/* ... (isi marquee) ... */}
+            <div className="marquee-content">
+              {/* ... (isi marquee Anda) ... */}
+            </div>
           </div>
-          
-          {/* STYLE 1 DIPINDAH KE SINI: Di dalam div-nya tapi di luar div lain */}
-          <style jsx>{`
-            .marquee-container {
-              width: 100%;
-              overflow: hidden;
-              white-space: nowrap;
-              display: flex;
-              align-items: center;
-              min-height: 80px;
-            }
-
-            .marquee-content {
-              display: inline-block;
-              animation: marquee 40s linear infinite;
-              padding-right: 50px;
-            }
-
-            .marquee-item {
-              display: inline-block;
-              line-height: 1;
-            }
-
-            @keyframes marquee {
-              0% {
-                transform: translateX(0);
-              }
-              100% {
-                transform: translateX(-75%);
-              }
-            }
-          `}</style>
         </div>
 
-        {/* ... (sisa konten halaman) ... */}
+        {/* ... (sisa konten halaman Anda) ... */}
 
         <Footer />
       </div>
-      {/* ^^^ INI ADALAH TAG PENUTUP UNTUK DIV UTAMA ANDA </DIV> ^^^ */}
+      {/* ^^^ INI ADALAH PENUTUP DARI DIV UTAMA ANDA ^^^ */}
 
+      {/* VVV SEMUA STYLE HARUS DI LUAR DIV UTAMA SEPERTI INI VVV */}
+      <style jsx>{`
+        .marquee-container {
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          min-height: 80px;
+        }
 
-      {/* VVV STYLE GLOBAL HARUS DI SINI VVV
-        Di luar <div> utama, tapi di dalam Fragment <> 
-      */}
+        .marquee-content {
+          display: inline-block;
+          animation: marquee 40s linear infinite;
+          padding-right: 50px;
+        }
+
+        .marquee-item {
+          display: inline-block;
+          line-height: 1;
+        }
+
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-75%);
+          }
+        }
+      `}</style>
+
       <style jsx global>{`
         .clip-black-section {
           clip-path: polygon(4% 0%, 96% 0%, 100% 24%, 100% 100%, 96% 100%, 4% 100%, 0% 100%, 0% 24%);
@@ -115,7 +112,7 @@ export default function AspalProductPage() {
             clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 100%, 90% 100%, 10% 100%, 0% 100%, 0% 10%);
           }
         }
-        
+
         .clip-bottom-corners {
           clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 95% 100%, 5% 100%, 0% 85%);
         }
@@ -126,8 +123,6 @@ export default function AspalProductPage() {
           }
         }
       `}</style>
-      
-    </>
-    // ^^^ INI PENUTUP FRAGMENT </> ^^^
+    </> // ^^^ PENUTUP DARI FRAGMENT <> (INI WAJIB) ^^^
   );
 }
