@@ -1,5 +1,4 @@
 import "~/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
 import { Titillium_Web, Noto_Serif } from "next/font/google";
 import { type Metadata } from "next";
@@ -26,7 +25,7 @@ const notoSerif = Noto_Serif({
   variable: "--font-noto-serif",
 });
 
-// VVV BAGIAN 1: "BAHAN" (OBJEK DATA SCHEMA) DITARUH DI SINI VVV
+// VVV INI DIA SCHEMA ANDA (HANYA SATU KALI) VVV
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "HomeAndConstructionBusiness",
@@ -83,34 +82,7 @@ const organizationSchema = {
   ]
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${titilliumWeb.variable} ${notoSerif.variable}`}
-    >
-      <body>
-        <SmoothScrollProvider>
-          {children}
-          <SmoothScrollAnchor />
-        </SmoothScrollProvider>
-        <FloatingWhatsAppButton
-          message="Halo, saya tertarik dengan produk WMS"
-          position="bottom-right"
-        />
-        {/* Script yang lama bisa dibiarkan saja */}
-        
-        {/* VVV BAGIAN 2: "MEMBUAT KUE" (TAG SCRIPT) DITARUH DI DALAM RETURN VVV */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-      </body>
-    </html>
-  );
-}
+// VVV DAN INI FUNGSI ROOTLAYOUT ANDA (HANYA SATU KALI) VVV
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -130,26 +102,15 @@ export default function RootLayout({
         />
         {/* <Script id="smooth-scroll" strategy="afterInteractive">
           {`
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-              anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                  targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-                  
-                  // Opsional: Update URL dengan hash
-                  history.pushState(null, null, targetId);
-                }
-              });
-            });
+            ... (script Anda yang lama) ...
           `}
         </Script> */}
+
+        {/* VVV DAN INI SCRIPT TAG SCHEMA ANDA (DI DALAM BODY) VVV */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </body>
     </html>
   );
