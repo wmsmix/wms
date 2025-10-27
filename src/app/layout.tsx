@@ -25,6 +25,65 @@ const notoSerif = Noto_Serif({
   weight: ["400", "600", "700"],
   variable: "--font-noto-serif",
 });
+// ORGANISATION SCHEME
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "name": "PT Wahana Makmur Sentosa",
+  "alternateName": "WMS Mix",
+  "description": "Pilihan Ahli Konstruksi. Supplier aspal hotmix, readymix, dan beton precast terpercaya di Indonesia. Bagian dari Restu Mulia Construction Group.",
+  "url": "https://wmsmix.com",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://wmsmix.com/svgs/wms-logo.svg"
+  },
+  "telephone": "+6282337900700",
+  "email": "halo@wmsmix.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Penidon I, Magersari, Plumpang",
+    "addressLocality": "Tuban Regency",
+    "addressRegion": "East Java",
+    "postalCode": "62382",
+    "addressCountry": "ID"
+  },
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "Restu Mulia Construction Group"
+  },
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Aspal Hotmix"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Beton Readymix"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Beton Precast"
+      }
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/pt-wahana-makmur-sentosa",
+    "https://www.facebook.com/profile.php?id=61571593506561",
+    "https://www.instagram.com/wms.mix/",
+    "https://www.tiktok.com/@wmsmix"
+  ]
+}
+</script>
+//ORGANISATION SCHEME
 
 export default function RootLayout({
   children,
