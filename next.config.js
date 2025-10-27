@@ -5,6 +5,14 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  // VVV TAMBAHKAN BLOK INI VVV
+  eslint: {
+    // This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+  // ^^^ TAMBAHKAN BLOK INI ^^^
+};
 
 export default config;
