@@ -25,9 +25,9 @@ const notoSerif = Noto_Serif({
   weight: ["400", "600", "700"],
   variable: "--font-noto-serif",
 });
-// ORGANISATION SCHEME
-<script type="application/ld+json">
-{
+
+// VVV BAGIAN 1: "BAHAN" (OBJEK DATA SCHEMA) DITARUH DI SINI VVV
+const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "HomeAndConstructionBusiness",
   "name": "PT Wahana Makmur Sentosa",
@@ -81,10 +81,36 @@ const notoSerif = Noto_Serif({
     "https://www.instagram.com/wms.mix/",
     "https://www.tiktok.com/@wmsmix"
   ]
-}
-</script>
-//ORGANISATION SCHEME
+};
 
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${titilliumWeb.variable} ${notoSerif.variable}`}
+    >
+      <body>
+        <SmoothScrollProvider>
+          {children}
+          <SmoothScrollAnchor />
+        </SmoothScrollProvider>
+        <FloatingWhatsAppButton
+          message="Halo, saya tertarik dengan produk WMS"
+          position="bottom-right"
+        />
+        {/* Script yang lama bisa dibiarkan saja */}
+        
+        {/* VVV BAGIAN 2: "MEMBUAT KUE" (TAG SCRIPT) DITARUH DI DALAM RETURN VVV */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </body>
+    </html>
+  );
+}
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
